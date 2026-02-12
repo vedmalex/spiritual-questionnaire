@@ -174,6 +174,8 @@ function HomePage() {
   const {
     questionnaires,
     loading: questionnairesLoading,
+    serverStatus,
+    retryLoad,
   } = useQuestionnaires();
 
   const userName = user?.name || '';
@@ -593,7 +595,11 @@ function HomePage() {
       <QuestionnaireList
         questionnaires={questionnaires}
         loading={questionnairesLoading}
+        serverStatus={serverStatus}
         pausedQuestionnaireIds={pausedQuestionnaireIds}
+        onRetryLoad={() => {
+          void retryLoad();
+        }}
         onSelect={handleSelectQuestionnaire}
       />
     </div>

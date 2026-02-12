@@ -28,6 +28,15 @@ export interface TranslationKeys {
   'quiz.scale': string;
   'quiz.start': string;
   'quiz.noQuizzes': string;
+  'quiz.loading.title': string;
+  'quiz.loading.retrying': string;
+  'quiz.loading.retryingHint': string;
+  'quiz.loading.partialTitle': string;
+  'quiz.loading.partialDescription': string;
+  'quiz.loading.failedTitle': string;
+  'quiz.loading.failedDescription': string;
+  'quiz.loading.autoRetry': string;
+  'quiz.loading.retryButton': string;
   'quiz.paused.title': string;
   'quiz.paused.description': string;
   'quiz.paused.continue': string;

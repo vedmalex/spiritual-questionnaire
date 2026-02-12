@@ -54,12 +54,16 @@ describe('LocalStorageAdapter questionnaire identity', () => {
         const url = String(input);
         if (url.endsWith('/questionnaires/index.json')) {
           return {
+            ok: true,
+            status: 200,
             json: async () => ['titiksha.json'],
           } as Response;
         }
 
         if (url.endsWith('/questionnaires/titiksha.json')) {
           return {
+            ok: true,
+            status: 200,
             json: async () => staticQuestionnaire,
           } as Response;
         }

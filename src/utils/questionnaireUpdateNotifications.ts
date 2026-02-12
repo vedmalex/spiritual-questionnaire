@@ -1,7 +1,8 @@
 import { STORAGE_KEYS } from './constants';
 import { t } from './i18n';
+import { toPublicPath } from './publicPath';
 
-const QUESTIONNAIRE_INDEX_URL = '/questionnaires/index.json';
+const QUESTIONNAIRE_INDEX_URL = toPublicPath('questionnaires/index.json');
 const UPDATE_CHECK_INTERVAL_MS = 5 * 60 * 1000;
 const MAX_NAMES_IN_NOTIFICATION = 3;
 

@@ -7,6 +7,7 @@ import {
   stripLocalRuntimePrefix,
   withQuestionnaireRuntimeIdentity,
 } from '../utils/questionnaireIdentity';
+import { toPublicPath } from '../utils/publicPath';
 
 export class LocalStorageAdapter implements DataAdapter {
   private getResultsStorageKey(scope: ResultsScope = 'student'): string {
@@ -35,12 +36,18 @@ export class LocalStorageAdapter implements DataAdapter {
 
   private async loadStaticQuestionnaires(): Promise<Questionnaire[]> {
     try {
-      const response = await fetch('/questionnaires/index.json');
+      const response = await fetch(toPublicPath('questionnaires/index.json'));
+      if (!response.ok) {
+        throw new Error(`Failed to load index.json: HTTP ${response.status}`);
+      }
       const files: string[] = await response.json();
       
       const questionnaires = await Promise.all(
         files.map(async (file) => {
-          const res = await fetch(`/questionnaires/${file}`);
+          const res = await fetch(toPublicPath(`questionnaires/${file}`));
+          if (!res.ok) {
+            throw new Error(`Failed to load "${file}": HTTP ${res.status}`);
+          }
           const parsed = await res.json();
           return normalizeQuestionnaire(parsed);
         })
