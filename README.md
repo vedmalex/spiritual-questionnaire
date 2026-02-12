@@ -61,6 +61,11 @@ npm run build:profiles
 - Trigger: push в `main` (или ручной запуск через `workflow_dispatch`)
 - Build script: `npm run build:gh-pages`
 - Публикуемый артефакт: `dist/gh-pages` (на основе `dist/full/client`)
+- Ветка публикации: `gh-pages`
+- В настройках репозитория (`Settings -> Pages`) нужен режим:
+  - `Source: Deploy from a branch`
+  - `Branch: gh-pages` и папка `/ (root)`
+- URL приложения: `https://vedmalex.github.io/spiritual-questionnaire/`
 
 Для локальной проверки GitHub Pages-артефакта:
 
