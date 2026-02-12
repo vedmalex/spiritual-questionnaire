@@ -11,6 +11,9 @@ import { useUser } from '../hooks/useUser';
 import { exportResults } from '../utils/exportUtils';
 import { getGradeDescription, getLanguage, t } from '../utils/i18n';
 import { getQuestionnaireRuntimeId } from '../utils/questionnaireIdentity';
+import { MarkdownContent } from './ui/MarkdownContent';
+import { MarkdownEditor } from './ui/MarkdownEditor';
+import { hasMarkdownContent, mergeLegacyCommentWithPhotos } from '../utils/markdown';
 
 interface FeedbackTarget {
   resultId: string;
@@ -188,14 +191,14 @@ export function CuratorDashboard() {
     rawText: string,
     closeEditor = true
   ) => {
-    const text = rawText.trim();
-    if (!text) {
+    if (!hasMarkdownContent(rawText)) {
       if (closeEditor) {
         setFeedbackTarget(null);
         setFeedbackText('');
       }
       return;
     }
+    const text = rawText.trim();
 
     const key = `${result.id}::${questionId}`;
     if (savingFeedbackKey === key) return;
@@ -390,6 +393,11 @@ export function CuratorDashboard() {
                 const schemaQuestion = schemaLookup?.get(questionId);
                 const questionIndex = schemaQuestion?.index ?? index;
                 const questionTitle = schemaQuestion?.title || questionId;
+                const studentCommentMarkdown = mergeLegacyCommentWithPhotos(
+                  details.comment || '',
+                  details.photos || []
+                );
+                const hasStudentComment = hasMarkdownContent(studentCommentMarkdown);
 
                 return (
                   <div
@@ -414,29 +422,10 @@ export function CuratorDashboard() {
                       )}
                     </div>
 
-                    {details.comment && (
+                    {hasStudentComment && (
                       <div className="mb-3 p-2 bg-white dark:bg-gray-800 rounded border-l-4 border-primary-400">
                         <p className="text-xs text-gray-500 mb-1">{t('curator.comment.student')}</p>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">
-                          {details.comment}
-                        </p>
-                      </div>
-                    )}
-
-                    {details.photos && details.photos.length > 0 && (
-                      <div className="mb-3">
-                        <p className="text-xs text-gray-500 mb-2">{t('curator.photos.attached')}</p>
-                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
-                          {details.photos.map((photo, photoIndex) => (
-                            <img
-                              key={photoIndex}
-                              src={photo}
-                              alt={`Student response ${photoIndex + 1}`}
-                              className="w-full h-16 md:h-20 object-cover rounded-lg cursor-pointer hover:opacity-80"
-                              onClick={() => window.open(photo, '_blank')}
-                            />
-                          ))}
-                        </div>
+                        <MarkdownContent markdown={studentCommentMarkdown} />
                       </div>
                     )}
 
@@ -455,9 +444,10 @@ export function CuratorDashboard() {
                                 {new Date(feedback.timestamp).toLocaleDateString()}
                               </span>
                             </div>
-                            <p className="text-sm text-blue-800 dark:text-blue-200">
-                              {feedback.comment}
-                            </p>
+                            <MarkdownContent
+                              markdown={feedback.comment}
+                              className="text-blue-800 dark:text-blue-200"
+                            />
                           </div>
                         ))}
                       </div>
@@ -466,27 +456,22 @@ export function CuratorDashboard() {
                     <div className="mt-3">
                       {isFeedbackTarget ? (
                         <div className="space-y-2">
-                          <textarea
+                          <MarkdownEditor
                             value={feedbackText}
-                            onChange={(event) => setFeedbackText(event.target.value)}
-                            onBlur={(event) => {
-                              const relatedTarget = event.relatedTarget as HTMLElement | null;
-                              const action = relatedTarget?.dataset?.feedbackAction;
-                              if (action === 'send' || action === 'cancel') {
-                                return;
-                              }
-                              void saveFeedback(result, questionId, event.currentTarget.value, true);
-                            }}
+                            onChange={(value) => setFeedbackText(value)}
                             placeholder={t('curator.feedback.placeholder')}
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm resize-none"
-                            rows={3}
+                            allowImages
+                            minHeightClassName="min-h-[96px]"
                           />
                           <div className="flex gap-2">
                             <button
                               type="button"
                               data-feedback-action="send"
                               onClick={() => void saveFeedback(result, questionId, feedbackText, true)}
-                              disabled={savingFeedbackKey === `${result.id}::${questionId}`}
+                              disabled={
+                                savingFeedbackKey === `${result.id}::${questionId}` ||
+                                !hasMarkdownContent(feedbackText)
+                              }
                               className="px-3 py-1 bg-primary-600 hover:bg-primary-700 text-white rounded text-sm transition-colors"
                             >
                               {t('curator.feedback.send')}

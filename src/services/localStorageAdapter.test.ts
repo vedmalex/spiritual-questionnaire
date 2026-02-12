@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { Questionnaire } from '../types/questionnaire';
+import type { ArchivedUserRecord, Questionnaire } from '../types/questionnaire';
 import { LocalStorageAdapter } from './localStorageAdapter';
 
 const staticQuestionnaire: Questionnaire = {
@@ -97,5 +97,46 @@ describe('LocalStorageAdapter questionnaire identity', () => {
     expect(staticResolved?.source).toBe('static');
     expect(localResolved?.source).toBe('local');
     expect(localResolved?.metadata.title).toEqual({ ru: 'Локальный Титикша', en: 'Local Titiksha' });
+  });
+
+  it('stores archived users and supports lookup/delete via adapter API', async () => {
+    const older: ArchivedUserRecord = {
+      id: 'archive_older',
+      savedAt: 1700000000000,
+      user: {
+        name: 'Older User',
+        role: 'student',
+        createdAt: 1690000000000,
+        theme: 'light',
+        language: 'ru',
+      },
+      appLanguage: 'ru',
+      session: null,
+      pausedSessions: [],
+      studentResults: [],
+      curatorResults: [],
+      customQuestionnaires: [],
+    };
+    const newer: ArchivedUserRecord = {
+      ...older,
+      id: 'archive_newer',
+      savedAt: 1800000000000,
+      user: {
+        ...older.user,
+        name: 'Newer User',
+      },
+    };
+
+    await adapter.saveArchivedUser(older);
+    await adapter.saveArchivedUser(newer);
+
+    const archivedUsers = await adapter.getArchivedUsers();
+    expect(archivedUsers.map((entry) => entry.id)).toEqual(['archive_newer', 'archive_older']);
+
+    const selected = await adapter.getArchivedUserById('archive_older');
+    expect(selected?.user.name).toBe('Older User');
+
+    await adapter.deleteArchivedUser('archive_older');
+    expect(await adapter.getArchivedUserById('archive_older')).toBeNull();
   });
 });

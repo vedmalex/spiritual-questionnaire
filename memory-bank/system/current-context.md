@@ -51,6 +51,10 @@
 35. `2026-02-12_TASK-039_analytics-layout-refinement`
 36. `2026-02-12_TASK-040_shadcn-range-picker-analytics`
 37. `2026-02-12_TASK-041_multi-paused-quiz-sessions`
+38. `2026-02-12_TASK-042_markdown-editor-safe-render-user-archive`
+39. `2026-02-12_TASK-043_report-print-pdf-header-mobile-consistency`
+40. `2026-02-12_TASK-044_header-compact-profile-dropdown-navigation`
+41. `2026-02-12_TASK-045_report-print-theme-isolation`
 
 ## Current State
 - Dashboard-требование `UR-043` реализовано и зафиксировано отдельной задачей.
@@ -99,6 +103,15 @@
 - Выполнен `TASK-039`: переработан analytics layout (первым идет выбор опросника, добавлен фильтр периода, убран полноширинный дубль-график под календарем, динамика вопросов показывается только для 2+ оценок).
 - Выполнен `TASK-040`: date period filter в аналитике переведен на shadcn-style range picker (Calendar + Popover на `react-day-picker`) с подтверждением сценария выбора диапазона через Playwright.
 - Выполнен `TASK-041`: pause/resume расширен до нескольких paused-опросников; при выборе карточки опросника студент продолжает именно соответствующую paused-сессию с сохраненного вопроса.
+- Выполнен `TASK-042`: формы student/dashboard/curator переведены на headless TipTap markdown editor (с inline image), отдельный photo-input в ответах удален; отображение markdown вынесено в safe renderer с защитой от исполнимого JS/XSS.
+- Выполнен `TASK-042`: logout усилен confirm + предупреждением о сохранении backup-файла; добавлен локальный архив пользователей (adapter API + восстановление на входе) и smoke-проверка сценария через `playwright` skill.
+- Выполнен follow-up `TASK-042`: toolbar markdown-редактора переведен на иконки (без технических текстовых сокращений), подтверждено Playwright UI-проверкой.
+- Выполнен follow-up `TASK-042`: browser `confirm/alert` для logout заменены на in-app modal flow в стиле приложения, предупреждение дополнено пояснением про «файл профиля» для восстановления на другом устройстве.
+- Выполнен follow-up `TASK-023/042`: preview отчета перенесен inline в карточку выбранной попытки (в секцию результатов), добавлены клиентские экспорты HTML и PDF (через print-dialog), подтверждено Playwright UI-проверкой.
+- Выполнен follow-up UI simplification: в отчете оставлены 2 ключевых действия (одна кнопка «Скачать» с dropdown-форматами + одна «Печать»), а кнопка выхода перенесена из Header в Profile с пояснением сценария logout/re-login.
+- Выполнен `TASK-043`: печать отчета переведена на iframe-based print flow (без popup-block проблем), добавлен прямой клиентский экспорт PDF, в Header удалены mobile combo-box (`select`) и включен единый segmented UI с horizontal scroll; переход в профиль доступен по клику на имя, переход на главную — по клику на название приложения.
+- Выполнен `TASK-044`: в Header переходы `Результаты/Профиль` перенесены в dropdown под блоком пользователя, верхняя навигация сокращена для student/curator (compact mode), и подтверждены route-переходы через Playwright smoke.
+- Выполнен `TASK-045`: подготовка отчета к печати/PDF отвязана от dark/light темы приложения: report export принудительно использует светлую color scheme и явный контрастный цвет текста, что устраняет бледный/нечитаемый PDF в dark mode.
 - Зафиксирован follow-up bug `BUG-003`: в static prerender runtime наблюдается `React #418` hydration mismatch (консольная ошибка), требуется отдельная стабилизация.
 - Обновлена схема опросников до полного мультиязычного контракта (`metadata.languages`, локализованные `question/context_sources/self_check_prompts`) и добавлена migration `v5`.
 - Обновлен skill `spiritual-questionnaire-architect` под новый schema contract.
@@ -110,4 +123,4 @@
 - `memory-bank/system/WORKFLOW.md`
 - `memory-bank/system/AUDIT-2026-02-11-user-req.md`
 
-Last Updated: 2026-02-12 04:23
+Last Updated: 2026-02-12 12:34

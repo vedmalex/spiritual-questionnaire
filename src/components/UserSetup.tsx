@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { t, setLanguage, getLanguage, initializeLanguage } from '../utils/i18n';
 import type { LanguageCode } from '../types/i18n';
-import type { UserRole } from '../types/questionnaire';
+import type { ArchivedUserRecord, UserRole } from '../types/questionnaire';
 import { LanguageButtons, RoleCards } from './ui/ProfileSelectors';
 import {
   DEFAULT_PROFILE_ROLE,
@@ -12,15 +12,24 @@ import {
 interface UserSetupProps {
   onSubmit: (name: string, role: UserRole) => void;
   onImportBackup?: (file: File) => Promise<void>;
+  archivedUsers?: ArchivedUserRecord[];
+  onRestoreArchivedUser?: (archiveId: string) => Promise<void>;
 }
 
-export function UserSetup({ onSubmit, onImportBackup }: UserSetupProps) {
+export function UserSetup({
+  onSubmit,
+  onImportBackup,
+  archivedUsers = [],
+  onRestoreArchivedUser,
+}: UserSetupProps) {
   const [name, setName] = useState('');
   const [role, setRole] = useState<UserRole>(DEFAULT_PROFILE_ROLE);
   const [error, setError] = useState('');
   const [language, setLangState] = useState<LanguageCode>('ru');
   const [importStatus, setImportStatus] = useState('');
   const [importError, setImportError] = useState('');
+  const [restoringArchiveId, setRestoringArchiveId] = useState<string | null>(null);
+  const [archiveError, setArchiveError] = useState('');
   const isRu = language === 'ru';
 
   useEffect(() => {
@@ -62,19 +71,26 @@ export function UserSetup({ onSubmit, onImportBackup }: UserSetupProps) {
 
     try {
       await onImportBackup(file);
-      setImportStatus(
-        isRu
-          ? 'Профиль и данные успешно загружены из backup файла.'
-          : 'Profile and data restored from backup file.'
-      );
+      setImportStatus(t('user.backup.success'));
     } catch (importErr) {
-      const message =
-        importErr instanceof Error ? importErr.message : 'Не удалось загрузить backup файл.';
+      const message = importErr instanceof Error ? importErr.message : t('user.backup.error');
       setImportError(message);
     } finally {
       if (event.target) {
         event.target.value = '';
       }
+    }
+  };
+
+  const handleRestoreArchivedUser = async (archiveId: string) => {
+    if (!onRestoreArchivedUser) return;
+    setArchiveError('');
+    setRestoringArchiveId(archiveId);
+    try {
+      await onRestoreArchivedUser(archiveId);
+    } catch (error) {
+      setArchiveError(error instanceof Error ? error.message : t('user.archive.error'));
+      setRestoringArchiveId(null);
     }
   };
 
@@ -144,10 +160,66 @@ export function UserSetup({ onSubmit, onImportBackup }: UserSetupProps) {
           </div>
         </form>
 
+        {onRestoreArchivedUser && (
+          <div className="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 space-y-3">
+            <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {t('user.archive.title')}
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{t('user.archive.select')}</p>
+
+            {archivedUsers.length === 0 ? (
+              <p className="text-xs text-gray-500 dark:text-gray-400">{t('user.archive.empty')}</p>
+            ) : (
+              <div className="space-y-2">
+                {archivedUsers.map((record) => {
+                  const isRestoring = restoringArchiveId === record.id;
+                  return (
+                    <div
+                      key={record.id}
+                      className="rounded-lg border border-gray-200 dark:border-gray-700 p-3"
+                    >
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                        {record.user.name}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {t('user.archive.role', {
+                          role: t(`header.role.${record.user.role}`),
+                        })}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+                        {t('user.archive.lastUsed', {
+                          date: new Date(record.savedAt).toLocaleString(
+                            language === 'ru' ? 'ru-RU' : 'en-US'
+                          ),
+                        })}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => void handleRestoreArchivedUser(record.id)}
+                        disabled={Boolean(restoringArchiveId)}
+                        className="px-3 py-1.5 rounded-lg bg-primary-600 hover:bg-primary-700 disabled:opacity-60 text-white text-xs"
+                      >
+                        {isRestoring
+                          ? t('user.archive.restoring')
+                          : t('user.archive.use', { name: record.user.name })}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
+            {archiveError && <p className="text-xs text-red-700 dark:text-red-400">{archiveError}</p>}
+          </div>
+        )}
+
         {onImportBackup && (
           <div className="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
             <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {isRu ? 'Войти из backup файла' : 'Restore from backup file'}
+              {t('user.backup.title')}
+            </p>
+            <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">
+              {t('user.backup.description')}
             </p>
             <input
               type="file"

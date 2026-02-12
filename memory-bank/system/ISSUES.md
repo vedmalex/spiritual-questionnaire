@@ -60,16 +60,22 @@
 - [x] [CLOSE-052] Icon corner cleanup: white top-corner artifacts removed, and outer PNG corners verified transparent (`alpha=0`) via Playwright evidence (`UR-026`, `UR-027`, `WF-008`) — ✅ Closed: 2026-02-12
 - [x] [CLOSE-053] Analytics range picker upgraded to shadcn-style Calendar+Popover (`react-day-picker`) with period filtering and Playwright verification (`UR-034`, `UR-050`, `UR-051`, `WF-008`) — ✅ Closed: 2026-02-12
 - [x] [CLOSE-054] Multiple paused quiz sessions: student can pause several questionnaires and resume selected one from its saved step (`UR-012`, `UR-027`, `WF-008`) — ✅ Closed: 2026-02-12
+- [x] [CLOSE-055] Markdown form editing hardening: headless TipTap editor + safe markdown rendering (XSS guard), logout confirm/warning flow, and local archived-user restore on login (`UR-007`, `UR-008`, `UR-044`, `UR-056`, `UR-057`, `WF-008`) — ✅ Closed: 2026-02-12
+- [x] [CLOSE-056] Markdown/UI follow-up: icon toolbar, in-app logout modals with profile-file explanation, and inline report preview with HTML/PDF client exports (`UR-057`, `UR-067`, `UR-070`, `UR-071`, `UR-072`) — ✅ Closed: 2026-02-12
+- [x] [CLOSE-057] UI simplification follow-up: compact report actions (`Download` dropdown + `Print`) and logout relocated to profile with clear re-login guidance (`UR-073`, `UR-074`) — ✅ Closed: 2026-02-12
+- [x] [CLOSE-058] Header/report follow-up: fixed reliable print flow, added direct PDF export, removed mobile header combo-boxes, and added quick nav by user-name/app-title taps (`UR-075`, `UR-076`, `UR-077`, `UR-078`) — ✅ Closed: 2026-02-12
+- [x] [CLOSE-059] Header compact navigation: `Результаты/Профиль` moved into user dropdown menu, top bar reduced for student/curator, and dropdown routes validated with Playwright (`UR-079`) — ✅ Closed: 2026-02-12
+- [x] [CLOSE-060] Report print/PDF style isolation: print bundle forced to light readable palette, independent from app dark theme (`UR-080`) — ✅ Closed: 2026-02-12
 
 ## 🔄 LEVER Opportunities
 - Нет открытых LEVER-задач.
 
 ## 📊 Statistics
-- Total Items: 55
+- Total Items: 61
 - Open: 1
-- Closed: 54
+- Closed: 60
 
 ## 📅 Audit Link
 - `memory-bank/system/AUDIT-2026-02-11-user-req.md`
 
-**Last Updated:** 2026-02-12 04:23
+**Last Updated:** 2026-02-12 12:34

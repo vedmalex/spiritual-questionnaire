@@ -6,15 +6,24 @@ import type { ExportFormat } from '../utils/exportUtils';
 import { trackFormActivity } from '../utils/analytics';
 import { dataAdapter } from '../services/localStorageAdapter';
 import { AnalyticsPanel } from './AnalyticsPanel';
+import { MarkdownContent } from './ui/MarkdownContent';
+import { MarkdownEditor } from './ui/MarkdownEditor';
 import type { ImportStrategy, ImportSummary } from '../utils/resultsTransfer';
 import { getQuestionnaireRuntimeId } from '../utils/questionnaireIdentity';
 import {
   buildResultReportBundle,
+  downloadHtmlReport,
+  downloadPdfReport,
   downloadPlainTextReport,
   downloadTextReport,
   printReportHtml,
   type ResultReportBundle,
 } from '../utils/reportBuilder';
+import {
+  extractMarkdownImageSources,
+  hasMarkdownContent,
+  mergeLegacyCommentWithPhotos,
+} from '../utils/markdown';
 
 interface DashboardProps {
   results: QuizResult[];
@@ -102,6 +111,10 @@ function buildQuestionAnchorId(resultId: string, completedAt: number, questionId
   return `dashboard-question-${encodeURIComponent(resultId)}-${completedAt}-${encodeURIComponent(questionId)}`;
 }
 
+function buildReportAnchorId(resultId: string, completedAt: number): string {
+  return `dashboard-report-${encodeURIComponent(resultId)}-${completedAt}`;
+}
+
 export function Dashboard({
   results,
   questionnaires,
@@ -137,14 +150,18 @@ export function Dashboard({
   const [savingFeedbackKey, setSavingFeedbackKey] = useState<string | null>(null);
   const [reportBundle, setReportBundle] = useState<ResultReportBundle | null>(null);
   const [reportResultId, setReportResultId] = useState<string | null>(null);
+  const [reportResultCompletedAt, setReportResultCompletedAt] = useState<number | null>(null);
   const [reportTitle, setReportTitle] = useState('');
   const [reportError, setReportError] = useState('');
+  const [reportDownloadMenuOpen, setReportDownloadMenuOpen] = useState(false);
+  const [reportActionInProgress, setReportActionInProgress] = useState<'pdf' | 'print' | null>(null);
   const [highlightedFocus, setHighlightedFocus] = useState<{
     resultId: string;
     resultCompletedAt?: number;
     questionId?: string;
   } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const reportDownloadMenuRef = useRef<HTMLDivElement | null>(null);
   const focusAppliedKeyRef = useRef<string>('');
   const highlightTimeoutRef = useRef<number | null>(null);
   const exportFormat: ExportFormat = 'json';
@@ -166,6 +183,23 @@ export function Dashboard({
       views: next,
     });
   }, [activeTab]);
+
+  useEffect(() => {
+    if (!reportDownloadMenuOpen) return;
+
+    const onPointerDown = (event: MouseEvent) => {
+      if (!reportDownloadMenuRef.current) return;
+      if (reportDownloadMenuRef.current.contains(event.target as Node)) {
+        return;
+      }
+      setReportDownloadMenuOpen(false);
+    };
+
+    window.addEventListener('mousedown', onPointerDown);
+    return () => {
+      window.removeEventListener('mousedown', onPointerDown);
+    };
+  }, [reportDownloadMenuOpen]);
 
   const groupedResults = useMemo<QuestionnaireResultGroup[]>(() => {
     const byQuestionnaire = new Map<string, QuizResult[]>();
@@ -248,7 +282,7 @@ export function Dashboard({
               questionIndex,
               questionTitle,
               score: answer.score,
-              answerComment: answer.comment || '',
+              answerComment: mergeLegacyCommentWithPhotos(answer.comment || '', answer.photos || []),
               messages,
             },
           ];
@@ -401,8 +435,10 @@ export function Dashboard({
 
   const handleSaveStudentReply = async (result: QuizResult, questionId: string) => {
     const key = feedbackKey(result.id, questionId);
-    const reply = (replyDrafts[key] || '').trim();
-    if (!reply) return;
+    const replyDraft = String(replyDrafts[key] || '');
+    if (!hasMarkdownContent(replyDraft)) return;
+
+    const reply = replyDraft.trim();
 
     const answer = result.answers[questionId];
     if (!answer) return;
@@ -454,10 +490,12 @@ export function Dashboard({
     if (!answer) return;
 
     const draft = commentDrafts[key];
-    const nextComment = (draft ?? answer.comment ?? '').trim();
-    const prevComment = (answer.comment || '').trim();
+    const prevMarkdown = mergeLegacyCommentWithPhotos(answer.comment || '', answer.photos || []);
+    const nextComment = String(draft ?? prevMarkdown).trim();
+    const prevComment = prevMarkdown.trim();
     if (nextComment === prevComment) return;
 
+    const nextPhotos = extractMarkdownImageSources(nextComment);
     const updatedResult: QuizResult = {
       ...result,
       answers: {
@@ -465,6 +503,7 @@ export function Dashboard({
         [questionId]: {
           ...answer,
           comment: nextComment,
+          photos: nextPhotos,
         },
       },
     };
@@ -612,6 +651,18 @@ export function Dashboard({
   };
 
   const handlePrepareResultReport = (result: QuizResult) => {
+    const isCurrentReport =
+      reportResultId === result.id && reportResultCompletedAt === result.completedAt;
+    if (isCurrentReport) {
+      setReportBundle(null);
+      setReportResultId(null);
+      setReportResultCompletedAt(null);
+      setReportTitle('');
+      setReportError('');
+      setReportDownloadMenuOpen(false);
+      return;
+    }
+
     const questionnaire =
       questionnaires.find((item) => getQuestionnaireRuntimeId(item) === result.questionnaireId) || null;
     const locale = language === 'en' ? 'en-US' : 'ru-RU';
@@ -624,10 +675,18 @@ export function Dashboard({
 
     setReportBundle(nextBundle);
     setReportResultId(result.id);
+    setReportResultCompletedAt(result.completedAt);
     setReportTitle(`${result.questionnaireTitle} • ${new Date(result.completedAt).toLocaleString(locale)}`);
     setReportError('');
+    setReportDownloadMenuOpen(false);
     trackFormActivity('result_report', 'prepare', {
       questionnaire: result.questionnaireId,
+    });
+
+    requestAnimationFrame(() => {
+      const anchorId = buildReportAnchorId(result.id, result.completedAt);
+      const reportNode = document.getElementById(anchorId);
+      reportNode?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   };
 
@@ -645,23 +704,43 @@ export function Dashboard({
     trackFormActivity('result_report', 'download_plain_text');
   };
 
-  const handlePrintReport = () => {
+  const handleDownloadHtml = () => {
     if (!reportBundle) return;
+    downloadHtmlReport(reportBundle.html, `${reportBundle.filenameBase}.html`);
+    setReportError('');
+    trackFormActivity('result_report', 'download_html');
+  };
 
+  const handleDownloadPdf = async () => {
+    if (!reportBundle || reportActionInProgress) return;
+
+    setReportActionInProgress('pdf');
     try {
-      printReportHtml(reportBundle.html);
+      await downloadPdfReport(reportBundle.html, `${reportBundle.filenameBase}.pdf`);
       setReportError('');
-      trackFormActivity('result_report', 'print');
+      trackFormActivity('result_report', 'download_pdf');
     } catch {
-      setReportError(t('dashboard.report.error.print'));
+      setReportError(t('dashboard.report.error.pdf'));
+    } finally {
+      setReportActionInProgress(null);
     }
   };
 
-  const handleCloseReport = () => {
-    setReportBundle(null);
-    setReportResultId(null);
-    setReportTitle('');
-    setReportError('');
+  const handlePrintReport = async () => {
+    if (!reportBundle) return;
+    if (reportActionInProgress) return;
+
+    setReportActionInProgress('print');
+    try {
+      await printReportHtml(reportBundle.html);
+      setReportError('');
+      setReportDownloadMenuOpen(false);
+      trackFormActivity('result_report', 'print');
+    } catch {
+      setReportError(t('dashboard.report.error.print'));
+    } finally {
+      setReportActionInProgress(null);
+    }
   };
 
   const handleImportFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -758,58 +837,6 @@ export function Dashboard({
       )}
       {feedbackError && (
         <p className="text-sm text-red-700 dark:text-red-400">{feedbackError}</p>
-      )}
-
-      {reportBundle && (
-        <section className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-4 md:p-6 space-y-4">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {t('dashboard.report.title', { title: reportTitle })}
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                {t('dashboard.report.description')}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={handleDownloadText}
-                className="w-full sm:w-auto px-3 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm"
-              >
-                {t('dashboard.report.downloadMarkdown')}
-              </button>
-              <button
-                type="button"
-                onClick={handleDownloadPlainText}
-                className="w-full sm:w-auto px-3 py-2 rounded-lg bg-primary-100 hover:bg-primary-200 text-primary-800 text-sm dark:bg-primary-900/30 dark:hover:bg-primary-900/50 dark:text-primary-200"
-              >
-                {t('dashboard.report.downloadPlainText')}
-              </button>
-              <button
-                type="button"
-                onClick={handlePrintReport}
-                className="w-full sm:w-auto px-3 py-2 rounded-lg bg-gray-700 hover:bg-gray-800 text-white text-sm"
-              >
-                {t('dashboard.report.print')}
-              </button>
-              <button
-                type="button"
-                onClick={handleCloseReport}
-                className="w-full sm:w-auto px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm"
-              >
-                {t('dashboard.report.close')}
-              </button>
-            </div>
-          </div>
-
-          <iframe
-            title={t('dashboard.report.preview')}
-            srcDoc={reportBundle.html}
-            className="w-full h-[70vh] rounded-lg border border-gray-200 dark:border-gray-700 bg-white"
-          />
-        </section>
       )}
 
       {hasResults && (
@@ -954,6 +981,12 @@ export function Dashboard({
                                   const questionTitle = schemaQuestion?.title || questionId;
                                   const isExpandedQuestion =
                                     expanded?.resultId === result.id && expanded?.questionId === questionId;
+                                  const answerMarkdown = mergeLegacyCommentWithPhotos(
+                                    details.comment || '',
+                                    details.photos || []
+                                  );
+                                  const hasAnswerComment = hasMarkdownContent(answerMarkdown);
+                                  const imageCount = extractMarkdownImageSources(answerMarkdown).length;
 
                                   return (
                                     <div
@@ -985,9 +1018,9 @@ export function Dashboard({
                                               {t('dashboard.group.absentBadge')}
                                             </span>
                                           )}
-                                          {details.comment && <span className="text-xs text-gray-500">📝</span>}
-                                          {details.photos && details.photos.length > 0 && (
-                                            <span className="text-xs text-gray-500">📷 {details.photos.length}</span>
+                                          {hasAnswerComment && <span className="text-xs text-gray-500">📝</span>}
+                                          {imageCount > 0 && (
+                                            <span className="text-xs text-gray-500">📷 {imageCount}</span>
                                           )}
                                         </div>
                                         <svg
@@ -1011,28 +1044,12 @@ export function Dashboard({
                                             <strong>{t('quiz.score.selected')}:</strong> {getGradeDescription(details.score)}
                                           </p>
 
-                                          {details.comment && (
+                                          {hasAnswerComment && (
                                             <div className="mb-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
                                               <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
                                                 📝 {t('quiz.comment.add')}:
                                               </p>
-                                              <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
-                                                {details.comment}
-                                              </p>
-                                            </div>
-                                          )}
-
-                                          {details.photos && details.photos.length > 0 && (
-                                            <div className="grid grid-cols-4 gap-2">
-                                              {details.photos.map((photo, photoIdx) => (
-                                                <img
-                                                  key={photoIdx}
-                                                  src={photo}
-                                                  alt={`Response visual ${photoIdx + 1}`}
-                                                  className="w-full h-20 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
-                                                  onClick={() => window.open(photo, '_blank')}
-                                                />
-                                              ))}
+                                              <MarkdownContent markdown={answerMarkdown} />
                                             </div>
                                           )}
                                         </div>
@@ -1055,12 +1072,16 @@ export function Dashboard({
                                 type="button"
                                 onClick={() => handlePrepareResultReport(result)}
                                 className={`px-2 py-2 rounded-lg transition-colors text-xs font-medium ${
-                                  reportResultId === result.id
+                                  reportResultId === result.id &&
+                                  reportResultCompletedAt === result.completedAt
                                     ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300'
                                     : 'bg-primary-600 hover:bg-primary-700 text-white'
                                 }`}
                               >
-                                {t('dashboard.report.create')}
+                                {reportResultId === result.id &&
+                                reportResultCompletedAt === result.completedAt
+                                  ? t('dashboard.report.hide')
+                                  : t('dashboard.report.create')}
                               </button>
                               <button
                                 type="button"
@@ -1085,6 +1106,104 @@ export function Dashboard({
                               </button>
                             </div>
                           </div>
+
+                          {reportBundle &&
+                            reportResultId === result.id &&
+                            reportResultCompletedAt === result.completedAt && (
+                              <section
+                                id={buildReportAnchorId(result.id, result.completedAt)}
+                                className="mt-4 bg-gray-50 dark:bg-gray-900/40 rounded-lg border border-gray-200 dark:border-gray-700 p-4 md:p-5 space-y-4"
+                              >
+                                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+                                  <div>
+                                    <h4 className="text-base font-semibold text-gray-900 dark:text-white">
+                                      {t('dashboard.report.title', { title: reportTitle })}
+                                    </h4>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                                      {t('dashboard.report.description')}
+                                    </p>
+                                  </div>
+
+                                  <div className="flex flex-wrap gap-2">
+                                    <div className="relative" ref={reportDownloadMenuRef}>
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          setReportDownloadMenuOpen((prev) => !prev);
+                                        }}
+                                        disabled={Boolean(reportActionInProgress)}
+                                        className="w-full sm:w-auto px-3 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                                      >
+                                        {t('dashboard.report.download')}
+                                      </button>
+
+                                      {reportDownloadMenuOpen && (
+                                        <div className="absolute right-0 z-20 mt-2 w-60 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl p-1">
+                                          <button
+                                            type="button"
+                                            onClick={() => {
+                                              setReportDownloadMenuOpen(false);
+                                              void handleDownloadPdf();
+                                            }}
+                                            className="w-full text-left px-3 py-2 rounded text-sm text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                          >
+                                            {t('dashboard.report.savePdf')}
+                                          </button>
+                                          <button
+                                            type="button"
+                                            onClick={() => {
+                                              handleDownloadText();
+                                              setReportDownloadMenuOpen(false);
+                                            }}
+                                            className="w-full text-left px-3 py-2 rounded text-sm text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                          >
+                                            {t('dashboard.report.downloadMarkdown')}
+                                          </button>
+                                          <button
+                                            type="button"
+                                            onClick={() => {
+                                              handleDownloadPlainText();
+                                              setReportDownloadMenuOpen(false);
+                                            }}
+                                            className="w-full text-left px-3 py-2 rounded text-sm text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                          >
+                                            {t('dashboard.report.downloadPlainText')}
+                                          </button>
+                                          <button
+                                            type="button"
+                                            onClick={() => {
+                                              handleDownloadHtml();
+                                              setReportDownloadMenuOpen(false);
+                                            }}
+                                            className="w-full text-left px-3 py-2 rounded text-sm text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                          >
+                                            {t('dashboard.report.downloadHtml')}
+                                          </button>
+                                        </div>
+                                      )}
+                                    </div>
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        void handlePrintReport();
+                                      }}
+                                      disabled={Boolean(reportActionInProgress)}
+                                      className="w-full sm:w-auto px-3 py-2 rounded-lg bg-gray-700 hover:bg-gray-800 text-white text-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                                    >
+                                      {reportActionInProgress === 'print'
+                                        ? t('common.loading')
+                                        : t('dashboard.report.print')}
+                                    </button>
+                                  </div>
+                                </div>
+
+                                <iframe
+                                  title={t('dashboard.report.preview')}
+                                  srcDoc={reportBundle.html}
+                                  className="w-full h-[60vh] rounded-lg border border-gray-200 dark:border-gray-700 bg-white"
+                                />
+                              </section>
+                            )}
                         </div>
                       ))}
                     </div>
@@ -1219,9 +1338,7 @@ export function Dashboard({
                                         )}
                                       </span>
                                     </div>
-                                    <p className="text-sm text-gray-700 dark:text-gray-200 whitespace-pre-wrap">
-                                      {entry.comment}
-                                    </p>
+                                    <MarkdownContent markdown={entry.comment} />
                                   </div>
                                 );
                               })}
@@ -1231,14 +1348,14 @@ export function Dashboard({
                               <p className="text-xs font-medium text-gray-600 dark:text-gray-400">
                                 {t('dashboard.feedback.comment.label')}
                               </p>
-                              <textarea
+                              <MarkdownEditor
                                 value={commentValue}
-                                onChange={(event) =>
-                                  updateCommentDraft(result.id, question.questionId, event.target.value)
+                                onChange={(value) =>
+                                  updateCommentDraft(result.id, question.questionId, value)
                                 }
                                 placeholder={t('dashboard.feedback.comment.placeholder')}
-                                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm resize-none"
-                                rows={3}
+                                allowImages
+                                minHeightClassName="min-h-[96px]"
                               />
                               <button
                                 type="button"
@@ -1251,19 +1368,19 @@ export function Dashboard({
                             </div>
 
                             <div className="space-y-2">
-                              <textarea
+                              <MarkdownEditor
                                 value={replyValue}
-                                onChange={(event) =>
-                                  updateFeedbackDraft(result.id, question.questionId, event.target.value)
+                                onChange={(value) =>
+                                  updateFeedbackDraft(result.id, question.questionId, value)
                                 }
                                 placeholder={t('dashboard.feedback.reply.placeholder')}
-                                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm resize-none"
-                                rows={3}
+                                allowImages
+                                minHeightClassName="min-h-[96px]"
                               />
                               <button
                                 type="button"
                                 onClick={() => void handleSaveStudentReply(result, question.questionId)}
-                                disabled={!replyValue.trim() || isSaving}
+                                disabled={!hasMarkdownContent(replyValue) || isSaving}
                                 className="px-3 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm disabled:opacity-60 disabled:cursor-not-allowed"
                               >
                                 {t('dashboard.feedback.reply.save')}

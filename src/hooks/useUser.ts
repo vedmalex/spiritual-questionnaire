@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { UserData, UserRole } from '../types/questionnaire';
+import type { ArchivedUserRecord, UserData, UserRole } from '../types/questionnaire';
 import { dataAdapter } from '../services/localStorageAdapter';
 import {
   createUserBackupPayload,
@@ -7,11 +7,33 @@ import {
   parseUserBackupPayload,
 } from '../utils/userBackup';
 import { normalizeRoleForProfile } from '../config/appProfile';
+import { STORAGE_KEYS } from '../utils/constants';
 
 const USER_UPDATED_EVENT = 'spiritual-user-updated';
 
+function buildArchiveRecordId(user: UserData): string {
+  const safeName = user.name
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9_-]/g, '');
+
+  return `archive_${safeName || 'user'}_${user.createdAt}`;
+}
+
+interface RestoredWorkspaceSnapshot {
+  user: UserData;
+  session: ReturnType<typeof createUserBackupPayload>['session'];
+  pausedSessions: ReturnType<typeof createUserBackupPayload>['pausedSessions'];
+  studentResults: ReturnType<typeof createUserBackupPayload>['results'];
+  curatorResults: ReturnType<typeof createUserBackupPayload>['curatorResults'];
+  customQuestionnaires: ReturnType<typeof createUserBackupPayload>['customQuestionnaires'];
+  appLanguage: string;
+}
+
 export function useUser() {
   const [user, setUser] = useState<UserData | null>(null);
+  const [archivedUsers, setArchivedUsers] = useState<ArchivedUserRecord[]>([]);
   const [loading, setLoading] = useState(true);
 
   const normalizeUserForProfile = useCallback((value: UserData): UserData => {
@@ -27,7 +49,12 @@ export function useUser() {
 
   const loadUser = useCallback(async () => {
     try {
-      const userData = await dataAdapter.getUser();
+      const [userData, archive] = await Promise.all([
+        dataAdapter.getUser(),
+        dataAdapter.getArchivedUsers(),
+      ]);
+      setArchivedUsers(archive);
+
       if (!userData) {
         setUser(null);
         return;
@@ -49,6 +76,38 @@ export function useUser() {
     window.dispatchEvent(new Event(USER_UPDATED_EVENT));
   }, []);
 
+  const restoreWorkspace = useCallback(
+    async (snapshot: RestoredWorkspaceSnapshot): Promise<UserData> => {
+      const normalizedUser = normalizeUserForProfile(snapshot.user);
+
+      const existingCustom = await dataAdapter.getCustomQuestionnaires();
+      await Promise.all(
+        existingCustom.map((questionnaire) =>
+          dataAdapter.deleteCustomQuestionnaire(questionnaire.metadata.quality)
+        )
+      );
+
+      await Promise.all([
+        dataAdapter.saveUser(normalizedUser),
+        snapshot.session ? dataAdapter.saveSession(snapshot.session) : dataAdapter.clearSession(),
+        dataAdapter.savePausedSessions(snapshot.pausedSessions || []),
+        dataAdapter.saveResults(snapshot.studentResults || [], 'student'),
+        dataAdapter.saveResults(snapshot.curatorResults || [], 'curator'),
+      ]);
+
+      for (const questionnaire of snapshot.customQuestionnaires || []) {
+        await dataAdapter.saveCustomQuestionnaire(questionnaire);
+      }
+
+      localStorage.setItem('app-language', snapshot.appLanguage || normalizedUser.language || 'ru');
+
+      setUser(normalizedUser);
+      notifyUserUpdated();
+      return normalizedUser;
+    },
+    [normalizeUserForProfile, notifyUserUpdated]
+  );
+
   useEffect(() => {
     loadUser();
 
@@ -57,7 +116,10 @@ export function useUser() {
     };
 
     const onStorage = (event: StorageEvent) => {
-      if (event.key === 'spiritual_questionnaire_user') {
+      if (
+        event.key === STORAGE_KEYS.USER ||
+        event.key === STORAGE_KEYS.USER_ARCHIVE
+      ) {
         loadUser().catch(console.error);
       }
     };
@@ -125,6 +187,19 @@ export function useUser() {
       appLanguage: localStorage.getItem('app-language') || currentUser.language || 'ru',
     });
 
+    const archiveRecord: ArchivedUserRecord = {
+      id: buildArchiveRecordId(currentUser),
+      savedAt: Date.now(),
+      user: currentUser,
+      appLanguage: payload.appLanguage,
+      session,
+      pausedSessions,
+      studentResults,
+      curatorResults,
+      customQuestionnaires,
+    };
+    await dataAdapter.saveArchivedUser(archiveRecord);
+
     downloadUserBackupFile(payload);
 
     await Promise.all([
@@ -143,43 +218,48 @@ export function useUser() {
     async (file: File): Promise<UserData> => {
       const content = await file.text();
       const payload = parseUserBackupPayload(content);
-      const normalizedUser = normalizeUserForProfile(payload.user);
+      return restoreWorkspace({
+        user: payload.user,
+        session: payload.session,
+        pausedSessions: payload.pausedSessions,
+        studentResults: payload.results,
+        curatorResults: payload.curatorResults,
+        customQuestionnaires: payload.customQuestionnaires,
+        appLanguage: payload.appLanguage,
+      });
+    },
+    [restoreWorkspace]
+  );
 
-      const existingCustom = await dataAdapter.getCustomQuestionnaires();
-      await Promise.all(
-        existingCustom.map((questionnaire) =>
-          dataAdapter.deleteCustomQuestionnaire(questionnaire.metadata.quality)
-        )
-      );
-
-      await Promise.all([
-        dataAdapter.saveUser(normalizedUser),
-        payload.session ? dataAdapter.saveSession(payload.session) : dataAdapter.clearSession(),
-        dataAdapter.savePausedSessions(payload.pausedSessions || []),
-        dataAdapter.saveResults(payload.results, 'student'),
-        dataAdapter.saveResults(payload.curatorResults, 'curator'),
-      ]);
-
-      for (const questionnaire of payload.customQuestionnaires) {
-        await dataAdapter.saveCustomQuestionnaire(questionnaire);
+  const restoreFromArchive = useCallback(
+    async (archiveId: string): Promise<UserData> => {
+      const record = await dataAdapter.getArchivedUserById(archiveId);
+      if (!record) {
+        throw new Error('Не удалось найти пользователя в локальном архиве.');
       }
 
-      localStorage.setItem('app-language', payload.appLanguage || payload.user.language || 'ru');
-
-      setUser(normalizedUser);
-      notifyUserUpdated();
-      return normalizedUser;
+      return restoreWorkspace({
+        user: record.user,
+        session: record.session,
+        pausedSessions: record.pausedSessions,
+        studentResults: record.studentResults,
+        curatorResults: record.curatorResults,
+        customQuestionnaires: record.customQuestionnaires,
+        appLanguage: record.appLanguage,
+      });
     },
-    [normalizeUserForProfile, notifyUserUpdated]
+    [restoreWorkspace]
   );
 
   return {
     user,
+    archivedUsers,
     loading,
     saveUser,
     updateUser,
     switchRole,
     exportAndLogout,
     restoreFromBackup,
+    restoreFromArchive,
   };
 }

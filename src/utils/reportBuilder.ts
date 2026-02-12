@@ -1,6 +1,13 @@
 import type { LanguageCode } from '../types/i18n';
 import type { Questionnaire, QuizResult } from '../types/questionnaire';
 import { getGradeDescription } from './i18n';
+import {
+  extractMarkdownImageSources,
+  hasMarkdownTextContent,
+  markdownToPlainText,
+  mergeLegacyCommentWithPhotos,
+  renderMarkdownToSafeHtml,
+} from './markdown';
 
 interface ReportLabels {
   generatedAt: string;
@@ -57,11 +64,13 @@ const LABELS: Record<LanguageCode, ReportLabels> = {
 interface ReportQuestionBlock {
   questionText: string;
   score: number;
-  comment: string | null;
+  commentMarkdown: string | null;
+  commentText: string | null;
   photos: string[];
   feedback: Array<{
     curatorName: string;
-    comment: string;
+    commentMarkdown: string;
+    commentText: string;
   }>;
 }
 
@@ -164,25 +173,39 @@ function toQuestionBlocks(
       return [];
     }
 
-    const comment = typeof answer.comment === 'string' && answer.comment.trim()
-      ? answer.comment.trim()
+    const commentMarkdown = mergeLegacyCommentWithPhotos(answer.comment || '', answer.photos || []);
+    const commentText = hasMarkdownTextContent(commentMarkdown)
+      ? markdownToPlainText(commentMarkdown)
       : null;
 
-    const photos = (answer.photos || []).map(sanitizeImageUrl).filter(Boolean);
+    const photos = extractMarkdownImageSources(commentMarkdown)
+      .map(sanitizeImageUrl)
+      .filter(Boolean);
 
     const feedback = (answer.curatorFeedback || [])
       .map((entry) => {
-        const feedbackComment = String(entry.comment || '').trim();
-        if (!feedbackComment) {
+        const feedbackMarkdown = String(entry.comment || '').trim();
+        if (!feedbackMarkdown) {
+          return null;
+        }
+
+        const feedbackText = markdownToPlainText(feedbackMarkdown);
+        if (!feedbackText) {
           return null;
         }
 
         return {
           curatorName: String(entry.curatorName || labels.curatorFeedbackBy),
-          comment: feedbackComment,
+          commentMarkdown: feedbackMarkdown,
+          commentText: feedbackText,
         };
       })
-      .filter((entry): entry is { curatorName: string; comment: string } => Boolean(entry));
+      .filter(
+        (
+          entry
+        ): entry is { curatorName: string; commentMarkdown: string; commentText: string } =>
+          Boolean(entry)
+      );
 
     const questionText = questionLookup[questionId] || labels.missingQuestionPrefix;
 
@@ -190,7 +213,8 @@ function toQuestionBlocks(
       {
         questionText,
         score: answer.score,
-        comment,
+        commentMarkdown: commentMarkdown || null,
+        commentText,
         photos,
         feedback,
       },
@@ -229,9 +253,9 @@ function buildFormattedText(options: {
     lines.push(block.questionText);
     lines.push(`${labels.score}: ${block.score}/10 - ${getGradeDescription(block.score)}`);
 
-    if (block.comment) {
+    if (block.commentText) {
       lines.push(`${labels.comment}:`);
-      lines.push(block.comment);
+      lines.push(block.commentText);
     }
 
     if (block.photos.length > 0) {
@@ -245,7 +269,7 @@ function buildFormattedText(options: {
       lines.push(`${labels.curatorFeedback}:`);
       block.feedback.forEach((entry, feedbackIndex) => {
         lines.push(
-          `- ${feedbackIndex + 1}. ${labels.curatorFeedbackBy}: ${entry.curatorName}. ${entry.comment}`
+          `- ${feedbackIndex + 1}. ${labels.curatorFeedbackBy}: ${entry.curatorName}. ${entry.commentText}`
         );
       });
     }
@@ -282,8 +306,8 @@ function buildPlainText(options: {
     lines.push(`${labels.question} ${index + 1}: ${block.questionText}`);
     lines.push(`${labels.score}: ${block.score}/10 - ${getGradeDescription(block.score)}`);
 
-    if (block.comment) {
-      lines.push(`${labels.comment}: ${block.comment}`);
+    if (block.commentText) {
+      lines.push(`${labels.comment}: ${block.commentText}`);
     }
 
     if (block.photos.length > 0) {
@@ -296,7 +320,9 @@ function buildPlainText(options: {
     if (block.feedback.length > 0) {
       lines.push(`${labels.curatorFeedback}:`);
       block.feedback.forEach((entry, feedbackIndex) => {
-        lines.push(`${feedbackIndex + 1}. ${labels.curatorFeedbackBy}: ${entry.curatorName}. ${entry.comment}`);
+        lines.push(
+          `${feedbackIndex + 1}. ${labels.curatorFeedbackBy}: ${entry.curatorName}. ${entry.commentText}`
+        );
       });
     }
   });
@@ -324,11 +350,12 @@ function buildHtml(options: {
 
   const questionsHtml = questionBlocks
     .map((block, index) => {
-      const commentHtml = block.comment
+      const commentMarkdown = block.commentMarkdown || '';
+      const safeCommentHtml = commentMarkdown
         ? `
             <div>
               <h5>${escapeHtml(labels.comment)}</h5>
-              <p>${escapeHtml(block.comment).replace(/\n/g, '<br />')}</p>
+              ${renderMarkdownToSafeHtml(commentMarkdown)}
             </div>
           `
         : '';
@@ -365,7 +392,7 @@ function buildHtml(options: {
                           <strong>${escapeHtml(labels.curatorFeedbackBy)}:</strong> ${escapeHtml(
                             entry.curatorName
                           )}<br />
-                          ${escapeHtml(entry.comment).replace(/\n/g, '<br />')}
+                          ${renderMarkdownToSafeHtml(entry.commentMarkdown)}
                         </li>
                       `
                     )
@@ -382,7 +409,7 @@ function buildHtml(options: {
           <p><strong>${escapeHtml(labels.score)}:</strong> ${block.score}/10 - ${escapeHtml(
         getGradeDescription(block.score)
       )}</p>
-          ${commentHtml}
+          ${safeCommentHtml}
           ${photosHtml}
           ${feedbackHtml}
         </article>
@@ -409,6 +436,10 @@ function buildHtml(options: {
         max-width: 980px;
         margin: 0 auto;
         padding: 20px;
+        color: #111827;
+      }
+      .report-shell :where(h1, h2, h3, h4, h5, h6, p, li, strong, em, span, div) {
+        color: inherit;
       }
       .report-header,
       .question-block {
@@ -572,31 +603,210 @@ export function downloadPlainTextReport(text: string, filename: string): void {
   downloadTextBlob(text, filename);
 }
 
-export function printReportHtml(html: string): void {
-  const printWindow = window.open('', '_blank', 'noopener,noreferrer');
-  if (!printWindow) {
-    throw new Error('Unable to open print window.');
+export function downloadHtmlReport(html: string, filename: string): void {
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = filename;
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+  URL.revokeObjectURL(url);
+}
+
+function createOffscreenReportElement(html: string): {
+  reportNode: HTMLElement;
+  cleanup: () => void;
+} {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    throw new Error('Document is not available.');
   }
 
-  printWindow.document.open();
-  printWindow.document.write(html);
-  printWindow.document.close();
+  const parser = new DOMParser();
+  const parsed = parser.parseFromString(html, 'text/html');
 
-  const triggerPrint = () => {
-    printWindow.focus();
-    printWindow.print();
-  };
+  const host = document.createElement('div');
+  host.setAttribute('aria-hidden', 'true');
+  host.style.position = 'fixed';
+  host.style.left = '-99999px';
+  host.style.top = '0';
+  host.style.width = '1200px';
+  host.style.opacity = '0';
+  host.style.pointerEvents = 'none';
+  host.style.zIndex = '-1';
+  // PDF rendering should stay readable regardless of app light/dark theme.
+  host.style.color = '#111827';
+  host.style.background = '#ffffff';
+  host.style.colorScheme = 'light';
 
-  if (printWindow.document.readyState === 'complete') {
-    setTimeout(triggerPrint, 50);
-    return;
-  }
+  const style = document.createElement('style');
+  style.textContent = Array.from(parsed.head.querySelectorAll('style'))
+    .map((entry) => entry.textContent || '')
+    .join('\n');
 
-  printWindow.addEventListener(
-    'load',
-    () => {
-      setTimeout(triggerPrint, 50);
+  const bodyWrapper = document.createElement('div');
+  bodyWrapper.innerHTML = parsed.body.innerHTML;
+  bodyWrapper.style.color = '#111827';
+  bodyWrapper.style.background = '#ffffff';
+  bodyWrapper.style.colorScheme = 'light';
+
+  host.appendChild(style);
+  host.appendChild(bodyWrapper);
+  document.body.appendChild(host);
+
+  const reportNode =
+    (bodyWrapper.querySelector('.report-shell') as HTMLElement | null) ||
+    (bodyWrapper.firstElementChild as HTMLElement | null) ||
+    bodyWrapper;
+
+  return {
+    reportNode,
+    cleanup: () => {
+      host.remove();
     },
-    { once: true }
+  };
+}
+
+async function waitForImagesToLoad(root: HTMLElement, timeoutMs = 7000): Promise<void> {
+  const images = Array.from(root.querySelectorAll('img'));
+  const pendingImages = images.filter((image) => !image.complete);
+  if (pendingImages.length === 0) return;
+
+  const waitForAll = Promise.all(
+    pendingImages.map(
+      (image) =>
+        new Promise<void>((resolve) => {
+          image.addEventListener('load', () => resolve(), { once: true });
+          image.addEventListener('error', () => resolve(), { once: true });
+        })
+    )
   );
+
+  await Promise.race([
+    waitForAll,
+    new Promise<void>((resolve) => {
+      window.setTimeout(resolve, timeoutMs);
+    }),
+  ]);
+}
+
+export async function downloadPdfReport(html: string, filename: string): Promise<void> {
+  const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
+    import('html2canvas'),
+    import('jspdf'),
+  ]);
+  const { reportNode, cleanup } = createOffscreenReportElement(html);
+
+  try {
+    await waitForImagesToLoad(reportNode);
+
+    const scale = Math.max(2, Math.ceil(window.devicePixelRatio || 1));
+    const canvas = await html2canvas(reportNode, {
+      scale,
+      backgroundColor: '#ffffff',
+      useCORS: true,
+      imageTimeout: 7000,
+      logging: false,
+    });
+
+    const imageData = canvas.toDataURL('image/jpeg', 0.95);
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4',
+      compress: true,
+    });
+
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const imageWidth = pageWidth;
+    const imageHeight = (canvas.height * imageWidth) / canvas.width;
+
+    let heightLeft = imageHeight;
+    let yPosition = 0;
+
+    pdf.addImage(imageData, 'JPEG', 0, yPosition, imageWidth, imageHeight, undefined, 'FAST');
+    heightLeft -= pageHeight;
+
+    while (heightLeft > 0) {
+      yPosition = heightLeft - imageHeight;
+      pdf.addPage();
+      pdf.addImage(imageData, 'JPEG', 0, yPosition, imageWidth, imageHeight, undefined, 'FAST');
+      heightLeft -= pageHeight;
+    }
+
+    pdf.save(filename);
+  } finally {
+    cleanup();
+  }
+}
+
+export function printReportHtml(html: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      reject(new Error('Document is not available.'));
+      return;
+    }
+
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('aria-hidden', 'true');
+    iframe.style.position = 'fixed';
+    iframe.style.right = '0';
+    iframe.style.bottom = '0';
+    iframe.style.width = '0';
+    iframe.style.height = '0';
+    iframe.style.border = '0';
+    iframe.style.opacity = '0';
+    iframe.style.pointerEvents = 'none';
+
+    let isSettled = false;
+    const finish = (error?: Error) => {
+      if (isSettled) return;
+      isSettled = true;
+      iframe.remove();
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
+    };
+
+    iframe.onload = () => {
+      const printWindow = iframe.contentWindow;
+      if (!printWindow) {
+        finish(new Error('Unable to access print frame.'));
+        return;
+      }
+
+      const fallbackTimer = window.setTimeout(() => {
+        finish();
+      }, 2000);
+
+      printWindow.onafterprint = () => {
+        window.clearTimeout(fallbackTimer);
+        finish();
+      };
+
+      try {
+        printWindow.focus();
+        printWindow.print();
+      } catch (error) {
+        window.clearTimeout(fallbackTimer);
+        finish(error instanceof Error ? error : new Error('Failed to print report.'));
+      }
+    };
+
+    document.body.appendChild(iframe);
+
+    const frameDocument = iframe.contentDocument;
+    if (!frameDocument) {
+      finish(new Error('Unable to create print frame document.'));
+      return;
+    }
+
+    frameDocument.open();
+    frameDocument.write(html);
+    frameDocument.close();
+  });
 }

@@ -118,6 +118,18 @@ export interface UserData {
   language: string;
 }
 
+export interface ArchivedUserRecord {
+  id: string;
+  savedAt: number;
+  user: UserData;
+  appLanguage: string;
+  session: QuizSession | null;
+  pausedSessions: QuizSession[];
+  studentResults: QuizResult[];
+  curatorResults: QuizResult[];
+  customQuestionnaires: Questionnaire[];
+}
+
 export interface AppState {
   version: number;
   buildId?: string;

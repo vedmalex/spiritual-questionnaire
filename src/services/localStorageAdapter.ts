@@ -1,4 +1,10 @@
-import type { Questionnaire, QuizSession, QuizResult, UserData } from '../types/questionnaire';
+import type {
+  ArchivedUserRecord,
+  Questionnaire,
+  QuizSession,
+  QuizResult,
+  UserData,
+} from '../types/questionnaire';
 import type { DataAdapter, ResultsScope } from './dataAdapter';
 import { STORAGE_KEYS } from '../utils/constants';
 import { normalizeQuestionnaire } from '../utils/questionnaireSchema';
@@ -32,6 +38,28 @@ export class LocalStorageAdapter implements DataAdapter {
 
   private writeAppState(nextState: Record<string, unknown>): void {
     localStorage.setItem(STORAGE_KEYS.APP_STATE, JSON.stringify(nextState));
+  }
+
+  private readArchivedUsers(): ArchivedUserRecord[] {
+    const data = localStorage.getItem(STORAGE_KEYS.USER_ARCHIVE);
+    if (!data) {
+      return [];
+    }
+
+    try {
+      const parsed = JSON.parse(data);
+      if (!Array.isArray(parsed)) {
+        return [];
+      }
+      return parsed as ArchivedUserRecord[];
+    } catch (error) {
+      console.warn('Failed to parse user archive payload:', error);
+      return [];
+    }
+  }
+
+  private writeArchivedUsers(records: ArchivedUserRecord[]): void {
+    localStorage.setItem(STORAGE_KEYS.USER_ARCHIVE, JSON.stringify(records));
   }
 
   private async loadStaticQuestionnaires(): Promise<Questionnaire[]> {
@@ -102,6 +130,27 @@ export class LocalStorageAdapter implements DataAdapter {
 
   async clearUser(): Promise<void> {
     localStorage.removeItem(STORAGE_KEYS.USER);
+  }
+
+  async getArchivedUsers(): Promise<ArchivedUserRecord[]> {
+    return this.readArchivedUsers().sort((a, b) => b.savedAt - a.savedAt);
+  }
+
+  async saveArchivedUser(record: ArchivedUserRecord): Promise<void> {
+    const current = this.readArchivedUsers();
+    const filtered = current.filter((item) => item.id !== record.id);
+    filtered.push(record);
+    this.writeArchivedUsers(filtered.sort((a, b) => b.savedAt - a.savedAt));
+  }
+
+  async getArchivedUserById(id: string): Promise<ArchivedUserRecord | null> {
+    const current = this.readArchivedUsers();
+    return current.find((item) => item.id === id) || null;
+  }
+
+  async deleteArchivedUser(id: string): Promise<void> {
+    const current = this.readArchivedUsers();
+    this.writeArchivedUsers(current.filter((item) => item.id !== id));
   }
 
   async getCurrentSession(): Promise<QuizSession | null> {

@@ -19,7 +19,8 @@
     "deploy:surge": "npm run deploy:student:surge && npm run deploy:curator:surge && npm run deploy:full:surge",
     "preview": "vite preview",
     "test": "vitest run",
-    "audit:mobile": "node scripts/mobile-audit-playwright.mjs"
+    "audit:mobile": "node scripts/mobile-audit-playwright.mjs",
+    "test:ui:archive": "node scripts/playwright-user-archive-smoke.mjs"
   },
   "dependencies": {
     "@tanstack/react-devtools": "^0.7.0",
@@ -28,8 +29,16 @@
     "@tanstack/react-router-ssr-query": "^1.131.7",
     "@tanstack/react-start": "^1.132.0",
     "@tanstack/router-plugin": "^1.132.0",
+    "@tiptap/extension-image": "^3.19.0",
+    "@tiptap/extension-placeholder": "^3.19.0",
+    "@tiptap/markdown": "^3.19.0",
+    "@tiptap/react": "^3.19.0",
+    "@tiptap/starter-kit": "^3.19.0",
     "date-fns": "^4.1.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.1.0",
     "lucide-react": "^0.561.0",
+    "markdown-it": "^14.1.1",
     "react": "^19.2.0",
     "react-day-picker": "^9.13.2",
     "react-dom": "^19.2.0",

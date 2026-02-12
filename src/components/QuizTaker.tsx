@@ -1,7 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Questionnaire, AnswerDetails } from '../types/questionnaire';
 import { GRADING_DESCRIPTIONS } from '../utils/constants';
 import { t, getGradeDescription } from '../utils/i18n';
+import {
+  extractMarkdownImageSources,
+  hasMarkdownTextContent,
+  mergeLegacyCommentWithPhotos,
+} from '../utils/markdown';
+import { MarkdownEditor } from './ui/MarkdownEditor';
 
 interface QuizTakerProps {
   questionnaire: Questionnaire;
@@ -27,7 +33,6 @@ export function QuizTaker({
   const [showHelp, setShowHelp] = useState(false);
   const [hoveredScore, setHoveredScore] = useState<number | null>(null);
   const [showComment, setShowComment] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const currentQuestion = questionnaire.questions[currentQuestionIndex];
   const currentLanguage = document.documentElement.lang || 'ru';
@@ -35,11 +40,14 @@ export function QuizTaker({
   const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
   const currentAnswer = answers[currentQuestion.id];
   const currentScore = currentAnswer?.score;
-  const currentComment = currentAnswer?.comment || '';
-  const currentPhotos = currentAnswer?.photos || [];
+  const currentComment = mergeLegacyCommentWithPhotos(
+    currentAnswer?.comment || '',
+    currentAnswer?.photos || []
+  );
+  const currentPhotos = extractMarkdownImageSources(currentComment);
   const currentFeedback = currentAnswer?.curatorFeedback || [];
   const commentRequired = Boolean(currentQuestion.requires_comment);
-  const hasRequiredComment = !commentRequired || currentComment.trim().length > 0;
+  const hasRequiredComment = !commentRequired || hasMarkdownTextContent(currentComment);
   const canProceed = currentScore !== undefined && hasRequiredComment;
 
   useEffect(() => {
@@ -56,40 +64,11 @@ export function QuizTaker({
   };
 
   const handleCommentChange = (comment: string) => {
+    const nextPhotos = extractMarkdownImageSources(comment);
     onAnswer(currentQuestion.id, {
       score: currentScore || 0,
       comment,
-      photos: currentPhotos,
-      curatorFeedback: currentFeedback,
-    });
-  };
-
-  const handlePhotoAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-
-    Array.from(files).forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64 = reader.result as string;
-        const newPhotos = [...currentPhotos, base64];
-        onAnswer(currentQuestion.id, {
-          score: currentScore || 0,
-          comment: currentComment,
-          photos: newPhotos,
-          curatorFeedback: currentFeedback,
-        });
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const handlePhotoRemove = (index: number) => {
-    const newPhotos = currentPhotos.filter((_, i) => i !== index);
-    onAnswer(currentQuestion.id, {
-      score: currentScore || 0,
-      comment: currentComment,
-      photos: newPhotos,
+      photos: nextPhotos,
       curatorFeedback: currentFeedback,
     });
   };
@@ -240,12 +219,11 @@ export function QuizTaker({
           )}
           
           {(commentRequired || showComment || currentComment) && (
-            <textarea
+            <MarkdownEditor
               value={currentComment}
-              onChange={(e) => handleCommentChange(e.target.value)}
+              onChange={handleCommentChange}
               placeholder={t('quiz.comment.placeholder')}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
-              rows={4}
+              allowImages
             />
           )}
 
@@ -256,55 +234,6 @@ export function QuizTaker({
           )}
         </div>
 
-        {/* Photo Section */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              📷 {t('quiz.photo.add')} ({currentPhotos.length})
-            </span>
-            
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="text-sm px-3 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
-            >
-              +
-            </button>
-          </div>
-          
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handlePhotoAdd}
-            className="hidden"
-          />
-          
-          {currentPhotos.length > 0 && (
-            <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-              {currentPhotos.map((photo, idx) => (
-                <div key={idx} className="relative group">
-                  <img
-                    src={photo}
-                    alt={`Photo ${idx + 1}`}
-                    className="w-full h-24 object-cover rounded-lg"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handlePhotoRemove(idx)}
-                    className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    title={t('quiz.photo.remove')}
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
       </div>
 
       {/* Navigation */}

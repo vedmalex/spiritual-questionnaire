@@ -1,4 +1,10 @@
-import type { Questionnaire, QuizSession, QuizResult, UserData } from '../types/questionnaire';
+import type {
+  ArchivedUserRecord,
+  Questionnaire,
+  QuizSession,
+  QuizResult,
+  UserData,
+} from '../types/questionnaire';
 
 export type ResultsScope = 'student' | 'curator';
 
@@ -7,6 +13,10 @@ export interface DataAdapter {
   getUser(): Promise<UserData | null>;
   saveUser(user: UserData): Promise<void>;
   clearUser(): Promise<void>;
+  getArchivedUsers(): Promise<ArchivedUserRecord[]>;
+  saveArchivedUser(record: ArchivedUserRecord): Promise<void>;
+  getArchivedUserById(id: string): Promise<ArchivedUserRecord | null>;
+  deleteArchivedUser(id: string): Promise<void>;
   
   // Session operations
   getCurrentSession(): Promise<QuizSession | null>;

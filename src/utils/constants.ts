@@ -12,6 +12,7 @@ export const STORAGE_KEYS = {
   RESULTS: 'spiritual_questionnaire_results', // legacy key (pre-v4)
   RESULTS_STUDENT: 'spiritual_questionnaire_results_student',
   RESULTS_CURATOR: 'spiritual_questionnaire_results_curator',
+  USER_ARCHIVE: 'spiritual_questionnaire_user_archive',
   CUSTOM_QUESTIONNAIRES: 'spiritual_questionnaire_custom_questionnaires',
   STATIC_QUESTIONNAIRE_INDEX_SNAPSHOT: 'spiritual_questionnaire_static_questionnaire_index_snapshot',
   QUESTIONNAIRE_NOTIFICATION_PERMISSION_PROMPTED:

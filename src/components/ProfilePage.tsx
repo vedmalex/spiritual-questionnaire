@@ -9,16 +9,21 @@ import type { LanguageCode } from '../types/i18n';
 import type { UserRole } from '../types/questionnaire';
 import { ENABLED_ROLES, canSwitchRoles, isRoleEnabled } from '../config/appProfile';
 import { LanguageSelect, RoleSelect } from './ui/ProfileSelectors';
+import { ConfirmModal } from './ui/ConfirmModal';
 
 export function ProfilePage() {
   const navigate = useNavigate();
-  const { user, loading, updateUser, switchRole } = useUser();
+  const { user, loading, updateUser, switchRole, exportAndLogout } = useUser();
   const { refresh } = useQuestionnaires();
   const { theme, setTheme } = useTheme();
   const [name, setName] = useState('');
   const [language, setLanguageState] = useState<LanguageCode>('ru');
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
+  const [logoutLoading, setLogoutLoading] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [showLogoutWarning, setShowLogoutWarning] = useState(false);
+  const [logoutError, setLogoutError] = useState('');
 
   useEffect(() => {
     initializeLanguage();
@@ -77,6 +82,21 @@ export function ProfilePage() {
     void updateUser({ theme: nextTheme });
     setStatus(t('profile.status.theme'));
     setError('');
+  };
+
+  const executeLogout = async () => {
+    setLogoutError('');
+    setLogoutLoading(true);
+    try {
+      await exportAndLogout();
+      window.location.assign('/');
+    } catch (logoutErr) {
+      console.error('Logout export failed:', logoutErr);
+      setLogoutError(t('header.logoutError'));
+      setLogoutLoading(false);
+      setShowLogoutWarning(false);
+      setShowLogoutConfirm(false);
+    }
   };
 
   if (loading || !user) {
@@ -174,6 +194,33 @@ export function ProfilePage() {
         </ul>
       </section>
 
+      <section className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 md:p-6 space-y-3">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+          {t('profile.logout.title')}
+        </h2>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          {t('profile.logout.description')}
+        </p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          {t('profile.logout.howToReturn')}
+        </p>
+        <button
+          type="button"
+          onClick={() => {
+            if (logoutLoading) return;
+            setLogoutError('');
+            setShowLogoutConfirm(true);
+          }}
+          disabled={logoutLoading}
+          className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white text-sm"
+        >
+          {logoutLoading ? t('header.loggingOut') : t('profile.logout.action')}
+        </button>
+        {logoutError && (
+          <p className="text-sm text-red-700 dark:text-red-400">{logoutError}</p>
+        )}
+      </section>
+
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
           {t('profile.questionnaires.title')}
@@ -192,6 +239,33 @@ export function ProfilePage() {
           {error}
         </section>
       )}
+
+      <ConfirmModal
+        open={showLogoutConfirm}
+        title={t('header.logoutConfirmTitle')}
+        description={t('header.logoutConfirm')}
+        confirmLabel={t('header.logoutContinue')}
+        cancelLabel={t('header.logoutStay')}
+        onConfirm={() => {
+          setShowLogoutConfirm(false);
+          setShowLogoutWarning(true);
+        }}
+        onCancel={() => setShowLogoutConfirm(false)}
+      />
+
+      <ConfirmModal
+        open={showLogoutWarning}
+        title={t('header.logoutBackupTitle')}
+        description={t('header.logoutSaveWarning')}
+        confirmLabel={logoutLoading ? t('header.loggingOut') : t('header.logoutBackupAction')}
+        cancelLabel={t('header.logoutStay')}
+        onConfirm={() => {
+          void executeLogout();
+        }}
+        onCancel={() => setShowLogoutWarning(false)}
+        confirmVariant="danger"
+        loading={logoutLoading}
+      />
     </div>
   );
 }

@@ -170,7 +170,14 @@ export const Route = createFileRoute('/')({
 function HomePage() {
   const navigate = useNavigate();
   const search = Route.useSearch();
-  const { user, loading: userLoading, saveUser, restoreFromBackup } = useUser();
+  const {
+    user,
+    archivedUsers,
+    loading: userLoading,
+    saveUser,
+    restoreFromBackup,
+    restoreFromArchive,
+  } = useUser();
   const {
     questionnaires,
     loading: questionnairesLoading,
@@ -474,6 +481,10 @@ function HomePage() {
     await restoreFromBackup(file);
   };
 
+  const handleRestoreFromArchive = async (archiveId: string) => {
+    await restoreFromArchive(archiveId);
+  };
+
   const handleComplete = async () => {
     if (!selectedQuestionnaire) return;
 
@@ -513,7 +524,14 @@ function HomePage() {
   }
 
   if (!user) {
-    return <UserSetup onSubmit={handleUserSetup} onImportBackup={handleRestoreFromBackup} />;
+    return (
+      <UserSetup
+        onSubmit={handleUserSetup}
+        onImportBackup={handleRestoreFromBackup}
+        archivedUsers={archivedUsers}
+        onRestoreArchivedUser={handleRestoreFromArchive}
+      />
+    );
   }
 
   // Curator view
