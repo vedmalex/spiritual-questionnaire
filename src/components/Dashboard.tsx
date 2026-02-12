@@ -785,7 +785,7 @@ export function Dashboard({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 overflow-x-auto">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
           {t('dashboard.results.count', { count: results.length })}
@@ -894,12 +894,12 @@ export function Dashboard({
               {groupedResults.map((group) => (
                 <div
                   key={group.questionnaireId}
-                  className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-6"
+                  className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-4 sm:p-6"
                 >
                   <div className="space-y-4">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white break-words">
                           {group.questionnaireTitle}
                         </h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -916,7 +916,7 @@ export function Dashboard({
                         <p className="text-xl font-bold text-primary-600 dark:text-primary-400">
                           {group.overallScoreTen}/10
                         </p>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">
+                        <p className="text-sm text-gray-700 dark:text-gray-300 break-words">
                           {group.overallScoreLabel} ({group.overallPercentage}%)
                         </p>
                       </div>
@@ -937,7 +937,7 @@ export function Dashboard({
                               : ''
                           }`}
                         >
-                          <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-3">
+                          <div className="flex flex-col gap-3">
                             <div className="flex-1">
                               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                                 <div>
@@ -964,21 +964,66 @@ export function Dashboard({
                                 </div>
                               </div>
 
+                              <div className="mt-3 flex flex-wrap items-center gap-2">
+                                <button
+                                  type="button"
+                                  onClick={() => void handleOpenResultForEdit(result)}
+                                  className="px-3 py-2 rounded-lg bg-primary-100 hover:bg-primary-200 text-primary-800 text-xs font-medium transition-colors whitespace-nowrap dark:bg-primary-900/30 dark:hover:bg-primary-900/50 dark:text-primary-200"
+                                >
+                                  {t('dashboard.group.openQuestionnaire.action')}
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handlePrepareResultReport(result)}
+                                  className={`px-3 py-2 rounded-lg transition-colors text-xs font-medium whitespace-nowrap ${
+                                    reportResultId === result.id &&
+                                    reportResultCompletedAt === result.completedAt
+                                      ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300'
+                                      : 'bg-primary-600 hover:bg-primary-700 text-white'
+                                  }`}
+                                >
+                                  {reportResultId === result.id &&
+                                  reportResultCompletedAt === result.completedAt
+                                    ? t('dashboard.report.hide')
+                                    : t('dashboard.report.create')}
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => onExportResult(result, exportFormat)}
+                                  className="h-9 w-9 inline-flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                                  title={t('dashboard.export')}
+                                >
+                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                  </svg>
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => onDeleteResult(result.id)}
+                                  className="h-9 w-9 inline-flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                                  title={t('dashboard.delete')}
+                                >
+                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                  </svg>
+                                </button>
+                              </div>
+
                               <div className="mt-3 space-y-2">
                                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
                                   {t('quiz.questions')}:
                                 </p>
                                 {(result.absentInCurrentSchemaQuestionIds?.length || 0) > 0 && (
                                   <p className="text-xs text-amber-700 dark:text-amber-400">
-                                    {t('dashboard.group.absentQuestions', {
-                                      questions: result.absentInCurrentSchemaQuestionIds?.join(', ') || '',
-                                    })}
+                                    {t('dashboard.group.absentQuestions')}
                                   </p>
                                 )}
                                 {Object.entries(result.answers).map(([questionId, details], idx) => {
                                   const schemaQuestion = questionLookup.get(result.questionnaireId)?.get(questionId);
                                   const questionIndex = schemaQuestion?.index ?? idx;
                                   const questionTitle = schemaQuestion?.title || questionId;
+                                  const isAbsentQuestion =
+                                    result.absentInCurrentSchemaQuestionIds?.includes(questionId) || false;
                                   const isExpandedQuestion =
                                     expanded?.resultId === result.id && expanded?.questionId === questionId;
                                   const answerMarkdown = mergeLegacyCommentWithPhotos(
@@ -992,7 +1037,11 @@ export function Dashboard({
                                     <div
                                       key={questionId}
                                       id={buildQuestionAnchorId(result.id, result.completedAt, questionId)}
-                                      className={`border border-gray-200 dark:border-gray-700 rounded-lg transition-all ${
+                                      className={`border rounded-lg transition-all ${
+                                        isAbsentQuestion
+                                          ? 'border-amber-400/90 dark:border-amber-500/80'
+                                          : 'border-gray-200 dark:border-gray-700'
+                                      } ${
                                         isQuestionHighlighted(result, questionId)
                                           ? 'ring-2 ring-primary-300/70 bg-primary-50/60 dark:bg-primary-900/25'
                                           : ''
@@ -1001,30 +1050,25 @@ export function Dashboard({
                                       <button
                                         type="button"
                                         onClick={() => toggleQuestionDetails(result.id, questionId)}
-                                        className="w-full px-4 py-2 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                                        className="w-full px-4 py-2 flex items-center justify-between gap-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                                       >
-                                        <div className="flex items-center space-x-3 min-w-0">
-                                          <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                                        <div className="flex min-w-0 flex-1 items-center gap-2">
+                                          <span className="shrink-0 text-sm font-medium text-gray-600 dark:text-gray-400">
                                             #{questionIndex + 1}
                                           </span>
-                                          <span className="text-sm text-gray-800 dark:text-gray-100 truncate max-w-[26rem]">
+                                          <span className="min-w-0 flex-1 block truncate text-sm text-gray-800 dark:text-gray-100 max-w-[clamp(9rem,44vw,23rem)] sm:max-w-[clamp(12rem,50vw,30rem)] md:max-w-[clamp(16rem,56vw,42rem)]">
                                             {questionTitle}
                                           </span>
-                                          <span className="font-semibold text-gray-900 dark:text-white">
+                                          <span className="shrink-0 font-semibold text-gray-900 dark:text-white">
                                             {details.score}/10
                                           </span>
-                                          {result.absentInCurrentSchemaQuestionIds?.includes(questionId) && (
-                                            <span className="text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">
-                                              {t('dashboard.group.absentBadge')}
-                                            </span>
-                                          )}
-                                          {hasAnswerComment && <span className="text-xs text-gray-500">📝</span>}
+                                          {hasAnswerComment && <span className="shrink-0 text-xs text-gray-500">📝</span>}
                                           {imageCount > 0 && (
-                                            <span className="text-xs text-gray-500">📷 {imageCount}</span>
+                                            <span className="shrink-0 text-xs text-gray-500">📷 {imageCount}</span>
                                           )}
                                         </div>
                                         <svg
-                                          className={`w-5 h-5 text-gray-400 transition-transform ${
+                                          className={`w-5 h-5 shrink-0 text-gray-400 transition-transform ${
                                             isExpandedQuestion ? 'rotate-180' : ''
                                           }`}
                                           fill="none"
@@ -1058,52 +1102,6 @@ export function Dashboard({
                                   );
                                 })}
                               </div>
-                            </div>
-
-                            <div className="flex flex-wrap gap-2">
-                              <button
-                                type="button"
-                                onClick={() => void handleOpenResultForEdit(result)}
-                                className="px-2 py-2 rounded-lg bg-primary-100 hover:bg-primary-200 text-primary-800 text-xs font-medium transition-colors dark:bg-primary-900/30 dark:hover:bg-primary-900/50 dark:text-primary-200"
-                              >
-                                {t('dashboard.group.openQuestionnaire.action')}
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handlePrepareResultReport(result)}
-                                className={`px-2 py-2 rounded-lg transition-colors text-xs font-medium ${
-                                  reportResultId === result.id &&
-                                  reportResultCompletedAt === result.completedAt
-                                    ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300'
-                                    : 'bg-primary-600 hover:bg-primary-700 text-white'
-                                }`}
-                              >
-                                {reportResultId === result.id &&
-                                reportResultCompletedAt === result.completedAt
-                                  ? t('dashboard.report.hide')
-                                  : t('dashboard.report.create')}
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => onExportResult(result, exportFormat)}
-                                className="p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                                title={t('dashboard.export')}
-                              >
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                </svg>
-                              </button>
-
-                              <button
-                                type="button"
-                                onClick={() => onDeleteResult(result.id)}
-                                className="p-2 text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                                title={t('dashboard.delete')}
-                              >
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                </svg>
-                              </button>
                             </div>
                           </div>
 

@@ -53,8 +53,6 @@ npm run build:profiles
 
 После стандартной сборки (`npm run build`) используйте `dist/full/client/`.
 
-Для профильных билдов используйте соответствующую папку `dist/<profile>/client/` для статического хостинга.
-
 ### GitHub Pages (auto deploy)
 
 - Workflow: `.github/workflows/deploy-gh-pages.yml`
@@ -75,7 +73,7 @@ npm run build:gh-pages
 
 1. Соберите приложение: `npm run build`.
 2. Публикуйте только клиентскую директорию:
-   - `dist/full/client/` или `dist/<profile>/client/`.
+   - `dist/full/client/`.
 3. Для deep-link роутов включите fallback на `index.html`.
 4. Если хостинг не поддерживает кастомный rewrite, используйте `404.html` (генерируется автоматически).
 5. Для PWA обязателен HTTPS (localhost для разработки поддерживается браузером).

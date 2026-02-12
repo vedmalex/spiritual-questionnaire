@@ -31,6 +31,6 @@ npm test
 - Критерий сверки реализации: `memory-bank/system/USER-REQ.md`
 - Последний аудит: `memory-bank/system/AUDIT-2026-02-11-user-req.md`
 - Workflow требования: `memory-bank/system/WORKFLOW.md`
-- Любое изменение UI должно подтверждаться Playwright-сценарием (skill `playwright`) с сохранением артефактов в задаче memory-bank.
+- Любое изменение UI должно подтверждаться сценарием через skill `playwright` в режиме `playwright-cli` (через wrapper `$PWCLI`) с сохранением артефактов в задаче memory-bank.
 
-Last Updated: 2026-02-11 14:12
+Last Updated: 2026-02-12 13:30

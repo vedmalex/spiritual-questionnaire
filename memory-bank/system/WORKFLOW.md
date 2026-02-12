@@ -43,7 +43,7 @@
 
 ## WF-008: UI Change Requires Playwright Test
 - Любой пользовательский запрос, который меняет поведение UI (экраны, интеракции, навигацию, состояния), обязан сопровождаться добавлением или обновлением соответствующего UI-теста.
-- UI-тест для такого изменения должен проектироваться и запускаться через `playwright` skill (CLI-first с wrapper `$PWCLI`).
+- UI-тест для такого изменения должен проектироваться и запускаться через `playwright` skill строго в режиме `playwright-cli` (через wrapper `$PWCLI`).
 - Задача по изменению UI не считается завершенной без зафиксированного тестового сценария и результата прогона.
 
 ## Links
@@ -52,4 +52,4 @@
 - Issue tracker: `memory-bank/system/ISSUES.md`
 - i18n checklist: `memory-bank/system/I18N_FORM_CHECKLIST.md`
 
-Last Updated: 2026-02-11 22:02
+Last Updated: 2026-02-12 13:30

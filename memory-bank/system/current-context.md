@@ -55,6 +55,7 @@
 39. `2026-02-12_TASK-043_report-print-pdf-header-mobile-consistency`
 40. `2026-02-12_TASK-044_header-compact-profile-dropdown-navigation`
 41. `2026-02-12_TASK-045_report-print-theme-isolation`
+42. `2026-02-12_TASK-046_remove-profile-surge-deploy-scripts`
 
 ## Current State
 - Dashboard-требование `UR-043` реализовано и зафиксировано отдельной задачей.
@@ -112,6 +113,7 @@
 - Выполнен `TASK-043`: печать отчета переведена на iframe-based print flow (без popup-block проблем), добавлен прямой клиентский экспорт PDF, в Header удалены mobile combo-box (`select`) и включен единый segmented UI с horizontal scroll; переход в профиль доступен по клику на имя, переход на главную — по клику на название приложения.
 - Выполнен `TASK-044`: в Header переходы `Результаты/Профиль` перенесены в dropdown под блоком пользователя, верхняя навигация сокращена для student/curator (compact mode), и подтверждены route-переходы через Playwright smoke.
 - Выполнен `TASK-045`: подготовка отчета к печати/PDF отвязана от dark/light темы приложения: report export принудительно использует светлую color scheme и явный контрастный цвет текста, что устраняет бледный/нечитаемый PDF в dark mode.
+- Выполнен `TASK-046`: удалены npm-скрипты профильной публикации на `surge.sh`; deployment-инструкции сведены к full build (`dist/full/client`).
 - Зафиксирован follow-up bug `BUG-003`: в static prerender runtime наблюдается `React #418` hydration mismatch (консольная ошибка), требуется отдельная стабилизация.
 - Обновлена схема опросников до полного мультиязычного контракта (`metadata.languages`, локализованные `question/context_sources/self_check_prompts`) и добавлена migration `v5`.
 - Обновлен skill `spiritual-questionnaire-architect` под новый schema contract.

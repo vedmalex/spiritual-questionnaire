@@ -156,46 +156,47 @@ export function QuizTaker({
           )}
         </div>
 
-        {/* Score Selection with Tooltips */}
+        {/* Score Selection */}
         <div className="mb-6">
           <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
             {t('quiz.score.select')}
           </h3>
-          
+
           <div className="grid grid-cols-6 sm:grid-cols-11 gap-2">
             {GRADING_DESCRIPTIONS.map(({ score }) => (
-              <div key={score} className="relative">
-                <button
-                  type="button"
-                  onClick={() => handleScoreSelect(score)}
-                  onMouseEnter={() => setHoveredScore(score)}
-                  onMouseLeave={() => setHoveredScore(null)}
-                  className={`
-                    w-full p-3 rounded-lg text-sm font-medium transition-all
-                    ${currentScore === score
-                      ? 'bg-primary-600 text-white ring-2 ring-primary-600 ring-offset-2 dark:ring-offset-gray-800'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-                    }
-                  `}
-                >
-                  {score}
-                </button>
-                
-                {/* Tooltip */}
-                {hoveredScore === score && (
-                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs rounded-lg shadow-lg whitespace-nowrap z-10 max-w-xs">
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-white"></div>
-                    {getGradeDescription(score)}
-                  </div>
-                )}
-              </div>
+              <button
+                key={score}
+                type="button"
+                onClick={() => handleScoreSelect(score)}
+                onMouseEnter={() => setHoveredScore(score)}
+                onMouseLeave={() => setHoveredScore(null)}
+                onFocus={() => setHoveredScore(score)}
+                onBlur={() => setHoveredScore(null)}
+                className={`
+                  w-full p-3 rounded-lg text-sm font-medium transition-all
+                  ${currentScore === score
+                    ? 'bg-primary-600 text-white ring-2 ring-primary-600 ring-offset-2 dark:ring-offset-gray-800'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  }
+                `}
+              >
+                {score}
+              </button>
             ))}
           </div>
-          
-          {currentScore !== undefined && (
+
+          {(hoveredScore !== null || currentScore !== undefined) && (
             <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
-              {t('quiz.score.selected')}: <strong className="text-primary-600 dark:text-primary-400">{currentScore}</strong> - {' '}
-              {getGradeDescription(currentScore)}
+              {t(
+                hoveredScore !== null && hoveredScore !== currentScore
+                  ? 'quiz.score.preview'
+                  : 'quiz.score.selected'
+              )}
+              :{' '}
+              <strong className="text-primary-600 dark:text-primary-400">
+                {hoveredScore ?? currentScore}
+              </strong>{' '}
+              - {getGradeDescription(hoveredScore ?? currentScore ?? 0)}
             </p>
           )}
         </div>

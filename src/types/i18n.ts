@@ -62,6 +62,7 @@ export interface TranslationKeys {
   'quiz.selfCheck.title': string;
   'quiz.score.select': string;
   'quiz.score.selected': string;
+  'quiz.score.preview': string;
   'quiz.comment.add': string;
   'quiz.comment.required': string;
   'quiz.comment.requiredHint': string;

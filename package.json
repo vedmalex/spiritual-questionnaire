@@ -13,14 +13,11 @@
     "build:curator": "VITE_APP_PROFILE=curator BUILD_OUT_DIR=dist/curator vite build && BUILD_OUT_DIR=dist/curator node scripts/postbuild-static-fallback.mjs",
     "build:profiles": "npm run build:student && npm run build:curator && npm run build:full",
     "build:gh-pages": "VITE_APP_BASE=/spiritual-questionnaire/ npm run build:full && node scripts/prepare-gh-pages.mjs",
-    "deploy:student:surge": "npm run build:student && npx surge ./dist/student/client student_qwiz_2nd.surge.sh",
-    "deploy:curator:surge": "npm run build:curator && npx surge ./dist/curator/client curator_qwiz_2nd.surge.sh",
-    "deploy:full:surge": "npm run build:full && npx surge ./dist/full/client full_qwiz_2nd.surge.sh",
-    "deploy:surge": "npm run deploy:student:surge && npm run deploy:curator:surge && npm run deploy:full:surge",
     "preview": "vite preview",
     "test": "vitest run",
     "audit:mobile": "node scripts/mobile-audit-playwright.mjs",
-    "test:ui:archive": "node scripts/playwright-user-archive-smoke.mjs"
+    "test:ui:archive": "node scripts/playwright-user-archive-smoke.mjs",
+    "test:ui:header-ultrasmall": "node scripts/playwright-header-ultrasmall.mjs"
   },
   "dependencies": {
     "@tanstack/react-devtools": "^0.7.0",
