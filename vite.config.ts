@@ -11,6 +11,15 @@ import path from 'node:path'
 const buildId = process.env.VITE_APP_BUILD_ID || new Date().toISOString()
 const rawProfile = String(process.env.VITE_APP_PROFILE || 'full').trim().toLowerCase()
 const appProfile = rawProfile === 'student' || rawProfile === 'curator' ? rawProfile : 'full'
+const rawBase = String(process.env.VITE_APP_BASE || '/').trim()
+const appBase =
+  rawBase === './'
+    ? '/'
+    : rawBase.startsWith('/')
+      ? rawBase.endsWith('/')
+        ? rawBase
+        : `${rawBase}/`
+      : `/${rawBase.replace(/^\/+|\/+$/g, '')}/`
 const outDir = process.env.BUILD_OUT_DIR || 'dist'
 const QUESTIONNAIRES_DIR = path.join('public', 'questionnaires')
 const QUESTIONNAIRES_INDEX_FILE = 'index.json'
@@ -92,7 +101,7 @@ function questionnairesIndexPlugin(): Plugin {
 }
 
 const config = defineConfig({
-  base: './',
+  base: appBase,
   define: {
     'import.meta.env.VITE_APP_BUILD_ID': JSON.stringify(buildId),
     'import.meta.env.VITE_APP_PROFILE': JSON.stringify(appProfile),
