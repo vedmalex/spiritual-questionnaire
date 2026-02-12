@@ -12,6 +12,7 @@
     "build:student": "VITE_APP_PROFILE=student BUILD_OUT_DIR=dist/student vite build && BUILD_OUT_DIR=dist/student node scripts/postbuild-static-fallback.mjs",
     "build:curator": "VITE_APP_PROFILE=curator BUILD_OUT_DIR=dist/curator vite build && BUILD_OUT_DIR=dist/curator node scripts/postbuild-static-fallback.mjs",
     "build:profiles": "npm run build:student && npm run build:curator && npm run build:full",
+    "build:gh-pages": "npm run build:full && node scripts/prepare-gh-pages.mjs",
     "deploy:student:surge": "npm run build:student && npx surge ./dist/student/client student_qwiz_2nd.surge.sh",
     "deploy:curator:surge": "npm run build:curator && npx surge ./dist/curator/client curator_qwiz_2nd.surge.sh",
     "deploy:full:surge": "npm run build:full && npx surge ./dist/full/client full_qwiz_2nd.surge.sh",

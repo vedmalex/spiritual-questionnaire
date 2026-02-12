@@ -55,6 +55,19 @@ npm run build:profiles
 
 Для профильных билдов используйте соответствующую папку `dist/<profile>/client/` для статического хостинга.
 
+### GitHub Pages (auto deploy)
+
+- Workflow: `.github/workflows/deploy-gh-pages.yml`
+- Trigger: push в `main` (или ручной запуск через `workflow_dispatch`)
+- Build script: `npm run build:gh-pages`
+- Публикуемый артефакт: `dist/gh-pages` (на основе `dist/full/client`)
+
+Для локальной проверки GitHub Pages-артефакта:
+
+```bash
+npm run build:gh-pages
+```
+
 ### Static Hosting Checklist
 
 1. Соберите приложение: `npm run build`.
