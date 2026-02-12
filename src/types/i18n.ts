@@ -1,0 +1,369 @@
+/**
+ * Internationalization types
+ */
+
+export type LanguageCode = 'ru' | 'en';
+
+export interface TranslationKeys {
+  // Navigation
+  'nav.home': string;
+  'nav.dashboard': string;
+  'nav.admin': string;
+  'nav.editor': string;
+  'nav.translations': string;
+  'nav.profile': string;
+  
+  // User setup
+  'user.title': string;
+  'user.subtitle': string;
+  'user.placeholder': string;
+  'user.error.empty': string;
+  'user.error.short': string;
+  'user.continue': string;
+  
+  // Questionnaire list
+  'quiz.title': string;
+  'quiz.subtitle': string;
+  'quiz.questions': string;
+  'quiz.scale': string;
+  'quiz.start': string;
+  'quiz.noQuizzes': string;
+  'quiz.paused.title': string;
+  'quiz.paused.description': string;
+  'quiz.paused.continue': string;
+  
+  // Quiz taker
+  'quiz.question': string;
+  'quiz.of': string;
+  'quiz.sources': string;
+  'quiz.selfCheck.show': string;
+  'quiz.selfCheck.hide': string;
+  'quiz.selfCheck.title': string;
+  'quiz.score.select': string;
+  'quiz.score.selected': string;
+  'quiz.comment.add': string;
+  'quiz.comment.required': string;
+  'quiz.comment.requiredHint': string;
+  'quiz.comment.placeholder': string;
+  'quiz.photo.add': string;
+  'quiz.photo.remove': string;
+  'quiz.navigation.back': string;
+  'quiz.navigation.pause': string;
+  'quiz.navigation.next': string;
+  'quiz.navigation.complete': string;
+  
+  // Dashboard
+  'dashboard.title': string;
+  'dashboard.subtitle': string;
+  'dashboard.empty.title': string;
+  'dashboard.empty.description': string;
+  'dashboard.results.count': string;
+  'dashboard.export.all': string;
+  'dashboard.score.total': string;
+  'dashboard.score.percentage': string;
+  'dashboard.answered': string;
+  'dashboard.date': string;
+  'dashboard.export': string;
+  'dashboard.delete': string;
+  'dashboard.import.button': string;
+  'dashboard.import.strategy.skip': string;
+  'dashboard.import.strategy.replace': string;
+  'dashboard.transfer.defaults': string;
+  'dashboard.import.success': string;
+  'dashboard.import.error': string;
+  'dashboard.report.create': string;
+  'dashboard.report.title': string;
+  'dashboard.report.description': string;
+  'dashboard.report.downloadMarkdown': string;
+  'dashboard.report.downloadPlainText': string;
+  'dashboard.report.print': string;
+  'dashboard.report.close': string;
+  'dashboard.report.preview': string;
+  'dashboard.report.error.print': string;
+  'dashboard.group.summary': string;
+  'dashboard.group.overall': string;
+  'dashboard.group.history': string;
+  'dashboard.group.absentQuestions': string;
+  'dashboard.group.absentBadge': string;
+  'dashboard.group.openQuestionnaire.action': string;
+  'dashboard.group.openQuestionnaire.errorSchema': string;
+  'dashboard.tab.results': string;
+  'dashboard.tab.analytics': string;
+  'dashboard.tab.feedback': string;
+  'dashboard.analytics.title': string;
+  'dashboard.analytics.subtitle': string;
+  'dashboard.analytics.usage': string;
+  'dashboard.analytics.filter.questionnaire': string;
+  'dashboard.analytics.filter.period': string;
+  'dashboard.analytics.filter.quickPeriod': string;
+  'dashboard.analytics.filter.from': string;
+  'dashboard.analytics.filter.to': string;
+  'dashboard.analytics.filter.quick7': string;
+  'dashboard.analytics.filter.quick30': string;
+  'dashboard.analytics.filter.quickAll': string;
+  'dashboard.analytics.filter.rangePlaceholder': string;
+  'dashboard.analytics.filter.clear': string;
+  'dashboard.analytics.emptyByFilter': string;
+  'dashboard.analytics.rangeInvalid': string;
+  'dashboard.feedback.title': string;
+  'dashboard.feedback.subtitle': string;
+  'dashboard.feedback.empty': string;
+  'dashboard.feedback.question': string;
+  'dashboard.feedback.thread': string;
+  'dashboard.feedback.reply.placeholder': string;
+  'dashboard.feedback.reply.save': string;
+  'dashboard.feedback.comment.label': string;
+  'dashboard.feedback.comment.placeholder': string;
+  'dashboard.feedback.comment.save': string;
+  'dashboard.feedback.author.curator': string;
+  'dashboard.feedback.author.student': string;
+  'dashboard.feedback.saved': string;
+  'dashboard.feedback.openQuestion.action': string;
+  'dashboard.feedback.openQuestion.errorSchema': string;
+  'dashboard.feedback.openQuestion.errorQuestion': string;
+
+  // Admin dashboard
+  'admin.title': string;
+  'admin.subtitle': string;
+  'admin.tab.overview': string;
+  'admin.tab.questionnaires': string;
+  'admin.tab.translations': string;
+  'admin.tab.operations': string;
+  'admin.ops.migrations.title': string;
+  'admin.ops.migrations.description': string;
+  'admin.ops.migrations.run': string;
+  'admin.ops.status.migrations.success': string;
+  'admin.ops.error.migrations.failed': string;
+  'admin.ops.reconciliation.title': string;
+  'admin.ops.reconciliation.description': string;
+  'admin.ops.reconciliation.file': string;
+  'admin.ops.error.reconciliation.emptyFile': string;
+  'admin.ops.status.reconciliation.completed': string;
+  'admin.ops.error.reconciliation.failed': string;
+  'admin.ops.report.totalResults': string;
+  'admin.ops.report.compatibleResults': string;
+  'admin.ops.report.incompatibleResults': string;
+  'admin.ops.report.missingQuestionnaires': string;
+  'admin.ops.report.missingQuestions': string;
+  'admin.overview.editor.description': string;
+  'admin.overview.translation.description': string;
+  'admin.overview.operations.description': string;
+
+  // Questionnaire editor
+  'editor.title': string;
+  'editor.subtitle': string;
+  'editor.loadExisting': string;
+  'editor.loadExisting.placeholder': string;
+  'editor.import': string;
+  'editor.meta.title': string;
+  'editor.meta.title.placeholder': string;
+  'editor.meta.source': string;
+  'editor.meta.source.placeholder': string;
+  'editor.meta.quality': string;
+  'editor.languages.remove.aria': string;
+  'editor.languages.new.placeholder': string;
+  'editor.languages.hint': string;
+  'editor.languages.title': string;
+  'editor.languages.add': string;
+  'editor.question.title': string;
+  'editor.question.delete': string;
+  'editor.question.id': string;
+  'editor.question.requiresComment': string;
+  'editor.question.localized': string;
+  'editor.question.contextSources': string;
+  'editor.question.selfCheckPrompts': string;
+  'editor.error.language.empty': string;
+  'editor.error.language.invalid': string;
+  'editor.error.language.duplicate': string;
+  'editor.status.language.added': string;
+  'editor.error.language.last': string;
+  'editor.status.language.removed': string;
+  'editor.status.saved': string;
+  'editor.status.exported': string;
+  'editor.status.imported': string;
+  'editor.error.deleteCustom.qualityMissing': string;
+  'editor.status.deleteCustom.success': string;
+  'editor.actions.addQuestion': string;
+  'editor.actions.save': string;
+  'editor.actions.export': string;
+  'editor.actions.deleteCustom': string;
+  'editor.actions.reset': string;
+
+  // Translation manager
+  'translation.title': string;
+  'translation.subtitle': string;
+  'translation.language': string;
+  'translation.language.option.ru': string;
+  'translation.language.option.en': string;
+  'translation.translator': string;
+  'translation.translator.placeholder': string;
+  'translation.import': string;
+  'translation.json': string;
+  'translation.status.currentLoaded': string;
+  'translation.status.loadedForLanguage': string;
+  'translation.status.fileDownloaded': string;
+  'translation.status.fileLoaded': string;
+  'translation.error.invalidJson': string;
+  'translation.error.fileRead': string;
+  'translation.status.importMeta': string;
+  'translation.keys.title': string;
+  'translation.keys.noneMissing': string;
+  'translation.actions.loadCurrent': string;
+  'translation.actions.save': string;
+  'translation.actions.exportAll': string;
+  'translation.audit.title': string;
+  'translation.audit.summary': string;
+  'translation.audit.missingRu': string;
+  'translation.audit.missingEn': string;
+  'translation.audit.exportCoverage': string;
+  'translation.audit.table.form': string;
+  'translation.audit.table.keys': string;
+  'translation.audit.table.missingRu': string;
+  'translation.audit.table.missingEn': string;
+  'translation.audit.table.status': string;
+  'translation.audit.status.ok': string;
+  'translation.audit.status.needsWork': string;
+
+  // Questionnaire loader
+  'loader.title': string;
+  'loader.subtitle': string;
+  'loader.actions.downloadTemplate': string;
+  'loader.actions.upload': string;
+  'loader.status.success': string;
+  'loader.status.error': string;
+
+  // Score chart
+  'chart.distribution.title': string;
+  'chart.distribution.subtitle': string;
+  'chart.timeline.title': string;
+  'chart.timeline.subtitle': string;
+  'chart.timeline.hint': string;
+  'chart.timeline.empty': string;
+  'chart.timeline.summary': string;
+
+  // Questionnaire stats panel
+  'questionStats.title': string;
+  'questionStats.subtitle': string;
+  'questionStats.select': string;
+  'questionStats.empty': string;
+  'questionStats.metric.id': string;
+  'questionStats.metric.average': string;
+  'questionStats.metric.last': string;
+  'questionStats.metric.attempts': string;
+  'questionStats.metric.delta': string;
+  'questionStats.dynamics.title': string;
+  'questionStats.dynamics.noData': string;
+  'questionStats.lowData.title': string;
+  'questionStats.lowData.item': string;
+  
+  // Grading scale
+  'grade.0': string;
+  'grade.1': string;
+  'grade.2': string;
+  'grade.3': string;
+  'grade.4': string;
+  'grade.5': string;
+  'grade.6': string;
+  'grade.7': string;
+  'grade.8': string;
+  'grade.9': string;
+  'grade.10': string;
+  
+  // Common
+  'common.loading': string;
+  'common.close': string;
+  'common.save': string;
+  'common.cancel': string;
+  'common.delete': string;
+  'common.edit': string;
+  'common.back': string;
+  'header.role.student': string;
+  'header.role.curator': string;
+  'header.role.admin': string;
+  'header.logout': string;
+  'header.loggingOut': string;
+  'header.logoutError': string;
+  'access.denied.title': string;
+  'access.denied.editorOnlyAdmin': string;
+  'access.denied.translationsOnlyAdmin': string;
+
+  // PWA notifications
+  'pwa.updates.title': string;
+  'pwa.updates.body': string;
+
+  // Curator dashboard
+  'curator.title': string;
+  'curator.subtitle': string;
+  'curator.metrics.totalAnswers': string;
+  'curator.metrics.groupCount': string;
+  'curator.metrics.pending': string;
+  'curator.metrics.reviewed': string;
+  'curator.metrics.averageScore': string;
+  'curator.section.activeGroups': string;
+  'curator.section.completedGroups': string;
+  'curator.empty.activeGroups': string;
+  'curator.group.summary': string;
+  'curator.group.reviewedSummary': string;
+  'curator.status.pending': string;
+  'curator.status.inReview': string;
+  'curator.status.reviewed': string;
+  'curator.status.needsRevision': string;
+  'curator.status.approved': string;
+  'curator.actions.hide': string;
+  'curator.actions.review': string;
+  'curator.actions.markReviewed': string;
+  'curator.actions.requestRevision': string;
+  'curator.actions.approve': string;
+  'curator.question.label': string;
+  'curator.question.absent': string;
+  'curator.schema.absentQuestions': string;
+  'curator.comment.student': string;
+  'curator.photos.attached': string;
+  'curator.feedback.add': string;
+  'curator.feedback.send': string;
+  'curator.feedback.cancel': string;
+  'curator.feedback.placeholder': string;
+  'curator.ops.exportFormat': string;
+  'curator.ops.importStrategy': string;
+  'curator.ops.exportAllReviewed': string;
+  'curator.ops.importStudentAnswers': string;
+  'curator.ops.exportForStudent': string;
+  'curator.ops.export.json': string;
+  'curator.ops.export.csv': string;
+  'curator.ops.import.skip': string;
+  'curator.ops.import.replace': string;
+  'curator.ops.defaults': string;
+  'curator.message.importSummary': string;
+  'curator.message.exportGroup': string;
+  'curator.message.exportAll': string;
+  'curator.error.import': string;
+  'curator.error.noReviewed': string;
+  'curator.error.groupNoReviewed': string;
+
+  // Profile
+  'profile.title': string;
+  'profile.subtitle': string;
+  'profile.name.title': string;
+  'profile.name.label': string;
+  'profile.name.placeholder': string;
+  'profile.actions.saveName': string;
+  'profile.settings.title': string;
+  'profile.settings.language': string;
+  'profile.settings.theme': string;
+  'profile.settings.theme.light': string;
+  'profile.settings.theme.dark': string;
+  'profile.settings.role': string;
+  'profile.transfer.title': string;
+  'profile.transfer.subtitle': string;
+  'profile.transfer.export': string;
+  'profile.transfer.import': string;
+  'profile.questionnaires.title': string;
+  'profile.status.saved': string;
+  'profile.status.language': string;
+  'profile.status.theme': string;
+  'profile.status.role': string;
+  'profile.error.name.empty': string;
+  'profile.error.name.short': string;
+}
+
+export type TranslationSet = Record<LanguageCode, TranslationKeys>;

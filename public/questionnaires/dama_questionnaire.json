@@ -1,0 +1,338 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": {
+    "ru": "Опросник по качеству Дама (Самообладание)",
+    "en": "Dama (Self-Control) Assessment Questionnaire"
+  },
+  "metadata": {
+    "title": {
+      "ru": "Дама — Самообладание: Владение чувствами",
+      "en": "Dama — Self-Control: Mastery of the Senses"
+    },
+    "source_lecture": {
+      "ru": "Урок 1. Подготовка ко второй инициации. Самообладание (Дама) — качество брахмана. Е.М. Вистара прабху",
+      "en": "Lesson 1. Preparation for Second Initiation. Dama (Self-Control) — the Quality of a Brahmana. E.M. Vistara Prabhu"
+    },
+    "quality": "dama",
+    "languages": ["ru", "en"]
+  },
+  "grading_system": {
+    "scale_min": 0,
+    "scale_max": 10,
+    "description": [
+      { "score": 0, "meaning": "не задумывался (отсутствие осознанности) / never thought about it" },
+      { "score": 1, "meaning": "когда вспоминаю, стараюсь, но уже поздно / try when I remember, but too late" },
+      { "score": 2, "meaning": "почти никогда не получается / almost never succeeds" },
+      { "score": 3, "meaning": "часто почти не получается / often fails" },
+      { "score": 4, "meaning": "получается редко, требует огромных усилий / rarely succeeds, requires huge effort" },
+      { "score": 5, "meaning": "стараюсь, получается не всегда (50/50) / I try, succeeds half the time" },
+      { "score": 6, "meaning": "получается чаще, чем не получается / succeeds more often than not" },
+      { "score": 7, "meaning": "иногда получается стабильно (уверенная практика) / sometimes stable practice" },
+      { "score": 8, "meaning": "получается в большинстве случаев / succeeds in most cases" },
+      { "score": 9, "meaning": "почти всегда получается / almost always succeeds" },
+      { "score": 10, "meaning": "всегда (совершенство) / always (perfection)" }
+    ]
+  },
+  "questions": [
+    {
+      "id": "dama_01_manifestation_in_activity",
+      "question": {
+        "ru": "Проявляется ли моё самообладание в конкретных действиях и взаимодействии с миром, а не только как теоретическая концепция?",
+        "en": "Does my self-control manifest in concrete actions and interaction with the world, rather than just as a theoretical concept?"
+      },
+      "context_sources": {
+        "ru": [
+          "Бхагавад-гита 18.42: «Качества брахманов проявляются в их деятельности».",
+          "Лекция: «Это не мнимые вещи. Это то, как мы действуем, как мы общаемся... Это видно»."
+        ],
+        "en": [
+          "Bhagavad-gita 18.42: 'The qualities of the brahmanas are manifest in their activities.'",
+          "Lecture: 'These are not imaginary things. It's how we act, how we communicate... It is visible.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Замечают ли окружающие мою сдержанность в провокационных ситуациях?",
+          "Могу ли я привести пример за последнюю неделю, когда я не совершил импульсивного действия?",
+          "Является ли моё поведение предсказуемым и стабильным, или оно зависит от настроения?"
+        ],
+        "en": [
+          "Do others notice my restraint in provocative situations?",
+          "Can I give an example from the past week when I didn't take an impulsive action?",
+          "Is my behavior predictable and stable, or does it depend on my mood?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "dama_02_turtle_method",
+      "question": {
+        "ru": "Насколько эффективно я использую «метод черепахи» — способность мгновенно отводить чувства от объектов, которые не способствуют моему служению?",
+        "en": "How effectively do I use the 'turtle method' — the ability to instantly withdraw my senses from objects that do not facilitate my service?"
+      },
+      "context_sources": {
+        "ru": [
+          "Бхагавад-гита 2.58: «Тот, кто, подобно черепахе... способен отводить свои чувства от объектов».",
+          "Лекция: «Мы чувства прячем под панцирь своего разума... Когда это неблагоприятно, мы их прячем»."
+        ],
+        "en": [
+          "Bhagavad-gita 2.58: 'One who is able to withdraw the senses from their objects, just as a tortoise...'",
+          "Lecture: 'We hide the senses under the shell of our intelligence... When it's unfavorable, we hide them.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Могу ли я закрыть вкладку в браузере или уйти из компании, где начинаются пустые разговоры?",
+          "Втягиваю ли я «лапки» своих чувств в панцирь разума, когда вижу объект вожделения или жадности?",
+          "Использую ли я свои чувства только тогда, когда это полезно для Кришны?"
+        ],
+        "en": [
+          "Can I close a browser tab or leave a group where empty talk begins?",
+          "Do I retract the 'limbs' of my senses into the shell of my intelligence when I see an object of lust or greed?",
+          "Do I use my senses only when it is useful for Krishna?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "dama_03_elephant_bathing",
+      "question": {
+        "ru": "Избегаю ли я состояния «купающегося слона», когда после духовной практики я сразу же позволяю чувствам «валяться в пыли» материальных наслаждений?",
+        "en": "Do I avoid the state of an 'elephant bathing', where after spiritual practice I immediately allow my senses to 'roll in the dust' of material enjoyments?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «Слон заходит в реку... выходит сияющий. И первое что он делает — опять в пыли валяется».",
+          "Шримад-Бхагаватам 6.1.13: Рекомендации для тех, кто хочет достичь совершенства."
+        ],
+        "en": [
+          "Lecture: 'An elephant enters the river... comes out shining. And the first thing he does is roll in the dust again.'",
+          "Srimad-Bhagavatam 6.1.13: Recommendations for those who want to reach perfection."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Что я делаю сразу после завершения джапы или киртана: погружаюсь в Кришну или бегу за 'наградой' для чувств?",
+          "Чувствую ли я, что мои материальные привычки сводят на нет плоды моей Садханы?",
+          "Умею ли я удерживать чистое состояние ума в течение дня после утренних программ?"
+        ],
+        "en": [
+          "What do I do immediately after finishing japa or kirtan: immerse in Krishna or run for a 'reward' for the senses?",
+          "Do I feel that my material habits negate the fruits of my Sadhana?",
+          "Can I maintain a clean state of mind throughout the day after morning programs?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "dama_04_preaching_to_mind",
+      "question": {
+        "ru": "Стал ли я для себя «проповедником», который постоянно убеждает свой ум действовать согласно Дхарме, не поддаваясь рефлекторным импульсам?",
+        "en": "Have I become a 'preacher' for myself, constantly convincing my mind to act according to Dharma without yielding to reflex impulses?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «Тот, кто хочет быть брахман, должен постоянно проповедовать своему уму».",
+          "Гуру Махарадж: Наставление о постоянной проповеди уму для контроля чувств."
+        ],
+        "en": [
+          "Lecture: 'One who wants to be a brahmana must constantly preach to his mind.'",
+          "Guru Maharaja: Instruction on constant preaching to the mind to control the senses."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Останавливаю ли я себя логическими аргументами из шастр, когда ум предлагает что-то греховное?",
+          "Разговариваю ли я с умом, напоминая ему о цели жизни и его истинном положении?",
+          "Насколько быстро я распознаю 'уловки' ума, пытающегося оправдать лень или слабость?"
+        ],
+        "en": [
+          "Do I stop myself with logical arguments from the shastras when the mind suggests something sinful?",
+          "Do I talk to the mind, reminding it of the goal of life and its true position?",
+          "How quickly do I recognize the 'tricks' of the mind trying to justify laziness or weakness?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "dama_05_six_urges",
+      "question": {
+        "ru": "Насколько успешно я контролирую шесть побуждений (речи, ума, гнева, языка, желудка и гениталий), описанных в Нектаре Наставлений?",
+        "en": "How successfully do I control the six urges (speech, mind, anger, tongue, belly, and genitals) described in the Nectar of Instruction?"
+      },
+      "context_sources": {
+        "ru": [
+          "Нектар Наставлений, Текст 1: «Уравновешенный человек, способный контролировать свою речь и ум...»",
+          "Лекция: Разбор квалификации Госвами и необходимости контроля импульсов (вега)."
+        ],
+        "en": [
+          "Nectar of Instruction, Text 1: 'A sober person who can control the urge to speak, the mind's demands...'",
+          "Lecture: Analysis of Goswami's qualification and the need for impulse control (vega)."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Могу ли я промолчать, когда хочется сказать что-то едкое или бессмысленное?",
+          "Ем ли я только тогда, когда это необходимо для здоровья и служения, или иду на поводу у вкуса?",
+          "Как долго я могу удерживать гнев внутри, не позволяя ему превратиться в разрушительные слова?"
+        ],
+        "en": [
+          "Can I remain silent when I want to say something caustic or meaningless?",
+          "Do I eat only when necessary for health and service, or do I indulge my sense of taste?",
+          "How long can I hold anger inside without letting it turn into destructive words?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "dama_06_inner_freedom_vs_karma",
+      "question": {
+        "ru": "Ощущаю ли я внутреннюю свободу выбора в своих поступках, или я чувствую себя жертвой обстоятельств, чья жизнь «проживается сама собой»?",
+        "en": "Do I feel inner freedom of choice in my actions, or do I feel like a victim of circumstances whose life is 'lived by itself'?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «Брахман, владеющий собой, практически выходит из-под влияния кармы... у нас будет выбор».",
+          "Лекция: «Не мы проживаем жизнь, а жизнь проживает нас» (Ангира Гуранга)."
+        ],
+        "en": [
+          "Lecture: 'A brahmana who controls himself practically steps out of the influence of karma... we will have a choice.'",
+          "Lecture: 'It's not us living life, but life living us' (Angira Gauranga)."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Часто ли я оправдываю свои ошибки 'внешними причинами' или 'плохой кармой'?",
+          "Чувствую ли я, что я — активный творец своего духовного пути, а не пассивная щепка в реке?",
+          "Могу ли я принять решение, противоречащее моим привычным рефлексам?"
+        ],
+        "en": [
+          "Do I often justify my mistakes with 'external reasons' or 'bad karma'?",
+          "Do I feel that I am an active creator of my spiritual path, not a passive chip in a river?",
+          "Can I make a decision that contradicts my usual reflexes?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "dama_07_subduing_inner_enemies",
+      "question": {
+        "ru": "Воспринимаю ли я свои необузданные чувства как внутренних преступников, которых необходимо усмирять ради блага своего 'царства' (духовного развития)?",
+        "en": "Do I perceive my unbridled senses as internal criminals who must be subdued for the sake of my 'kingdom' (spiritual development)?"
+      },
+      "context_sources": {
+        "ru": [
+          "Шри Чайтанья-чаритамрита, Мадхья 19.213 (комм): «Дама также означает усмирение врагов».",
+          "Лекция: Сравнение преданного с царем-Раджариши, держащим в узде преступные элементы."
+        ],
+        "en": [
+          "Sri Caitanya-caritamrta, Madhya 19.213 (comm): 'Dama also means subduing enemies.'",
+          "Lecture: Comparison of a devotee to a Rajarishi king keeping criminal elements in check."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Проявляю ли я твердость (кшатрийскую силу) по отношению к своим низшим желаниям?",
+          "Вижу ли я опасность в 'мелких' поблажках своим чувствам?",
+          "Держу ли я свои чувства в строгой узде Дхармы, не позволяя им 'грабить' мой духовный прогресс?"
+        ],
+        "en": [
+          "Do I show firmness (kshatriya strength) toward my lower desires?",
+          "Do I see danger in 'small' indulgences for my senses?",
+          "Do I keep my senses under the strict rein of Dharma, preventing them from 'robbing' my spiritual progress?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "dama_08_family_restraint",
+      "question": {
+        "ru": "Проявляю ли я сдержанность (дамену ча) в близких отношениях, сохраняя этикет и уважение даже в моменты несогласия?",
+        "en": "Do I show restraint (damena ca) in close relationships, maintaining etiquette and respect even in moments of disagreement?"
+      },
+      "context_sources": {
+        "ru": [
+          "Шримад-Бхагаватам 3.23.2: Пример Девахути — «была с ним сдержанна (дамена ча) и услаждала его слух».",
+          "Лекция: Наставление женам и мужьям о контроле чувств в семейных разногласиях."
+        ],
+        "en": [
+          "Srimad-Bhagavatam 3.23.2: Example of Devahuti — 'she was self-controlled (damena ca) and pleasing to his ears'.",
+          "Lecture: Instruction to wives and husbands on sense control in family disagreements."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Позволяю ли я себе 'выплескивать' эмоции на близких, оправдывая это искренностью?",
+          "Могу ли я сдержать резкое слово в адрес супруга/супруги, когда чувствую несправедливость?",
+          "Является ли моё домашнее поведение таким же брахманичным, как и в храме?"
+        ],
+        "en": [
+          "Do I allow myself to 'vent' emotions on loved ones, justifying it as sincerity?",
+          "Can I hold back a sharp word toward my spouse when I feel injustice?",
+          "Is my home behavior as Brahmanical as it is in the temple?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "dama_09_vows_fidelity",
+      "question": {
+        "ru": "Насколько моё самообладание позволяет мне быть верным принятым обетам и следовать дисциплине без чувства насилия над собой?",
+        "en": "How much does my self-control allow me to be faithful to my vows and follow discipline without a sense of self-violence?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «Посвящение, инициация означает, что мы даем обеты и следуем... Человек, который не владеет собой, будет постоянно оправдывать свою лень».",
+          "Шримад-Бхагаватам 2.9.43: Пример Нарады Муни, который был послушен и владел собой."
+        ],
+        "en": [
+          "Lecture: 'Consecration, initiation means we give vows and follow... A person who doesn't control himself will constantly justify his laziness.'",
+          "Srimad-Bhagavatam 2.9.43: Example of Narada Muni, who was obedient and self-controlled."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Являются ли мои обеты для меня источником силы или тяжким бременем?",
+          "Легко ли я нахожу оправдания, чтобы пропустить Садхану или нарушить дисциплину?",
+          "Ощущаю ли я радость от того, что я хозяин своих привычек, а не их раб?"
+        ],
+        "en": [
+          "Are my vows a source of strength for me or a heavy burden?",
+          "Do I easily find excuses to skip Sadhana or break discipline?",
+          "Do I feel joy from being the master of my habits, not their slave?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "dama_10_higher_pleasure_focus",
+      "question": {
+        "ru": "Осознаю ли я, что контроль чувств — это не просто подавление, а способ обрести доступ к высшему, внутреннему счастью и милости Господа?",
+        "en": "Do I realize that sense control is not just suppression, but a way to gain access to higher, inner happiness and the Lord's mercy?"
+      },
+      "context_sources": {
+        "ru": [
+          "Шримад-Бхагаватам 3.24.3 (комм): «Не совершая аскез... невозможно снискать милость Господа».",
+          "Лекция: «Источник счастья внутри. И для его обладания необходимо обуздывать, контролировать»."
+        ],
+        "en": [
+          "Srimad-Bhagavatam 3.24.3 (comm): 'Without performing austerities... it is impossible to gain the mercy of the Lord.'",
+          "Lecture: 'The source of happiness is within. And to possess it, one must curb and control.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Вижу ли я связь между своими аскезами в контроле чувств и ощущением близости к Кришне?",
+          "Верю ли я в ложь Кали-юги о том, что удовлетворение чувств — единственный путь к счастью?",
+          "Готов ли я 'пожертвовать' мелким удовольствием ради обретения духовного вкуса?"
+        ],
+        "en": [
+          "Do I see a connection between my austerities in sense control and the feeling of closeness to Krishna?",
+          "Do I believe the lies of Kali-yuga that sense gratification is the only path to happiness?",
+          "Am I ready to 'sacrifice' a small pleasure for the sake of gaining spiritual taste?"
+        ]
+      },
+      "requires_comment": true
+    }
+  ]
+}

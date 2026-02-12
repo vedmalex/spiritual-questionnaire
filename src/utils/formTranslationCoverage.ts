@@ -1,0 +1,441 @@
+import type { LanguageCode } from '../types/i18n';
+import { translations } from './i18n';
+
+interface FormTranslationRequirement {
+  formId: string;
+  title: string;
+  requiredKeys: string[];
+}
+
+export interface FormCoverageEntry {
+  formId: string;
+  title: string;
+  requiredKeys: string[];
+  missingByLanguage: Record<LanguageCode, string[]>;
+  coveredByLanguage: Record<LanguageCode, number>;
+  fullyCovered: boolean;
+}
+
+export interface FormCoverageSummary {
+  totalForms: number;
+  fullyCoveredForms: number;
+  totalMissingKeys: number;
+  languageMissingTotals: Record<LanguageCode, number>;
+}
+
+const FORM_TRANSLATION_REQUIREMENTS: FormTranslationRequirement[] = [
+  {
+    formId: 'user-setup',
+    title: 'User Setup',
+    requiredKeys: [
+      'user.title',
+      'user.subtitle',
+      'user.placeholder',
+      'user.error.empty',
+      'user.error.short',
+      'user.continue',
+      'header.role.student',
+      'header.role.curator',
+      'header.role.admin',
+    ],
+  },
+  {
+    formId: 'questionnaire-list',
+    title: 'Questionnaire List',
+    requiredKeys: ['quiz.questions', 'quiz.scale', 'quiz.start', 'quiz.noQuizzes'],
+  },
+  {
+    formId: 'quiz-taker',
+    title: 'Quiz Taker',
+    requiredKeys: [
+      'quiz.question',
+      'quiz.of',
+      'quiz.sources',
+      'quiz.selfCheck.show',
+      'quiz.selfCheck.hide',
+      'quiz.selfCheck.title',
+      'quiz.score.select',
+      'quiz.score.selected',
+      'quiz.comment.add',
+      'quiz.comment.required',
+      'quiz.comment.requiredHint',
+      'quiz.comment.placeholder',
+      'quiz.photo.add',
+      'quiz.photo.remove',
+      'quiz.navigation.back',
+      'quiz.navigation.pause',
+      'quiz.navigation.next',
+      'quiz.navigation.complete',
+    ],
+  },
+  {
+    formId: 'student-dashboard',
+    title: 'Student Dashboard',
+    requiredKeys: [
+      'dashboard.title',
+      'dashboard.subtitle',
+      'dashboard.empty.title',
+      'dashboard.empty.description',
+      'dashboard.results.count',
+      'dashboard.export.all',
+      'dashboard.score.total',
+      'dashboard.score.percentage',
+      'dashboard.answered',
+      'dashboard.date',
+      'dashboard.export',
+      'dashboard.delete',
+      'dashboard.import.button',
+      'dashboard.transfer.defaults',
+      'dashboard.import.success',
+      'dashboard.import.error',
+      'dashboard.report.create',
+      'dashboard.report.title',
+      'dashboard.report.description',
+      'dashboard.report.downloadMarkdown',
+      'dashboard.report.downloadPlainText',
+      'dashboard.report.print',
+      'dashboard.report.close',
+      'dashboard.report.preview',
+      'dashboard.report.error.print',
+      'dashboard.group.summary',
+      'dashboard.group.overall',
+      'dashboard.group.history',
+      'dashboard.group.absentQuestions',
+      'dashboard.group.absentBadge',
+      'dashboard.group.openQuestionnaire.action',
+      'dashboard.group.openQuestionnaire.errorSchema',
+      'dashboard.tab.results',
+      'dashboard.tab.analytics',
+      'dashboard.tab.feedback',
+      'dashboard.analytics.title',
+      'dashboard.analytics.subtitle',
+      'dashboard.analytics.usage',
+      'dashboard.analytics.filter.questionnaire',
+      'dashboard.analytics.filter.period',
+      'dashboard.analytics.filter.quickPeriod',
+      'dashboard.analytics.filter.from',
+      'dashboard.analytics.filter.to',
+      'dashboard.analytics.filter.quick7',
+      'dashboard.analytics.filter.quick30',
+      'dashboard.analytics.filter.quickAll',
+      'dashboard.analytics.filter.rangePlaceholder',
+      'dashboard.analytics.filter.clear',
+      'dashboard.analytics.emptyByFilter',
+      'dashboard.analytics.rangeInvalid',
+      'dashboard.feedback.title',
+      'dashboard.feedback.subtitle',
+      'dashboard.feedback.empty',
+      'dashboard.feedback.question',
+      'dashboard.feedback.thread',
+      'dashboard.feedback.reply.placeholder',
+      'dashboard.feedback.reply.save',
+      'dashboard.feedback.comment.label',
+      'dashboard.feedback.comment.placeholder',
+      'dashboard.feedback.comment.save',
+      'dashboard.feedback.author.curator',
+      'dashboard.feedback.author.student',
+      'dashboard.feedback.saved',
+      'dashboard.feedback.openQuestion.action',
+      'dashboard.feedback.openQuestion.errorSchema',
+      'dashboard.feedback.openQuestion.errorQuestion',
+      'questionStats.title',
+      'questionStats.subtitle',
+      'questionStats.select',
+      'questionStats.empty',
+      'questionStats.metric.average',
+      'questionStats.metric.last',
+      'questionStats.metric.attempts',
+      'questionStats.metric.delta',
+      'questionStats.dynamics.title',
+      'questionStats.dynamics.noData',
+      'questionStats.lowData.title',
+      'questionStats.lowData.item',
+    ],
+  },
+  {
+    formId: 'curator-dashboard',
+    title: 'Curator Dashboard',
+    requiredKeys: [
+      'curator.title',
+      'curator.subtitle',
+      'curator.metrics.totalAnswers',
+      'curator.metrics.groupCount',
+      'curator.metrics.pending',
+      'curator.metrics.reviewed',
+      'curator.metrics.averageScore',
+      'curator.section.activeGroups',
+      'curator.section.completedGroups',
+      'curator.empty.activeGroups',
+      'curator.group.summary',
+      'curator.group.reviewedSummary',
+      'curator.status.pending',
+      'curator.status.inReview',
+      'curator.status.reviewed',
+      'curator.status.needsRevision',
+      'curator.actions.hide',
+      'curator.actions.review',
+      'curator.actions.markReviewed',
+      'curator.actions.requestRevision',
+      'curator.feedback.add',
+      'curator.feedback.send',
+      'curator.feedback.cancel',
+      'curator.feedback.placeholder',
+      'curator.ops.exportAllReviewed',
+      'curator.ops.importStudentAnswers',
+      'curator.ops.exportForStudent',
+      'curator.ops.defaults',
+    ],
+  },
+  {
+    formId: 'profile',
+    title: 'Profile',
+    requiredKeys: [
+      'profile.title',
+      'profile.subtitle',
+      'profile.name.title',
+      'profile.name.label',
+      'profile.name.placeholder',
+      'profile.actions.saveName',
+      'profile.settings.title',
+      'profile.settings.language',
+      'profile.settings.theme',
+      'profile.settings.theme.light',
+      'profile.settings.theme.dark',
+      'profile.settings.role',
+      'profile.transfer.title',
+      'profile.transfer.subtitle',
+      'profile.transfer.export',
+      'profile.transfer.import',
+      'profile.questionnaires.title',
+      'profile.status.saved',
+      'profile.status.language',
+      'profile.status.theme',
+      'profile.status.role',
+      'profile.error.name.empty',
+      'profile.error.name.short',
+    ],
+  },
+  {
+    formId: 'admin-dashboard',
+    title: 'Admin Dashboard',
+    requiredKeys: [
+      'admin.title',
+      'admin.subtitle',
+      'admin.tab.overview',
+      'admin.tab.questionnaires',
+      'admin.tab.translations',
+      'admin.tab.operations',
+      'admin.ops.migrations.title',
+      'admin.ops.migrations.description',
+      'admin.ops.migrations.run',
+      'admin.ops.status.migrations.success',
+      'admin.ops.error.migrations.failed',
+      'admin.ops.reconciliation.title',
+      'admin.ops.reconciliation.description',
+      'admin.ops.reconciliation.file',
+      'admin.ops.error.reconciliation.emptyFile',
+      'admin.ops.status.reconciliation.completed',
+      'admin.ops.error.reconciliation.failed',
+      'admin.ops.report.totalResults',
+      'admin.ops.report.compatibleResults',
+      'admin.ops.report.incompatibleResults',
+      'admin.ops.report.missingQuestionnaires',
+      'admin.ops.report.missingQuestions',
+      'admin.overview.editor.description',
+      'admin.overview.translation.description',
+      'admin.overview.operations.description',
+      'access.denied.title',
+      'access.denied.editorOnlyAdmin',
+      'access.denied.translationsOnlyAdmin',
+    ],
+  },
+  {
+    formId: 'questionnaire-editor',
+    title: 'Questionnaire Editor',
+    requiredKeys: [
+      'editor.title',
+      'editor.subtitle',
+      'editor.loadExisting',
+      'editor.loadExisting.placeholder',
+      'editor.import',
+      'editor.meta.title',
+      'editor.meta.title.placeholder',
+      'editor.meta.source',
+      'editor.meta.source.placeholder',
+      'editor.meta.quality',
+      'editor.languages.title',
+      'editor.languages.remove.aria',
+      'editor.languages.new.placeholder',
+      'editor.languages.hint',
+      'editor.languages.add',
+      'editor.question.title',
+      'editor.question.delete',
+      'editor.question.id',
+      'editor.question.requiresComment',
+      'editor.question.localized',
+      'editor.question.contextSources',
+      'editor.question.selfCheckPrompts',
+      'editor.error.language.empty',
+      'editor.error.language.invalid',
+      'editor.error.language.duplicate',
+      'editor.status.language.added',
+      'editor.error.language.last',
+      'editor.status.language.removed',
+      'editor.status.saved',
+      'editor.status.exported',
+      'editor.status.imported',
+      'editor.error.deleteCustom.qualityMissing',
+      'editor.status.deleteCustom.success',
+      'editor.actions.addQuestion',
+      'editor.actions.save',
+      'editor.actions.export',
+      'editor.actions.deleteCustom',
+      'editor.actions.reset',
+    ],
+  },
+  {
+    formId: 'translation-manager',
+    title: 'Translation Manager',
+    requiredKeys: [
+      'translation.title',
+      'translation.subtitle',
+      'translation.language',
+      'translation.language.option.ru',
+      'translation.language.option.en',
+      'translation.translator',
+      'translation.translator.placeholder',
+      'translation.import',
+      'translation.json',
+      'translation.status.currentLoaded',
+      'translation.status.loadedForLanguage',
+      'translation.status.fileDownloaded',
+      'translation.status.fileLoaded',
+      'translation.error.invalidJson',
+      'translation.error.fileRead',
+      'translation.status.importMeta',
+      'translation.keys.title',
+      'translation.keys.noneMissing',
+      'translation.actions.loadCurrent',
+      'translation.actions.save',
+      'translation.actions.exportAll',
+      'translation.audit.title',
+      'translation.audit.summary',
+      'translation.audit.missingRu',
+      'translation.audit.missingEn',
+      'translation.audit.exportCoverage',
+      'translation.audit.table.form',
+      'translation.audit.table.keys',
+      'translation.audit.table.missingRu',
+      'translation.audit.table.missingEn',
+      'translation.audit.table.status',
+      'translation.audit.status.ok',
+      'translation.audit.status.needsWork',
+    ],
+  },
+  {
+    formId: 'questionnaire-loader',
+    title: 'Questionnaire Loader',
+    requiredKeys: [
+      'loader.title',
+      'loader.subtitle',
+      'loader.actions.downloadTemplate',
+      'loader.actions.upload',
+      'loader.status.success',
+      'loader.status.error',
+    ],
+  },
+  {
+    formId: 'score-chart',
+    title: 'Score Chart',
+    requiredKeys: [
+      'chart.distribution.title',
+      'chart.distribution.subtitle',
+      'chart.timeline.title',
+      'chart.timeline.subtitle',
+      'chart.timeline.hint',
+      'chart.timeline.empty',
+      'chart.timeline.summary',
+    ],
+  },
+  {
+    formId: 'header',
+    title: 'Header',
+    requiredKeys: [
+      'nav.home',
+      'nav.dashboard',
+      'nav.admin',
+      'nav.editor',
+      'nav.translations',
+      'nav.profile',
+      'header.role.student',
+      'header.role.curator',
+      'header.role.admin',
+      'header.logout',
+      'header.loggingOut',
+      'header.logoutError',
+    ],
+  },
+];
+
+function getMissingKeysForLanguage(keys: string[], language: LanguageCode): string[] {
+  const map = translations[language] as unknown as Record<string, string>;
+  return keys.filter((key) => {
+    const value = map[key];
+    return typeof value !== 'string' || !value.trim();
+  });
+}
+
+export function getFormTranslationCoverage(
+  languages: LanguageCode[] = ['ru', 'en']
+): FormCoverageEntry[] {
+  return FORM_TRANSLATION_REQUIREMENTS.map((requirement) => {
+    const missingByLanguage = {
+      ru: [] as string[],
+      en: [] as string[],
+    } satisfies Record<LanguageCode, string[]>;
+    const coveredByLanguage = {
+      ru: 0,
+      en: 0,
+    } satisfies Record<LanguageCode, number>;
+
+    for (const language of languages) {
+      const missing = getMissingKeysForLanguage(requirement.requiredKeys, language);
+      missingByLanguage[language] = missing;
+      coveredByLanguage[language] = requirement.requiredKeys.length - missing.length;
+    }
+
+    const fullyCovered = languages.every(
+      (language) => missingByLanguage[language].length === 0
+    );
+
+    return {
+      formId: requirement.formId,
+      title: requirement.title,
+      requiredKeys: requirement.requiredKeys,
+      missingByLanguage,
+      coveredByLanguage,
+      fullyCovered,
+    };
+  });
+}
+
+export function summarizeFormTranslationCoverage(
+  entries: FormCoverageEntry[]
+): FormCoverageSummary {
+  const languageMissingTotals = {
+    ru: 0,
+    en: 0,
+  } satisfies Record<LanguageCode, number>;
+
+  for (const entry of entries) {
+    languageMissingTotals.ru += entry.missingByLanguage.ru.length;
+    languageMissingTotals.en += entry.missingByLanguage.en.length;
+  }
+
+  return {
+    totalForms: entries.length,
+    fullyCoveredForms: entries.filter((entry) => entry.fullyCovered).length,
+    totalMissingKeys: languageMissingTotals.ru + languageMissingTotals.en,
+    languageMissingTotals,
+  };
+}

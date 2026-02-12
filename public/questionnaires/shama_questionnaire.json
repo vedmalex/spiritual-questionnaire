@@ -1,0 +1,338 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": {
+    "ru": "Опросник по качеству Шама (Умиротворение)",
+    "en": "Shama (Peacefulness) Assessment Questionnaire"
+  },
+  "metadata": {
+    "title": {
+      "ru": "Шама — Умиротворение: Качество Брахмана",
+      "en": "Shama — Peacefulness: The Quality of a Brahmana"
+    },
+    "source_lecture": {
+      "ru": "Урок 1. Подготовка ко второй инициации. Умиротворение (Шама) — качество брахмана. Е.М. Чайтанья Чандра Чаран прабху",
+      "en": "Lesson 1. Preparation for Second Initiation. Shama (Peacefulness) — the Quality of a Brahmana. E.M. Chaitanya Chandra Charan Prabhu"
+    },
+    "quality": "shama",
+    "languages": ["ru", "en"]
+  },
+  "grading_system": {
+    "scale_min": 0,
+    "scale_max": 10,
+    "description": [
+      { "score": 0, "meaning": "не задумывался (отсутствие осознанности) / never thought about it" },
+      { "score": 1, "meaning": "когда вспоминаю, стараюсь, но уже поздно / try when I remember, but too late" },
+      { "score": 2, "meaning": "почти никогда не получается / almost never succeeds" },
+      { "score": 3, "meaning": "часто почти не получается / often fails" },
+      { "score": 4, "meaning": "получается редко, требует огромных усилий / rarely succeeds, requires huge effort" },
+      { "score": 5, "meaning": "стараюсь, получается не всегда (50/50) / I try, succeeds half the time" },
+      { "score": 6, "meaning": "получается чаще, чем не получается / succeeds more often than not" },
+      { "score": 7, "meaning": "иногда получается стабильно (уверенная практика) / sometimes stable practice" },
+      { "score": 8, "meaning": "получается в большинстве случаев / succeeds in most cases" },
+      { "score": 9, "meaning": "почти всегда получается / almost always succeeds" },
+      { "score": 10, "meaning": "всегда (совершенство) / always (perfection)" }
+    ]
+  },
+  "questions": [
+    {
+      "id": "shama_01_satisfaction",
+      "question": {
+        "ru": "Способен ли я быть полностью удовлетворенным тем, что имею в данный момент, не создавая беспокойств в уме из-за нереализованных материальных желаний?",
+        "en": "Am I able to be fully satisfied with what I currently have, without creating mental agitation due to unfulfilled material desires?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «Шама означает быть довольным тем, что человек имеет, быть удовлетворенным».",
+          "Шримад-Бхагаватам 4.6.33: Пример Господа Шивы, который был невозмутим и бесстрастен."
+        ],
+        "en": [
+          "Lecture: 'Shama means being content with what one has, being satisfied.'",
+          "Srimad-Bhagavatam 4.6.33: Example of Lord Shiva, who was unperturbed and passionless."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Чувствую ли я жгучую потребность в приобретении новых вещей для 'полного счастья'?",
+          "Могу ли я сохранять покой, если мои планы на материальный комфорт рушатся?",
+          "Сравниваю ли я свой уровень достатка с другими, чувствуя при этом укол неудовлетворенности?"
+        ],
+        "en": [
+          "Do I feel a burning need to acquire new things for 'complete happiness'?",
+          "Can I remain peaceful if my plans for material comfort fall apart?",
+          "Do I compare my level of wealth with others, feeling a sting of dissatisfaction?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shama_02_guna_dominance",
+      "question": {
+        "ru": "Преобладает ли в моем сердце гуна благости (шама) над спонтанными вспышками гнева, раздражения или вожделения?",
+        "en": "Does the mode of goodness (shama) prevail in my heart over spontaneous outbursts of anger, irritation, or lust?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «Это не означает, что нет больше гнева... Но шама, как качество благости, оно преобладает, оно сильнее».",
+          "Бхагавад-гита 18.42: Шама — первое качество брахмана."
+        ],
+        "en": [
+          "Lecture: 'This doesn't mean anger is gone... But shama, as a quality of goodness, prevails; it is stronger.'",
+          "Bhagavad-gita 18.42: Shama is the first quality of a brahmana."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Что 'побеждает' внутри меня в момент конфликта: желание доказать правоту (страсть) или стремление сохранить мир (благость)?",
+          "Как быстро я возвращаюсь в равновесие после того, как почувствовал раздражение?",
+          "Осознаю ли я шаму как внутреннюю силу, способную 'поглотить' низшие эмоции?"
+        ],
+        "en": [
+          "What 'wins' inside me during a conflict: the desire to prove I'm right (passion) or the urge to keep peace (goodness)?",
+          "How quickly do I return to balance after feeling irritated?",
+          "Do I perceive shama as an internal strength capable of 'absorbing' lower emotions?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shama_03_crisis_resilience",
+      "question": {
+        "ru": "Способен ли я сохранять невозмутимость и бесстрастие даже перед лицом серьезных жизненных потрясений или потерь?",
+        "en": "Am I able to remain unperturbed and passionless even in the face of serious life shocks or losses?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: Пример Господа Шивы после смерти Сати (SB 4.6.33).",
+          "Шримад-Бхагаватам 12.10.5: Пример Маркандеи Риши, умиротворенного как океан в штиль."
+        ],
+        "en": [
+          "Lecture: Example of Lord Shiva after Sati's death (SB 4.6.33).",
+          "Srimad-Bhagavatam 12.10.5: Example of Markandeya Rishi, peaceful as an ocean during a calm."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Впадаю ли я в длительную депрессию или гнев при потере чего-то ценного?",
+          "Могу ли я продолжать свое служение, когда внешние обстоятельства кажутся катастрофическими?",
+          "Вижу ли я за трагическими событиями руку Кришны, что помогает мне сохранять тишину внутри?"
+        ],
+        "en": [
+          "Do I fall into long-term depression or anger when losing something valuable?",
+          "Can I continue my service when external circumstances seem catastrophic?",
+          "Do I see Krishna's hand behind tragic events, which helps me maintain inner silence?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shama_04_selfless_motive",
+      "question": {
+        "ru": "Очищен ли мой мотив в практике от желания 'чего-то для себя' (бхукти, мукти, сиддхи), что является главной причиной беспокойств?",
+        "en": "Is my motive in practice purified from the desire for 'something for myself' (bhukti, mukti, siddhi), which is the primary cause of unrest?"
+      },
+      "context_sources": {
+        "ru": [
+          "Шримад-Бхагаватам 2.4.19: «...не знают покоя, так как хотят получить что-либо для себя».",
+          "Чайтанья-чаритамрита, Мадхья 19.149: «Кришна-бхакта — нишкама, атаэва шанта»."
+        ],
+        "en": [
+          "Srimad-Bhagavatam 2.4.19: '...they know no peace because they want to get something for themselves.'",
+          "Chaitanya-charitamrita, Madhya 19.149: 'Krishna-bhakta is nishkama, therefore shanta'."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Ищу ли я признания, поччета или особого статуса через свое преданное служение?",
+          "Чувствую ли я зависть, когда другие получают материальные или духовные 'награды', которых нет у меня?",
+          "Готов ли я продолжать служить, если Кришна не дает мне никаких видимых плодов или комфорта?"
+        ],
+        "en": [
+          "Do I seek recognition, honor, or special status through my devotional service?",
+          "Do I feel envy when others receive material or spiritual 'rewards' that I don't have?",
+          "Am I ready to continue serving if Krishna gives me no visible fruits or comfort?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shama_05_shelter_confidence",
+      "question": {
+        "ru": "Ощущаю ли я внутреннюю уверенность и бесстрашие, основанные на полном прибежище у Кришны, подобно собаке, имеющей хозяина?",
+        "en": "Do I feel inner confidence and fearlessness based on full shelter in Krishna, like a dog that has a master?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: Пример маленькой собаки на поводке и большой бездомной собаки.",
+          "Шримад-Бхагаватам 4.24.20: Ум великой души подобен невозмутимой глади озера."
+        ],
+        "en": [
+          "Lecture: Example of a small dog on a leash and a large stray dog.",
+          "Srimad-Bhagavatam 4.24.20: The mind of a great soul is like the unperturbed surface of a lake."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Прибегаю ли я к памяти о Кришне как к первому и главному средству в моменты опасности?",
+          "Зависит ли мое спокойствие от внешних гарантий безопасности или от веры в защиту Господа?",
+          "Чувствую ли я себя 'сиротой' в этом мире или 'любимым слугой Хозяина'?"
+        ],
+        "en": [
+          "Do I resort to remembering Krishna as the first and primary remedy in moments of danger?",
+          "Does my peace depend on external security guarantees or on faith in the Lord's protection?",
+          "Do I feel like an 'orphan' in this world or a 'beloved servant of the Master'?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shama_06_non_competition",
+      "question": {
+        "ru": "Свободен ли я от духа конкуренции и борьбы за 'свое место под солнцем', понимая свое вечное положение в духовном мире?",
+        "en": "Am I free from the spirit of competition and the struggle for 'one's place under the sun', understanding my eternal position in the spiritual world?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «В духовном мире есть наше вечное законное место... Поэтому желание вернуться домой к Богу не возбуждает ум».",
+          "Шримад-Бхагаватам 8.6.24: Сотрудничество полубогов с демонами ради высшей цели."
+        ],
+        "en": [
+          "Lecture: 'In the spiritual world, there is our eternal rightful place... Therefore, the desire to return home to God does not agitate the mind.'",
+          "Srimad-Bhagavatam 8.6.24: Cooperation of demigods with demons for the higher goal."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Воспринимаю ли я других преданных как конкурентов в служении или как партнеров?",
+          "Могу ли я искренне радоваться успехам других, даже если они превосходят мои достижения?",
+          "Пытаюсь ли я 'расталкивать локтями' других ради получения служения или внимания старших?"
+        ],
+        "en": [
+          "Do I perceive other devotees as competitors in service or as partners?",
+          "Can I sincerely rejoice in the successes of others, even if they exceed my own achievements?",
+          "Do I try to 'elbow out' others to gain service or the attention of seniors?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shama_07_grihastha_shama",
+      "question": {
+        "ru": "Могу ли я сохранять статус 'прашанты' (глубоко умиротворенного) в кругу семьи, выполняя обязанности без чувства собственности и привязанности?",
+        "en": "Can I maintain the status of 'prashanta' (deeply peaceful) within my family, performing duties without a sense of ownership and attachment?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: Пример Прахлады Махараджа и его привязанности к семье (SB 8.19.2).",
+          "Лекция: «Преданный не имеет материальных желаний... конфликт не с деятельностью, а с мотивами»."
+        ],
+        "en": [
+          "Lecture: Example of Prahlada Maharaja and his attachment to family (SB 8.19.2).",
+          "Lecture: 'A devotee has no material desires... the conflict is not with the activity, but with the motives.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Считаю ли я членов семьи своей собственностью, обязанной служить моему наслаждению?",
+          "Вызывает ли у меня гнев поведение близких, когда оно не соответствует моим ожиданиям?",
+          "Могу ли я быть инструментом мира и умиротворения для своей семьи в стрессовых ситуациях?"
+        ],
+        "en": [
+          "Do I consider family members my property, obligated to serve my enjoyment?",
+          "Does the behavior of loved ones provoke anger in me when it doesn't meet my expectations?",
+          "Can I be an instrument of peace and tranquility for my family in stressful situations?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shama_08_shastra_anchor",
+      "question": {
+        "ru": "Является ли для меня следование наставлениям шастр надежным якорем, дающим непоколебимое спокойствие ума?",
+        "en": "Is following the instructions of the shastras a reliable anchor for me, providing unwavering peace of mind?"
+      },
+      "context_sources": {
+        "ru": [
+          "Шримад-Бхагаватам 3.25.21: «Садху... спокойно и невозмутимо следует наставлениям священных писаний».",
+          "Лекция: «Священное Писание дает прибежище для чувств и ума»."
+        ],
+        "en": [
+          "Srimad-Bhagavatam 3.25.21: 'A sadhu... calmly and unperturbedly follows the instructions of the sacred scriptures.'",
+          "Lecture: 'Sacred Scripture provides a refuge for the senses and the mind.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Ищу ли я ответы в шастрах, когда мой ум охвачен беспокойством?",
+          "Считаю ли я правила и предписания бременем или освобождающей силой?",
+          "Помогает ли мне знание философии не вовлекаться эмоционально в материальные споры?"
+        ],
+        "en": [
+          "Do I seek answers in the shastras when my mind is overwhelmed by anxiety?",
+          "Do I consider rules and regulations a burden or a liberating force?",
+          "Does my knowledge of philosophy help me avoid emotional involvement in material disputes?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shama_09_focus_on_krishna",
+      "question": {
+        "ru": "Сосредоточен ли мой разум на Кришне как на высшей цели, что является истинным определением умиротворенности?",
+        "en": "Is my intelligence focused on Krishna as the ultimate goal, which is the true definition of peacefulness?"
+      },
+      "context_sources": {
+        "ru": [
+          "Шримад-Бхагаватам 11.19.36: «Уравновешенность (умиротворенность) — это сосредоточенность разума на Мне».",
+          "Чайтанья-чаритамрита, Мадхья 19.211: «Шама — непоколебимая привязанность к Его лотосным стопам»."
+        ],
+        "en": [
+          "Srimad-Bhagavatam 11.19.36: 'Equanimity (peacefulness) is the concentration of the mind on Me.'",
+          "Chaitanya-charitamrita, Madhya 19.211: 'Shama is unwavering attachment to His lotus feet.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Является ли Кришна 'центром тяжести' моих мыслей в течение дня?",
+          "Ощущаю ли я, что моя умиротворенность — это результат личных усилий или милости от связи с Господом?",
+          "Могу ли я сказать, что мой ум 'занят' Кришной, а не просто 'пуст'?"
+        ],
+        "en": [
+          "Is Krishna the 'center of gravity' of my thoughts throughout the day?",
+          "Do I feel that my peacefulness is a result of personal effort or grace from my connection with the Lord?",
+          "Can I say that my mind is 'occupied' with Krishna, rather than just being 'empty'?"
+        ]
+      },
+                "requires_comment": true
+          },
+          {
+            "id": "shama_10_equanimity_dualities",
+            "question": {
+              "ru": "Способен ли я сохранять равноправие (самату) к друзьям и врагам, а также оставаться невозмутимым в поношении и славе, жаре и холоде, счастье и горе?",
+              "en": "Am I able to maintain equanimity (samata) toward friends and enemies, and remain unperturbed in infamy and fame, heat and cold, happiness and distress?"
+            },
+            "context_sources": {
+              "ru": [
+                "Бхагавад-гита 12.18-19: «Тот, кто одинаково относится к друзьям и врагам, кто одинаково встречает почет и бесчестье... такой человек очень дорог Мне».",
+                "Лекция: «С какими бы жизненными невзгодами ни сталкивался бы преданный, он всегда остается невозмутимым»."
+              ],
+              "en": [
+                "Bhagavad-gita 12.18-19: 'One who is equal to friends and enemies, who is equipoised in honor and dishonor... such a person is very dear to Me.'",
+                "Lecture: 'Whatever life's adversities a devotee faces, he always remains unperturbed.'"
+              ]
+            },
+            "self_check_prompts": {
+              "ru": [
+                "Меняется ли мое внутреннее состояние, когда меня критикуют или, наоборот, чрезмерно хвалят?",
+                "Разделяю ли я людей на 'своих' и 'чужих', проявляя к ним разную степень умиротворенности?",
+                "Могу ли я сохранять серьезность и сосредоточенность на служении, когда внешние условия (погода, комфорт) становятся неблагоприятными?"
+              ],
+              "en": [
+                "Does my internal state change when I am criticized or, conversely, excessively praised?",
+                "Do I divide people into 'ours' and 'others', showing them different degrees of peacefulness?",
+                "Can I remain grave and focused on service when external conditions (weather, comfort) become unfavorable?"
+              ]
+            },
+            "requires_comment": true
+          }
+        ]
+      }

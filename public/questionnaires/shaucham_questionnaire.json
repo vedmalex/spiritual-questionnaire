@@ -1,0 +1,338 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": {
+    "ru": "Опросник по качеству Шаучам (Чистота)",
+    "en": "Shaucham (Purity) Assessment Questionnaire"
+  },
+  "metadata": {
+    "title": {
+      "ru": "Шаучам — Чистота: Условие духовного прогресса",
+      "en": "Shaucham — Purity: A Condition for Spiritual Progress"
+    },
+    "source_lecture": {
+      "ru": "Урок 1. Подготовка ко второй инициации. Шаучам: Философские и практические аспекты чистоты. Е.М. Нитай Мангала прабху",
+      "en": "Lesson 1. Preparation for Second Initiation. Shaucham: Philosophical and Practical Aspects of Purity. E.M. Nitai Mangala Prabhu"
+    },
+    "quality": "shaucham",
+    "languages": ["ru", "en"]
+  },
+  "grading_system": {
+    "scale_min": 0,
+    "scale_max": 10,
+    "description": [
+      { "score": 0, "meaning": "не задумывался (отсутствие осознанности) / never thought about it" },
+      { "score": 1, "meaning": "когда вспоминаю, стараюсь, но уже поздно / try when I remember, but too late" },
+      { "score": 2, "meaning": "почти никогда не получается / almost never succeeds" },
+      { "score": 3, "meaning": "часто почти не получается / often fails" },
+      { "score": 4, "meaning": "получается редко, требует огромных усилий / rarely succeeds, requires huge effort" },
+      { "score": 5, "meaning": "стараюсь, получается не всегда (50/50) / I try, succeeds half the time" },
+      { "score": 6, "meaning": "получается чаще, чем не получается / succeeds more often than not" },
+      { "score": 7, "meaning": "иногда получается стабильно (уверенная практика) / sometimes stable practice" },
+      { "score": 8, "meaning": "получается в большинстве случаев / succeeds in most cases" },
+      { "score": 9, "meaning": "почти всегда получается / almost always succeeds" },
+      { "score": 10, "meaning": "всегда (совершенство) / always (perfection)" }
+    ]
+  },
+  "questions": [
+    {
+      "id": "shaucham_01_external_internal_balance",
+      "question": {
+        "ru": "Поддерживаю ли я баланс между внешней чистотой (омовение тела) и внутренней чистотой (памятование о Кришне), понимая их неразрывную связь?",
+        "en": "Do I maintain a balance between external purity (bathing the body) and internal purity (remembrance of Krishna), understanding their inseparable connection?"
+      },
+      "context_sources": {
+        "ru": [
+          "Бхагавад-гита 13.8-12 (комм): «Чистота — необходимое условие духовного прогресса. Различают внешнюю и внутреннюю чистоту».",
+          "Лекция: «Чтобы быть чистым снаружи, нужно регулярно совершать омовение. А чтобы оставаться чистым внутри, необходимо всегда думать о Кришне»."
+        ],
+        "en": [
+          "Bhagavad-gita 13.8-12 (comm): 'Purity is a necessary condition for spiritual progress. There is external and internal purity.'",
+          "Lecture: 'To be clean outside, one must bathe regularly. To stay clean inside, one must always think of Krishna.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Помогают ли мои внешние омовения моему уму настроиться на повторение Святого Имени?",
+          "Не превращается ли моя забота о чистоте тела в фанатичный ритуал при грязном сердце?",
+          "Является ли для меня Харе Кришна мантра главным средством очищения ума от накопленной пыли?"
+        ],
+        "en": [
+          "Do my external baths help my mind focus on chanting the Holy Name?",
+          "Does my concern for bodily purity turn into a fanatical ritual while the heart is dirty?",
+          "Is the Hare Krishna mantra my primary means of cleansing the mind of accumulated dust?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shaucham_02_absolute_vs_relative",
+      "question": {
+        "ru": "Способен ли я философски осознавать, что в абсолютном смысле всё чисто (как энергия Кришны), сохраняя при этом практическое различение чистого и нечистого в мире двойственности?",
+        "en": "Am I able to philosophically realize that in the absolute sense everything is pure (as Krishna's energy), while maintaining practical discrimination between the clean and unclean in the world of duality?"
+      },
+      "context_sources": {
+        "ru": [
+          "Бхагавад-гита 9.4: «В Своей непроявленной форме Я пронизываю всю вселенную...»",
+          "Лекция: «В абсолютном смысле всё чисто. Но для нас что-то не является чистым... Иначе это будет преждевременно»."
+        ],
+        "en": [
+          "Bhagavad-gita 9.4: 'By Me, in My unmanifested form, this entire universe is pervaded...'",
+          "Lecture: 'In the absolute sense everything is pure. But for us, some things are not pure... Otherwise, it would be premature.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Не использую ли я философию 'всё есть Кришна' как оправдание для пренебрежения правилами гигиены и чистоты?",
+          "Вижу ли я присутствие Господа даже в тех вещах, которые считаю нечистыми для своего уровня практики?",
+          "Понимаю ли я, что моя 'нечистота' — это относительная категория, помогающая мне расти духовно?"
+        ],
+        "en": [
+          "Do I use the philosophy 'everything is Krishna' as an excuse to neglect rules of hygiene and purity?",
+          "Do I see the presence of the Lord even in things I consider unclean for my level of practice?",
+          "Do I understand that my 'impurity' is a relative category helping me grow spiritually?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shaucham_03_consciousness_mode",
+      "question": {
+        "ru": "Слежу ли я за тем, в каком «режиме» (модусе) функционирует моё сознание, стремясь поддерживать его в саттва-гуне (режиме благости)?",
+        "en": "Do I monitor which 'mode' (modus) my consciousness is functioning in, striving to maintain it in sattva-guna (the mode of goodness)?"
+      },
+      "context_sources": {
+        "ru": [
+          "Бхагавад-гита 14 глава: «Три режима материальной природы» (Three modes of material nature).",
+          "Лекция: «Саттва-гуна — это осознание того, что я душа... Нам это нужно для того, чтобы мы начали заниматься чистой бхакти»."
+        ],
+        "en": [
+          "Bhagavad-gita Chapter 14: 'The Three Modes of Material Nature'.",
+          "Lecture: 'Sattva-guna is the realization that I am a soul... We need it so we can start practicing pure bhakti.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Могу ли я вовремя заметить, когда моё сознание переключается в режим страсти или невежества?",
+          "Понимаю ли я, что чистота — это техническое условие для того, чтобы 'услышать' наставления Гуру и шастр?",
+          "Чувствую ли я саттву как внутреннюю прозрачность и легкость, позволяющую сознавать дух?"
+        ],
+        "en": [
+          "Can I notice in time when my consciousness switches to the mode of passion or ignorance?",
+          "Do I understand that purity is a technical condition for 'hearing' the instructions of Guru and shastras?",
+          "Do I feel sattva as internal transparency and lightness that allows me to realize the spirit?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shaucham_04_raga_dvesha_freedom",
+      "question": {
+        "ru": "Насколько я свободен от привязанностей (рага) и неприязни (двеша), которые оскверняют мой ум и мешают видеть вещи такими, какие они есть?",
+        "en": "How free am I from attachments (raga) and aversions (dvesha), which contaminate my mind and prevent me from seeing things as they are?"
+      },
+      "context_sources": {
+        "ru": [
+          "Шримад-Бхагаватам 11.18.43 (комм): «Слово Шаучам указывает на чистоту ума и тела, а также на свободу от привязанности и неприязни».",
+          "Лекция: «Когда мы проявляем привязанность или неприязнь... мы начинаем забывать Брахман»."
+        ],
+        "en": [
+          "Srimad-Bhagavatam 11.18.43 (comm): 'The word shaucham indicates purity of mind and body, as well as freedom from attachment and aversion.'",
+          "Lecture: 'When we show attachment or aversion... we begin to forget Brahman.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Могу ли я оставаться невозмутимым, когда сталкиваюсь с чем-то, что мне очень неприятно?",
+          "Осознаю ли я свои сильные материальные привязанности как 'грязь', покрывающую мой разум?",
+          "Стремлюсь ли я видеть Кришну за пределами своих личных симпатий и антипатий?"
+        ],
+        "en": [
+          "Can I remain undisturbed when I encounter something that is very unpleasant to me?",
+          "Do I realize my strong material attachments as 'dirt' covering my intelligence?",
+          "Do I strive to see Krishna beyond my personal likes and dislikes?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shaucham_05_mental_scalpel",
+      "question": {
+        "ru": "Использую ли я свой ум как «скальпель хирурга», способный точно разделять истину и иллюзию, сохраняя при этом чистоту и остроту восприятия?",
+        "en": "Do I use my mind as a 'surgeon's scalpel', capable of accurately separating truth and illusion, while maintaining purity and sharpness of perception?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «Чистый ум, который видит точно, как скальпель, как хирург, он может одно от другого отличать».",
+          "Лекция: «Нам нужна чистота для того, чтобы проповедовать... разделять ложь от истины»."
+        ],
+        "en": [
+          "Lecture: 'A pure mind that sees accurately, like a scalpel, like a surgeon, can distinguish one from another.'",
+          "Lecture: 'We need purity in order to preach... to separate lie from truth.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Насколько быстро я распознаю иллюзорные концепции в своих собственных рассуждениях?",
+          "Позволяют ли мои материальные желания 'затупить' мой разум в вопросах преданного служения?",
+          "Понимаю ли я, что эффективность моей проповеди зависит от чистоты моего интеллекта?"
+        ],
+        "en": [
+          "How quickly do I recognize illusory concepts in my own reasoning?",
+          "Do my material desires allow my intelligence to be 'dulled' in matters of devotional service?",
+          "Do I understand that the effectiveness of my preaching depends on the purity of my intellect?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shaucham_06_universal_vision",
+      "question": {
+        "ru": "Способен ли я видеть единую Абсолютную Истину за пределами различных названий и религий, или мой ум всё еще осквернен делением на «наше» и «ваше»?",
+        "en": "Am I able to see the one Absolute Truth beyond various names and religions, or is my mind still contaminated by the division into 'ours' and 'yours'?"
+      },
+      "context_sources": {
+        "ru": [
+          "Шримад-Бхагаватам 7.11.8-12 (комм): «Бог один... Такое утверждение может сделать только тот, кто находится в чистом сознании».",
+          "Лекция: «Если ум человека не чист, он не видит и не сознает абсолютную истину как единое целое»."
+        ],
+        "en": [
+          "Srimad-Bhagavatam 7.11.8-12 (comm): 'God is one... Such a statement can only be made by one who is in pure consciousness.'",
+          "Lecture: 'If a person's mind is not pure, he does not see and does not realize the absolute truth as a whole.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Чувствую ли я превосходство над последователями других путей, основываясь на ложном эго?",
+          "Могу ли я оценить преданность Богу в человеке другой веры без предвзятости?",
+          "Является ли моё сознание достаточно широким, чтобы вместить идею Единого Господа?"
+        ],
+        "en": [
+          "Do I feel superior to followers of other paths based on false ego?",
+          "Can I appreciate devotion to God in a person of another faith without prejudice?",
+          "Is my consciousness broad enough to contain the idea of the One Lord?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shaucham_07_gundicha_cleaning_analogy",
+      "question": {
+        "ru": "Готов ли я 'вымыть храм своего сердца' так же тщательно, как Господь Чайтанья мыл храм Гундича — сотнями кувшинов преданности и святого имени?",
+        "en": "Am I ready to 'wash the temple of my heart' as thoroughly as Lord Caitanya washed the Gundicha temple — with hundreds of pots of devotion and the holy name?"
+      },
+      "context_sources": {
+        "ru": [
+          "Чайтанья-Чаритамрита, Мадхья 12.1: «...вычистил и вымыл храм Гундичи, сделав его таким же прохладным и сверкающим, как собственное сердце».",
+          "Лекция: «Там рассказывается, как храм вымыли водой сотней кувшинов... прохладно и уютно»."
+        ],
+        "en": [
+          "Caitanya-Caritamrta, Madhya 12.1: '...cleaned and washed the Gundicha temple, making it as cool and shining as His own heart.'",
+          "Lecture: 'It describes how the temple was washed with water from a hundred pots... cool and cozy.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Прилагаю ли я максимальные усилия в своей садхане, чтобы в сердце 'воцарился Господь'?",
+          "Чувствую ли я 'прохладу и уют' в своём уме после интенсивного воспевания?",
+          "Готов ли я к 'генеральной уборке' своего сознания, не оставляя мусора в дальних углах?"
+        ],
+        "en": [
+          "Do I exert maximum effort in my sadhana so that 'the Lord may reign' in my heart?",
+          "Do I feel 'coolness and coziness' in my mind after intense chanting?",
+          "Am I ready for a 'general cleaning' of my consciousness, leaving no trash in the far corners?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shaucham_08_sorting_the_mess",
+      "question": {
+        "ru": "Способен ли я честно 'вывалить перед собой весь хлам' своего сердца (свои недостатки) и рассортировать их с помощью Святого Имени, не впадая в отчаяние?",
+        "en": "Am I able to honestly 'dump out all the trash' of my heart (my shortcomings) and sort them with the help of the Holy Name, without falling into despair?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: Пример с уборкой на заброшенной даче. «Четыре круга я прочитал — все, я понял, что делать».",
+          "Лекция: «Во-первых, нужно всё, что есть, вывалить прямо перед собой... Признаться, что я накопил много»."
+        ],
+        "en": [
+          "Lecture: Example of cleaning an abandoned dacha. 'I read four rounds — that's it, I realized what to do.'",
+          "Lecture: 'First, you need to dump everything that is there right in front of you... Admit that I have accumulated a lot.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Прибегаю ли я к Святому Имени как к источнику сил перед тем, как начать работать над своими пороками?",
+          "Хватает ли мне мужества увидеть 'всю грязь' в своих потаенных углах сознания?",
+          "Использую ли я метод 'сортировки' — последовательного очищения от конкретных недостатков?"
+        ],
+        "en": [
+          "Do I resort to the Holy Name as a source of strength before starting to work on my vices?",
+          "Do I have the courage to see 'all the dirt' in the hidden corners of my consciousness?",
+          "Do I use the 'sorting' method — sequential purification from specific shortcomings?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shaucham_09_non_attachment_in_activity",
+      "question": {
+        "ru": "Является ли моё служение 'чистым' в плане отсутствия привязанности к плодам, или я всё еще ищу в нём материальной выгоды или славы?",
+        "en": "Is my service 'pure' in terms of non-attachment to the fruits, or am I still seeking material benefit or fame in it?"
+      },
+      "context_sources": {
+        "ru": [
+          "Шримад-Бхагаватам 11.19.38: «Чистота заключается в том, чтобы... оставаться свободным от привязанностей» (кармасв асан̇гамах̣ ш́аучам̇).",
+          "Лекция: «Мирскими считаются ритуалы, которые провоцируют человека поступать как материалист или демон»."
+        ],
+        "en": [
+          "Srimad-Bhagavatam 11.19.38: 'Purity consists in... remaining free from attachments' (karmasv asangamaḥ śaucam).",
+          "Lecture: 'Rituals are considered mundane if they provoke a person to act like a materialist or a demon.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Оскверняется ли моё служение вожделением или завистью к успехам других?",
+          "Могу ли я продолжать служить, если результат моей деятельности не приносит мне никакой выгоды?",
+          "Является ли удовлетворение Господа моим единственным мотивом в чистоте действий?"
+        ],
+        "en": [
+          "Is my service contaminated by lust or envy of others' success?",
+          "Can I continue to serve if the result of my activity brings me no benefit?",
+          "Is the Lord's satisfaction my only motive in the purity of actions?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "shaucham_10_spontaneous_purity",
+      "question": {
+        "ru": "Становится ли чистота для меня естественным и непроизвольным состоянием (подобно ребенку), или я всё еще следую правилам под давлением внешних категорий 'добра и зла'?",
+        "en": "Is purity becoming a natural and involuntary state for me (like a child), or am I still following rules under the pressure of external categories of 'good and evil'?"
+      },
+      "context_sources": {
+        "ru": [
+          "Шримад-Бхагаватам 11.7.11: «...делает это непроизвольно, как невинный ребенок... осознавший свою духовную природу».",
+          "Лекция: «Такая чистота... возникает самопроизвольно. Поступки совершенного преданного всегда чисты»."
+        ],
+        "en": [
+          "Srimad-Bhagavatam 11.7.11: '...does it involuntarily, like an innocent child... having realized his spiritual nature.'",
+          "Lecture: 'Such purity... arises spontaneously. The actions of a perfect devotee are always pure.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Чувствую ли я внутреннее сопротивление при соблюдении стандартов чистоты?",
+          "Ощущаю ли я, что моя чистота исходит из любви к Кришне, а не из страха перед последствиями?",
+          "Могу ли я сказать, что я 'вспомнил' свою чистую природу слуги, а не просто выучил правила?"
+        ],
+        "en": [
+          "Do I feel internal resistance when observing standards of purity?",
+          "Do I feel that my purity stems from love for Krishna, not from fear of consequences?",
+          "Can I say that I have 'remembered' my pure nature as a servant, rather than just learned the rules?"
+        ]
+      },
+      "requires_comment": true
+    }
+  ]
+}

@@ -1,0 +1,355 @@
+import { useEffect, useRef, useState } from 'react';
+import type { Questionnaire, AnswerDetails } from '../types/questionnaire';
+import { GRADING_DESCRIPTIONS } from '../utils/constants';
+import { t, getGradeDescription } from '../utils/i18n';
+
+interface QuizTakerProps {
+  questionnaire: Questionnaire;
+  currentQuestionIndex: number;
+  answers: Record<string, AnswerDetails>;
+  onAnswer: (questionId: string, details: AnswerDetails) => void;
+  onNext: () => void;
+  onPrev: () => void;
+  onPause: () => void;
+  onComplete: () => void;
+}
+
+export function QuizTaker({
+  questionnaire,
+  currentQuestionIndex,
+  answers,
+  onAnswer,
+  onNext,
+  onPrev,
+  onPause,
+  onComplete,
+}: QuizTakerProps) {
+  const [showHelp, setShowHelp] = useState(false);
+  const [hoveredScore, setHoveredScore] = useState<number | null>(null);
+  const [showComment, setShowComment] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  const currentQuestion = questionnaire.questions[currentQuestionIndex];
+  const currentLanguage = document.documentElement.lang || 'ru';
+  const totalQuestions = questionnaire.questions.length;
+  const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+  const currentAnswer = answers[currentQuestion.id];
+  const currentScore = currentAnswer?.score;
+  const currentComment = currentAnswer?.comment || '';
+  const currentPhotos = currentAnswer?.photos || [];
+  const currentFeedback = currentAnswer?.curatorFeedback || [];
+  const commentRequired = Boolean(currentQuestion.requires_comment);
+  const hasRequiredComment = !commentRequired || currentComment.trim().length > 0;
+  const canProceed = currentScore !== undefined && hasRequiredComment;
+
+  useEffect(() => {
+    setShowComment(commentRequired || Boolean(currentComment));
+  }, [currentQuestion.id, commentRequired]);
+
+  const handleScoreSelect = (score: number) => {
+    onAnswer(currentQuestion.id, {
+      score,
+      comment: currentComment,
+      photos: currentPhotos,
+      curatorFeedback: currentFeedback,
+    });
+  };
+
+  const handleCommentChange = (comment: string) => {
+    onAnswer(currentQuestion.id, {
+      score: currentScore || 0,
+      comment,
+      photos: currentPhotos,
+      curatorFeedback: currentFeedback,
+    });
+  };
+
+  const handlePhotoAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string;
+        const newPhotos = [...currentPhotos, base64];
+        onAnswer(currentQuestion.id, {
+          score: currentScore || 0,
+          comment: currentComment,
+          photos: newPhotos,
+          curatorFeedback: currentFeedback,
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handlePhotoRemove = (index: number) => {
+    const newPhotos = currentPhotos.filter((_, i) => i !== index);
+    onAnswer(currentQuestion.id, {
+      score: currentScore || 0,
+      comment: currentComment,
+      photos: newPhotos,
+      curatorFeedback: currentFeedback,
+    });
+  };
+
+  const getQuestionText = () => {
+    const q = currentQuestion.question;
+    if (typeof q === 'string') return q;
+    return q[currentLanguage] || q['en'] || q['ru'] || '';
+  };
+
+  const getLocalizedList = (value: Questionnaire['questions'][number]['context_sources']) => {
+    if (Array.isArray(value)) {
+      return value;
+    }
+
+    return value[currentLanguage] || value['en'] || value['ru'] || [];
+  };
+
+  const currentSources = getLocalizedList(currentQuestion.context_sources);
+  const currentPrompts = getLocalizedList(currentQuestion.self_check_prompts);
+
+  return (
+    <div className="max-w-4xl mx-auto">
+      {/* Progress Bar */}
+      <div className="mb-6">
+        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+          <span>{t('quiz.question')} {currentQuestionIndex + 1} {t('quiz.of')} {totalQuestions}</span>
+          <span>{Math.round(progress)}%</span>
+        </div>
+        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+          <div
+            className="bg-primary-600 h-2 rounded-full transition-all duration-300"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
+
+      {/* Question Card */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-6 mb-6">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          {getQuestionText()}
+        </h2>
+
+        {/* Context Sources */}
+        <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            {t('quiz.sources')}
+          </h3>
+          <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
+            {currentSources.map((source, idx) => (
+              <li key={`source-${idx}`}>{source}</li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Self-Check Prompts */}
+        <div className="mb-6">
+          <button
+            type="button"
+            onClick={() => setShowHelp(!showHelp)}
+            className="text-primary-600 dark:text-primary-400 hover:underline text-sm font-medium flex items-center"
+          >
+            {showHelp ? t('quiz.selfCheck.hide') : t('quiz.selfCheck.show')}
+            <svg
+              className={`w-4 h-4 ml-1 transform transition-transform ${showHelp ? 'rotate-180' : ''}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          {showHelp && (
+            <div className="mt-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">
+                {t('quiz.selfCheck.title')}
+              </h4>
+              <ul className="list-disc list-inside text-sm text-blue-800 dark:text-blue-200 space-y-1">
+                {currentPrompts.map((prompt, idx) => (
+                  <li key={`prompt-${idx}`}>{prompt}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Score Selection with Tooltips */}
+        <div className="mb-6">
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+            {t('quiz.score.select')}
+          </h3>
+          
+          <div className="grid grid-cols-6 sm:grid-cols-11 gap-2">
+            {GRADING_DESCRIPTIONS.map(({ score }) => (
+              <div key={score} className="relative">
+                <button
+                  type="button"
+                  onClick={() => handleScoreSelect(score)}
+                  onMouseEnter={() => setHoveredScore(score)}
+                  onMouseLeave={() => setHoveredScore(null)}
+                  className={`
+                    w-full p-3 rounded-lg text-sm font-medium transition-all
+                    ${currentScore === score
+                      ? 'bg-primary-600 text-white ring-2 ring-primary-600 ring-offset-2 dark:ring-offset-gray-800'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    }
+                  `}
+                >
+                  {score}
+                </button>
+                
+                {/* Tooltip */}
+                {hoveredScore === score && (
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs rounded-lg shadow-lg whitespace-nowrap z-10 max-w-xs">
+                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-white"></div>
+                    {getGradeDescription(score)}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          
+          {currentScore !== undefined && (
+            <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+              {t('quiz.score.selected')}: <strong className="text-primary-600 dark:text-primary-400">{currentScore}</strong> - {' '}
+              {getGradeDescription(currentScore)}
+            </p>
+          )}
+        </div>
+
+        {/* Comment Section */}
+        <div className="mb-6">
+          {!commentRequired && (
+            <button
+              type="button"
+              onClick={() => setShowComment(!showComment)}
+              className="text-primary-600 dark:text-primary-400 hover:underline text-sm font-medium flex items-center mb-3"
+            >
+              📝 {t('quiz.comment.add')}
+            </button>
+          )}
+
+          {commentRequired && (
+            <p className="mb-2 text-sm font-medium text-amber-700 dark:text-amber-300">
+              {t('quiz.comment.required')}
+            </p>
+          )}
+          
+          {(commentRequired || showComment || currentComment) && (
+            <textarea
+              value={currentComment}
+              onChange={(e) => handleCommentChange(e.target.value)}
+              placeholder={t('quiz.comment.placeholder')}
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+              rows={4}
+            />
+          )}
+
+          {commentRequired && currentScore !== undefined && !hasRequiredComment && (
+            <p className="mt-2 text-xs text-amber-700 dark:text-amber-300">
+              {t('quiz.comment.requiredHint')}
+            </p>
+          )}
+        </div>
+
+        {/* Photo Section */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              📷 {t('quiz.photo.add')} ({currentPhotos.length})
+            </span>
+            
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="text-sm px-3 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
+            >
+              +
+            </button>
+          </div>
+          
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handlePhotoAdd}
+            className="hidden"
+          />
+          
+          {currentPhotos.length > 0 && (
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+              {currentPhotos.map((photo, idx) => (
+                <div key={idx} className="relative group">
+                  <img
+                    src={photo}
+                    alt={`Photo ${idx + 1}`}
+                    className="w-full h-24 object-cover rounded-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handlePhotoRemove(idx)}
+                    className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    title={t('quiz.photo.remove')}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <div className="flex justify-between items-center">
+        <div className="flex space-x-3">
+          <button
+            type="button"
+            onClick={onPrev}
+            disabled={currentQuestionIndex === 0}
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            ← {t('quiz.navigation.back')}
+          </button>
+          
+          <button
+            type="button"
+            onClick={onPause}
+            className="px-4 py-2 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-900/50 transition-colors"
+          >
+            ⏸ {t('quiz.navigation.pause')}
+          </button>
+        </div>
+
+        <div>
+          {currentQuestionIndex === totalQuestions - 1 ? (
+            <button
+              type="button"
+              onClick={onComplete}
+              disabled={!canProceed}
+              className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              ✅ {t('quiz.navigation.complete')}
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onNext}
+              disabled={!canProceed}
+              className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {t('quiz.navigation.next')} →
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

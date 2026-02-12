@@ -1,0 +1,338 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": {
+    "ru": "Опросник по качеству Тапасья (Аскетизм)",
+    "en": "Tapasya (Austerity) Assessment Questionnaire"
+  },
+  "metadata": {
+    "title": {
+      "ru": "Тапасья — Аскетизм: Богатство Брахмана",
+      "en": "Tapasya — Austerity: The Wealth of a Brahmana"
+    },
+    "source_lecture": {
+      "ru": "Урок 1. Подготовка ко второй инициации. Аскетизм (Тапасья) — качество брахмана. Е.С. Вальмики прабху",
+      "en": "Lesson 1. Preparation for Second Initiation. Tapasya (Austerity) — the Quality of a Brahmana. E.S. Valmiki Prabhu"
+    },
+    "quality": "tapasya",
+    "languages": ["ru", "en"]
+  },
+  "grading_system": {
+    "scale_min": 0,
+    "scale_max": 10,
+    "description": [
+      { "score": 0, "meaning": "не задумывался (отсутствие осознанности) / never thought about it" },
+      { "score": 1, "meaning": "когда вспоминаю, стараюсь, но уже поздно / try when I remember, but too late" },
+      { "score": 2, "meaning": "почти никогда не получается / almost never succeeds" },
+      { "score": 3, "meaning": "часто почти не получается / often fails" },
+      { "score": 4, "meaning": "получается редко, требует огромных усилий / rarely succeeds, requires huge effort" },
+      { "score": 5, "meaning": "стараюсь, получается не всегда (50/50) / I try, succeeds half the time" },
+      { "score": 6, "meaning": "получается чаще, чем не получается / succeeds more often than not" },
+      { "score": 7, "meaning": "иногда получается стабильно (уверенная практика) / sometimes stable practice" },
+      { "score": 8, "meaning": "получается в большинстве случаев / succeeds in most cases" },
+      { "score": 9, "meaning": "почти всегда получается / almost always succeeds" },
+      { "score": 10, "meaning": "всегда (совершенство) / always (perfection)" }
+    ]
+  },
+  "questions": [
+    {
+      "id": "tapasya_01_definition_and_goal",
+      "question": {
+        "ru": "Воспринимаю ли я аскезу как добровольное лишение себя зоны комфорта ради высокой духовной цели, а не просто как механическое самоограничение?",
+        "en": "Do I perceive austerity as a voluntary deprivation of comfort for a high spiritual goal, rather than just mechanical self-restriction?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «Аскетизм — это добровольное лишение себя зоны комфорта во благо достижения высокой цели».",
+          "Шримад-Бхагаватам 2.9.24 (комм): «Легкая жизнь и достижение совершенства в познании трансцендентного несовместимы»."
+        ],
+        "en": [
+          "Lecture: 'Asceticism is the voluntary deprivation of one's comfort zone for the sake of achieving a high goal.'",
+          "Srimad-Bhagavatam 2.9.24 (comm): 'Easy life and reaching perfection in transcendental knowledge are incompatible.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Понимаю ли я, ради чего я терплю неудобства: ради Кришны или по привычке?",
+          "Чувствую ли я внутреннюю связь между своим дискомфортом и духовным ростом?",
+          "Могу ли я оставаться вдохновленным, когда внешние условия жизни становятся суровыми?"
+        ],
+        "en": [
+          "Do I understand what I am enduring discomfort for: for Krishna or out of habit?",
+          "Do I feel an inner connection between my discomfort and spiritual growth?",
+          "Can I remain inspired when external living conditions become harsh?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "tapasya_02_body_sanctification",
+      "question": {
+        "ru": "Занимаю ли я своё тело в аскезе (поклонение, чистота, тилака, вайшнавская одежда), превращая его в пригодный инструмент для служения?",
+        "en": "Do I engage my body in austerity (worship, purity, tilaka, Vaishnava clothes), turning it into a suitable instrument for service?"
+      },
+      "context_sources": {
+        "ru": [
+          "Бхагавад-гита 17.14: «Аскезой для тела является поклонение Господу... чистота, прямота, целомудрие».",
+          "Лекция: «Это то, что делает наше тело годным для преданного служения. Тело — это хороший инструмент»."
+        ],
+        "en": [
+          "Bhagavad-gita 17.14: 'Austerity of the body consists in worship of the Supreme Lord... purity, simplicity, celibacy.'",
+          "Lecture: 'This is what makes our body fit for devotional service. The body is a good instrument.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Наношу ли я тилаку на все 12 частей тела с сознанием присутствия Господа?",
+          "Считаю ли я поддержание чистоты тела (омовение, чистая одежда) важным элементом своей тапасьи?",
+          "Помогают ли мои телесные аскезы осознать, что 'я не есть это тело'?"
+        ],
+        "en": [
+          "Do I apply tilaka to all 12 parts of the body with the awareness of the Lord's presence?",
+          "Do I consider maintaining body purity (bathing, clean clothes) an important element of my tapasya?",
+          "Do my bodily austerities help me realize that 'I am not this body'?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "tapasya_03_speech_discipline",
+      "question": {
+        "ru": "Является ли моя речь аскетичной: правдивой, приятной, направленной на благо других и всегда подкрепленной авторитетом шастр?",
+        "en": "Is my speech austere: truthful, pleasing, directed toward the benefit of others, and always backed by the authority of the shastras?"
+      },
+      "context_sources": {
+        "ru": [
+          "Бхагавад-гита 17.15: «Аскеза речи состоит в том, чтобы говорить слова правдивые, приятные... и регулярно изучать ведические писания».",
+          "Лекция: «Те, кто занимаются духовной практикой, говорят лишь то, что подкреплено авторитетом священных писаний»."
+        ],
+        "en": [
+          "Bhagavad-gita 17.15: 'Austerity of speech consists in speaking words that are truthful, pleasing... and regularly reciting Vedic literature.'",
+          "Lecture: 'Those engaged in spiritual practice speak only what is backed by the authority of sacred scriptures.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Могу ли я воздержаться от правды, если она принесет только вред и беспокойство, не имея высшей цели?",
+          "Цитирую ли я писания, чтобы подтвердить свои слова, или опираюсь только на своё мнение?",
+          "Слежу ли я за тем, чтобы моя речь была приятной для слуха окружающих?"
+        ],
+        "en": [
+          "Can I refrain from telling the truth if it will only cause harm and agitation without a higher purpose?",
+          "Do I quote scriptures to confirm my words, or do I rely only on my own opinion?",
+          "Do I make sure my speech is pleasing to the ears of those around me?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "tapasya_04_mind_purification",
+      "question": {
+        "ru": "Работаю ли я над аскезой ума, приучая его к удовлетворенности и отрывая его от мыслей о чувственных наслаждениях?",
+        "en": "Am I working on the austerity of the mind, training it to be satisfied and detaching it from thoughts of sense gratification?"
+      },
+      "context_sources": {
+        "ru": [
+          "Бхагавад-гита 17.16: «Удовлетворенность, простота, сдержанность... называются аскезой ума».",
+          "Лекция: «Обуздать ум — значит оторвать его от мыслей о чувственных удовольствиях»."
+        ],
+        "en": [
+          "Bhagavad-gita 17.16: 'Satisfaction, simplicity, gravity... are called austerity of the mind.'",
+          "Lecture: 'To curb the mind means to tear it away from thoughts of sensual pleasures.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Занимаю ли я свой ум изучением историй из Пуран и Махабхараты, чтобы очистить его от материальной скверны?",
+          "Как быстро я замечаю мысли о наслаждениях и заменяю их мыслями о благе для других?",
+          "Чувствую ли я внутреннюю тишину (маунам) как сосредоточенность на природе духа?"
+        ],
+        "en": [
+          "Do I occupy my mind with studying stories from the Puranas and Mahabharata to cleanse it from material filth?",
+          "How quickly do I notice thoughts of enjoyment and replace them with thoughts of benefit for others?",
+          "Do I feel inner silence (maunam) as concentration on the nature of the spirit?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "tapasya_05_evening_discipline",
+      "question": {
+        "ru": "Способен ли я совершать вечернюю аскезу — ложиться спать вовремя, отказываясь от желания «догнать» чувственные наслаждения в конце дня?",
+        "en": "Am I able to perform evening austerity — going to bed on time, giving up the desire to 'catch up' on sense gratification at the end of the day?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «Аскеза будет заключаться в том, чтобы не культивировать... в уме желание удовлетвориться чем-то [напоследок]».",
+          "Лекция: «Мы также ложимся вовремя — это некий элемент аскезы. Поднимаемся рано»."
+        ],
+        "en": [
+          "Lecture: 'The austerity will consist in not cultivating... in the mind a desire to be satisfied with something [at the last moment].'",
+          "Lecture: 'We also go to bed on time — this is a certain element of austerity. We rise early.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Трачу ли я вечерние часы на интернет или еду вместо того, чтобы подготовиться к раннему подъему?",
+          "Могу ли я волевым усилием выключить гаджеты ради полноценной утренней садханы?",
+          "Понимаю ли я, что мой ранний подъем напрямую зависит от моей вечерней аскезы?"
+        ],
+        "en": [
+          "Do I spend evening hours on the internet or food instead of preparing for an early rise?",
+          "Can I forcefully turn off gadgets for the sake of a full morning sadhana?",
+          "Do I understand that my early rise directly depends on my evening austerity?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "tapasya_06_motive_and_gunas",
+      "question": {
+        "ru": "Совершаю ли я свои аскезы в гуне благости — без стремления к материальным благам и только ради удовлетворения Всевышнего?",
+        "en": "Do I perform my austerities in the mode of goodness — without striving for material benefits and only for the satisfaction of the Supreme?"
+      },
+      "context_sources": {
+        "ru": [
+          "Бхагавад-гита 17.17: «Аскезы... не стремится к материальным благам и действует ради удовлетворения Всевышнего...»",
+          "Лекция: «Кришна говорит, что аскеза является единственным источником всякой силы»."
+        ],
+        "en": [
+          "Bhagavad-gita 17.17: 'Austerities... without desiring material benefits and working for the satisfaction of the Supreme...'",
+          "Lecture: 'Krishna says that austerity is the only source of all power.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Есть ли в моей тапасье элемент гордости или желания почета (гуна страсти)?",
+          "Не является ли моя аскеза бессмысленным самоистязанием (гуна невежества)?",
+          "Чувствую ли я удовлетворение Господа как главный результат своей аскезы?"
+        ],
+        "en": [
+          "Is there an element of pride or desire for honor in my tapasya (mode of passion)?",
+          "Is my austerity a meaningless self-torture (mode of ignorance)?",
+          "Do I feel the Lord's satisfaction as the main result of my austerity?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "tapasya_07_cooperation_austerity",
+      "question": {
+        "ru": "Готов ли я совершать «высшую аскезу» — сотрудничать с преданными и другими людьми, переступая через своё эго ради миссии?",
+        "en": "Am I ready to perform the 'highest austerity' — to cooperate with devotees and other people, stepping over my ego for the sake of the mission?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «Самым великим элементом аскезы или самой суровой аскезой — это уметь сотрудничать со всеми живыми существами... особенно с преданными».",
+          "Лекция: «Уметь сотрудничать — то есть направлять свои помыслы все на то, чтобы распространять святое имя»."
+        ],
+        "en": [
+          "Lecture: 'The greatest element of austerity or the most severe austerity is to be able to cooperate with all living beings... especially with devotees.'",
+          "Lecture: 'To be able to cooperate — that is, to direct all your thoughts to spreading the holy name.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Могу ли я работать в команде с теми, кто мне неприятен, ради удовлетворения Гуру и Кришны?",
+          "Прилагаю ли я усилия, чтобы преодолеть малодушие и нежелание что-то делать для других?",
+          "Осознаю ли я сотрудничество как духовную битву с собственным эгоизмом?"
+        ],
+        "en": [
+          "Can I work in a team with those I dislike for the satisfaction of Guru and Krishna?",
+          "Do I make efforts to overcome faintheartedness and reluctance to do something for others?",
+          "Do I perceive cooperation as a spiritual battle with my own selfishness?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "tapasya_08_internal_kama_tyaga",
+      "question": {
+        "ru": "Является ли моя аскеза внутренним процессом отказа от материальных вожделений (кама-тьяга), а не только внешним ритуалом?",
+        "en": "Is my austerity an internal process of giving up material desires (kama-tyaga), rather than just an external ritual?"
+      },
+      "context_sources": {
+        "ru": [
+          "Шримад-Бхагаватам 11.19.37: «Истинная аскеза — это отказ от вожделения (материальных желаний)» (ка̄ма-тйа̄гас тапах̣ смр̣там).",
+          "Лекция: «Мы должны внутри работать над нашими качествами»."
+        ],
+        "en": [
+          "Srimad-Bhagavatam 11.19.37: 'True austerity is giving up lust (material desires)' (kāma-tyāgas tapaḥ smṛtam).",
+          "Lecture: 'We must work on our qualities internally.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Уменьшается ли моя привязанность к объектам чувств в результате моих аскез?",
+          "Не «коплю» ли я вожделение внутри, сдерживая его только внешне?",
+          "Чувствую ли я, что аскеза сжигает мою карму и очищает сердце?"
+        ],
+        "en": [
+          "Is my attachment to sense objects decreasing as a result of my austerities?",
+          "Am I not 'accumulating' lust inside while only restraining it externally?",
+          "Do I feel that austerity burns my karma and purifies my heart?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "tapasya_09_guru_instructions_fidelity",
+      "question": {
+        "ru": "Готов ли я безоговорочно выполнять указания духовного учителя, воспринимая это как главную и суровую аскезу своей жизни?",
+        "en": "Am I ready to unconditionally follow the instructions of my spiritual teacher, perceiving this as the main and severe austerity of my life?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «В этом кроется успех ученика... что он безоговорочно готов исполнять любые указания духовного учителя».",
+          "Шримад-Бхагаватам 2.9.24 (комм): «Выполнение этих указаний любой ценой — суровая аскеза»."
+        ],
+        "en": [
+          "Lecture: 'Therein lies the success of the disciple... that he is unconditionally ready to carry out any instructions of the spiritual master.'",
+          "Srimad-Bhagavatam 2.9.24 (comm): 'To carry out these instructions at any cost is severe austerity.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Ищу ли я «легких путей» и оправданий, чтобы не выполнять наставления Гуру полностью?",
+          "Является ли воля духовного учителя приоритетнее моего комфорта и планов?",
+          "Ощущаю ли я аскезу послушания как источник духовной силы?"
+        ],
+        "en": [
+          "Do I look for 'easy ways' and excuses not to carry out the Guru's instructions fully?",
+          "Is the will of the spiritual teacher more important than my comfort and plans?",
+          "Do I feel the austerity of obedience as a source of spiritual power?"
+        ]
+      },
+      "requires_comment": true
+    },
+    {
+      "id": "tapasya_10_comfort_and_steadiness",
+      "question": {
+        "ru": "Научился ли я совершать аскезы «комфортно» — так, чтобы они были устойчивыми и не приводили к срывам из-за чрезмерного насилия над собой?",
+        "en": "Have I learned to perform austerities 'comfortably' — so that they are stable and do not lead to breakdowns due to excessive self-violence?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция: «Аскезы должны нами твориться ровно столько, сколько мы сможем комфортно терпеть их».",
+          "Лекция: «Если качества будут в нашем сердце усиливаться... для него аскеза не станет чем-то тяжелым»."
+        ],
+        "en": [
+          "Lecture: 'Austerities should be performed by us just as much as we can comfortably endure them.'",
+          "Lecture: 'If qualities strengthen in our heart... for him austerity will not become something difficult.'"
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Могу ли я поддерживать свою тапасью годами, или она носит характер временных «подвигов»?",
+          "Стала ли для меня аскеза (например, ранний подъем) естественным состоянием и нектаром?",
+          "Слежу ли я за тем, чтобы моё тело не было истощено аскезой настолько, что я не могу служить?"
+        ],
+        "en": [
+          "Can I maintain my tapasya for years, or is it characterized by temporary 'feats'?",
+          "Has austerity (e.g., early rise) become a natural state and nectar for me?",
+          "Do I make sure my body is not so exhausted by austerity that I cannot serve?"
+        ]
+      },
+      "requires_comment": true
+    }
+  ]
+}
