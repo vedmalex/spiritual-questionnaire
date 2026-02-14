@@ -31,12 +31,36 @@
 - Инструменты: editor опросников, dynamic JSON loader, translation tool.
 - Data layer: adapter pattern + migrations.
 - Аналитика использования: Google Analytics page/form activity tracking (через env-конфигурацию).
+- Универсальные тесты: поддержка опросников с индивидуальными правилами расчета/интерпретации (ключи, параметры, профили).
+- Контент опросников: мультиязычные `intro`/`outro` блоки, обложка опросника, иллюстрации на уровне вопроса.
+- Регулярные опросники: расписание и напоминания в PWA.
+- Расширенные ответы: текст + изображения + аудио + видео.
+- Перенос rich-media данных: JSON как default-формат и optional binary package для больших медиа-наборов.
+- Пользовательская документация: поддерживаемая инструкция для `desktop/mobile` и профилей `student/curator/admin` с регулярным обновлением через `playwright-cli`.
+- Канонический baseline пользовательских потоков ведется в `docs/testing/user-flow-baseline.md` (Flow ID + expected result + regression checkpoints) и используется для приемки новых UI-фич.
+- Пользовательская инструкция для конечных пользователей ведется отдельно: `docs/guides/user-manual.md`.
+- Для автоматизации UI/UX regression поддерживается отдельный `playwright-cli` scenario pack, связанный с каноническими Flow ID.
+- Студентские опросники организуются в иерархию папок с возможностью произвольного перемещения.
+- Кураторские работы студентов организуются в иерархию папок с агрегатами по студентам и свежим непроверенным работам.
+- Для импорта/маршрутизации работ действует sticky-привязка студента к папке и fallback-диалог выбора/создания папки для неизвестного студента.
 
 ## Non-Functional Scope
 - Static hosting compatibility.
 - Type-safe codebase (TypeScript strict).
 - Local-first persistence.
 - Mobile-friendly UI.
+- Secure-by-default модель исполнения правил обработки результатов (sandbox, без произвольного JS).
+
+## Planned Milestone (Future Scope)
+- Source: `/Users/vedmalex/work/ai-questionary/FUTURE.md`.
+- Цель: эволюция платформы от фиксированной шкалы к универсальным опросникам с безопасными кастомными правилами расчета и rich-media ответами.
+- Группы работ:
+  - **Rules Engine & Schema**: declarative processing rules, per-questionnaire scoring logic.
+  - **Safe Runtime**: sandbox evaluator для безопасного выполнения правил.
+  - **Questionnaire Content**: intro/outro, cover, question images.
+  - **Recurring Flows**: questionnaire reminders in PWA.
+  - **Media & Transfer**: audio/video answers + exchange format extensions.
+  - **Foldered Workspaces**: student questionnaire folders + curator student-work folders with auto-routing.
 
 ## Current Status (2026-02-11)
 - Базовая сверка на этапе `UR-001..UR-034` зафиксирована в `memory-bank/system/AUDIT-2026-02-11-user-req.md`.
@@ -76,6 +100,11 @@
 - Выполнен `TASK-038`: устранены белые «уголки» иконки; верхние уголки карточки очищены, внешний контур PNG иконок подтвержден как прозрачный (`alpha=0`) с Playwright-артефактами.
 - Выполнен `TASK-041`: студент может держать на паузе несколько опросников; выбор карточки опросника резюмирует именно его paused-сессию с сохраненного вопроса.
 - Зафиксирован follow-up `BUG-003`: static prerender runtime показывает `React #418` hydration mismatch, требуется отдельная стабилизация.
+- Запланирована новая веха FUTURE: требования `UR-083..UR-092` и набор задач `TASK-052..TASK-058` (включая обновление skill `spiritual-questionnaire-architect`).
+- Выполнен baseline `TASK-059`: добавлена пользовательская инструкция и процесс регулярного обновления скриншотов через `playwright-cli`.
+- Выполнен follow-up `TASK-059`: инструкция переведена в канонический формат flow baseline (по ролям и desktop/mobile), добавлены обязательные Flow ID и чекпоинты для регрессионного тестирования (`UR-097`, `UR-098`).
+- Выполнен `TASK-060`: добавлен исполняемый сценарный пакет `playwright-cli` (JSON + runner + assert/report artifacts) для UI/UX regression по каноническим Flow ID (`UR-099`, `WF-010`).
+- FUTURE требования по иерархии папок синхронизированы в `USER-REQ` как `UR-100..UR-106`; реализация выделена в отдельные задачи `TASK-064..TASK-066`.
 
 ## Release Gate
 1. Mobile audit для 320/375/768 — ✅ выполнен (`memory-bank/system/MOBILE-AUDIT-2026-02-11.md`, артефакты в `memory-bank/system/mobile-audit-artifacts/2026-02-11`).
@@ -83,4 +112,4 @@
 3. Baseline automated tests and i18n coverage guard — ✅ выполнены (`npm test`, `src/utils/formTranslationCoverage.test.ts`).
 
 **Release Gate Status:** ✅ Closed
-**Last Updated:** 2026-02-12 04:23
+**Last Updated:** 2026-02-12 19:07

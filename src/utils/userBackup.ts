@@ -1,7 +1,16 @@
-import type { Questionnaire, QuizResult, QuizSession, UserData } from '../types/questionnaire';
+import type {
+  CuratorResultFoldersState,
+  Questionnaire,
+  QuizResult,
+  QuizSession,
+  StudentQuestionnaireFoldersState,
+  UserData,
+} from '../types/questionnaire';
+import { createDefaultStudentQuestionnaireFoldersState } from './studentQuestionnaireFolders';
+import { createDefaultCuratorResultFoldersState } from './curatorResultFolders';
 
 const USER_BACKUP_TYPE = 'spiritual-questionnaire-user-backup';
-const USER_BACKUP_VERSION = '1.2.0';
+const USER_BACKUP_VERSION = '1.4.0';
 const CURATOR_BACKUP_TYPE = 'spiritual-questionnaire-curator-backup';
 
 export interface UserBackupPayload {
@@ -14,6 +23,8 @@ export interface UserBackupPayload {
   results: QuizResult[]; // student scope (legacy compatible field)
   curatorResults: QuizResult[];
   customQuestionnaires: Questionnaire[];
+  studentQuestionnaireFolders: StudentQuestionnaireFoldersState;
+  curatorResultFolders: CuratorResultFoldersState;
   appLanguage: string;
 }
 
@@ -24,6 +35,8 @@ interface CreateUserBackupInput {
   studentResults: QuizResult[];
   curatorResults: QuizResult[];
   customQuestionnaires: Questionnaire[];
+  studentQuestionnaireFolders: StudentQuestionnaireFoldersState;
+  curatorResultFolders: CuratorResultFoldersState;
   appLanguage: string;
 }
 
@@ -42,6 +55,8 @@ export function createUserBackupPayload(input: CreateUserBackupInput): UserBacku
     results: input.studentResults,
     curatorResults: input.curatorResults,
     customQuestionnaires: input.customQuestionnaires,
+    studentQuestionnaireFolders: input.studentQuestionnaireFolders,
+    curatorResultFolders: input.curatorResultFolders,
     appLanguage: input.appLanguage || 'ru',
   };
 }
@@ -110,6 +125,8 @@ export function parseUserBackupPayload(content: string): UserBackupPayload {
         ? (parsed.curatorResults as QuizResult[])
         : [],
       customQuestionnaires: [],
+      studentQuestionnaireFolders: createDefaultStudentQuestionnaireFoldersState(),
+      curatorResultFolders: createDefaultCuratorResultFoldersState(),
       appLanguage: String(parsed.appLanguage || user.language || 'ru'),
     };
   }
@@ -134,6 +151,12 @@ export function parseUserBackupPayload(content: string): UserBackupPayload {
     customQuestionnaires: Array.isArray(parsed.customQuestionnaires)
       ? (parsed.customQuestionnaires as Questionnaire[])
       : [],
+    studentQuestionnaireFolders: isObject(parsed.studentQuestionnaireFolders)
+      ? (parsed.studentQuestionnaireFolders as StudentQuestionnaireFoldersState)
+      : createDefaultStudentQuestionnaireFoldersState(),
+    curatorResultFolders: isObject(parsed.curatorResultFolders)
+      ? (parsed.curatorResultFolders as CuratorResultFoldersState)
+      : createDefaultCuratorResultFoldersState(),
     appLanguage: String(parsed.appLanguage || user.language || 'ru'),
   };
 

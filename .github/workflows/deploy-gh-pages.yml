@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID || 'G-B4B3WX9N52' }}
+      VITE_GA_TAG_ID: ${{ vars.VITE_GA_TAG_ID || 'GT-P8Q2B8PW' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

@@ -1,0 +1,38 @@
+export const scenarios = [
+  {
+    id: 'PW-FLOW-STU-07-RESULTS-DESKTOP',
+    flowIds: ['STU-07'],
+    profile: 'student_with_results',
+    path: '/dashboard',
+    viewport: 'desktop',
+    requiredText: ['Мои результаты', 'История прохождений по опроснику'],
+    screenshot: 'stu-07-results-desktop.png',
+  },
+  {
+    id: 'PW-FLOW-STU-08-EXPORT-DESKTOP',
+    flowIds: ['STU-08'],
+    profile: 'student_with_results',
+    path: '/dashboard',
+    viewport: 'desktop',
+    requiredText: ['Экспортировать все', 'Импорт результатов'],
+    screenshot: 'stu-08-export-desktop.png',
+  },
+  {
+    id: 'PW-FLOW-STU-08-EXPORT-MOBILE',
+    flowIds: ['STU-08'],
+    profile: 'student_with_results',
+    path: '/dashboard',
+    viewport: 'mobile',
+    requiredText: ['Экспортировать все', 'Импорт результатов'],
+    screenshot: 'stu-08-export-mobile.png',
+  },
+  {
+    id: 'PW-FLOW-STU-11-ANALYTICS-DESKTOP',
+    flowIds: ['STU-11'],
+    profile: 'student_with_results',
+    path: '/dashboard?tab=analytics',
+    viewport: 'desktop',
+    requiredText: ['Аналитика динамики', 'Динамика по вопросам выбранного опросника'],
+    screenshot: 'stu-11-analytics-desktop.png',
+  },
+];

@@ -185,20 +185,24 @@ export function QuizTaker({
             ))}
           </div>
 
-          {(hoveredScore !== null || currentScore !== undefined) && (
-            <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
-              {t(
-                hoveredScore !== null && hoveredScore !== currentScore
-                  ? 'quiz.score.preview'
-                  : 'quiz.score.selected'
-              )}
-              :{' '}
-              <strong className="text-primary-600 dark:text-primary-400">
-                {hoveredScore ?? currentScore}
-              </strong>{' '}
-              - {getGradeDescription(hoveredScore ?? currentScore ?? 0)}
-            </p>
-          )}
+          <p className="mt-3 min-h-[1.5rem] text-sm text-gray-600 dark:text-gray-400">
+            {hoveredScore !== null || currentScore !== undefined ? (
+              <>
+                {t(
+                  hoveredScore !== null && hoveredScore !== currentScore
+                    ? 'quiz.score.preview'
+                    : 'quiz.score.selected'
+                )}
+                :{' '}
+                <strong className="text-primary-600 dark:text-primary-400">
+                  {hoveredScore ?? currentScore}
+                </strong>{' '}
+                - {getGradeDescription(hoveredScore ?? currentScore ?? 0)}
+              </>
+            ) : (
+              <span className="italic text-gray-400 dark:text-gray-500">{t('quiz.score.hint')}</span>
+            )}
+          </p>
         </div>
 
         {/* Comment Section */}

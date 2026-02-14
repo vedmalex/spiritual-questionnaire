@@ -18,6 +18,13 @@
 - **[ISSUES.md](memory-bank/system/ISSUES.md)** - Unified Issue Tracking
 - **[current-context.md](memory-bank/system/current-context.md)** - текущий рабочий контекст
 
+Пользовательские гайды:
+- **[docs/guides/user-manual.md](docs/guides/user-manual.md)** - инструкция для пользователей (`desktop/mobile`, `student/curator/admin`)
+- **[docs/testing/user-flow-baseline.md](docs/testing/user-flow-baseline.md)** - канонический Flow ID baseline для UI/QA
+
+UI/UX сценарии:
+- **[docs/testing/playwright-cli-flow-scenarios.md](docs/testing/playwright-cli-flow-scenarios.md)** - сценарный пакет `playwright-cli` (Flow ID baseline + скриншоты + assert report)
+
 ## Быстрый старт
 
 ```bash
@@ -25,6 +32,7 @@ npm install
 npm run dev
 npm run build
 npm test
+npm run test:ui:flow-scenarios
 ```
 
 ## Профильные сборки
@@ -107,13 +115,14 @@ npm run build:gh-pages
 
 ## Аналитика (GA)
 
-Google Analytics подключается опционально через переменную окружения:
+Google Analytics подключается опционально через переменные окружения:
 
 ```bash
 VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+VITE_GA_TAG_ID=GT-XXXXXXXXXX
 ```
 
-Если переменная не задана, трекинг не активируется.
+Если не задан ни один GA-идентификатор, трекинг не активируется.
 
 ## Лицензия
 

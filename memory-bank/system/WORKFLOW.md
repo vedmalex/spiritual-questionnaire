@@ -46,10 +46,43 @@
 - UI-тест для такого изменения должен проектироваться и запускаться через `playwright` skill строго в режиме `playwright-cli` (через wrapper `$PWCLI`).
 - Задача по изменению UI не считается завершенной без зафиксированного тестового сценария и результата прогона.
 
+## WF-009: User Manual Maintenance (Desktop/Mobile + Profiles)
+- В `docs/testing/user-flow-baseline.md` должна поддерживаться актуальная и **каноническая** матрица пользовательских потоков (Flow ID + expected result + regression checkpoints).
+- Этот документ является source of truth для UI regression и приемки новых фич.
+- Пользовательская (человеко-ориентированная) инструкция поддерживается отдельно: `docs/guides/user-manual.md`.
+- Инструкция обязательна в разрезе:
+  - типа экрана (`desktop`, `mobile`);
+  - профиля (`student`, `curator`, `admin`).
+- Для каждого flow должен быть стабильный `Flow ID`, ожидаемый результат и минимальные регрессионные чекпоинты.
+- Скриншоты инструкции обновляются только через `playwright` skill в режиме `playwright-cli`.
+- Для обновления скриншотов используется скрипт:
+  - `npm run docs:user-manual:screenshots`
+- Любое существенное изменение UI, затрагивающее пользовательские шаги, требует обновления baseline и пользовательской инструкции.
+- В `memory-bank/tasks/.../qa.md` для UI-задач обязательно фиксируются затронутые `Flow ID` и статус проверки по ним (`pass/fail`).
+
+## WF-010: Playwright CLI Flow Scenario Pack
+- Канонические потоки из `docs/testing/user-flow-baseline.md` должны быть представлены в машиночитаемом сценарном пакете:
+  - `docs/testing/playwright-cli-flow-scenarios.json`
+- Прогон сценарного пакета выполняется отдельной командой:
+  - `npm run test:ui:flow-scenarios`
+- Для UI-задач, которые меняют поведение канонического flow, в `qa.md` обязательно:
+  - запуск `npm run test:ui:flow-scenarios`;
+  - фиксация статуса по затронутым Flow ID;
+  - ссылка на `output/playwright/.../assert.json`.
+
+## WF-011: Folder Routing Continuity
+- Для student и curator folder-структур должна сохраняться стабильная идентичность узлов (папок) при миграциях и импорте.
+- Sticky-привязка студента к кураторской папке является приоритетной стратегией маршрутизации новых работ.
+- При отсутствии привязки система обязана запускать явный flow выбора/создания папки (без silent auto-placement).
+- Изменения folder routing/aggregation считаются UI+data изменениями и требуют:
+  - обновления канонических `Flow ID`;
+  - прогона `npm run test:ui:flow-scenarios`;
+  - фиксации артефактов в `memory-bank/tasks/.../qa.md`.
+
 ## Links
 - Requirements baseline: `memory-bank/system/USER-REQ.md`
 - Product requirements: `memory-bank/system/PRD.md`
 - Issue tracker: `memory-bank/system/ISSUES.md`
 - i18n checklist: `memory-bank/system/I18N_FORM_CHECKLIST.md`
 
-Last Updated: 2026-02-12 13:30
+Last Updated: 2026-02-12 19:07

@@ -1,0 +1,38 @@
+export const scenarios = [
+  {
+    id: 'PW-FLOW-STU-01-SETUP-DESKTOP',
+    flowIds: ['STU-01'],
+    profile: 'anonymous',
+    path: '/',
+    viewport: 'desktop',
+    requiredText: ['Добро пожаловать'],
+    screenshot: 'stu-01-setup-desktop.png',
+  },
+  {
+    id: 'PW-FLOW-STU-01-SETUP-MOBILE',
+    flowIds: ['STU-01'],
+    profile: 'anonymous',
+    path: '/',
+    viewport: 'mobile',
+    requiredText: ['Добро пожаловать'],
+    screenshot: 'stu-01-setup-mobile.png',
+  },
+  {
+    id: 'PW-FLOW-STU-02-RESTORE-DESKTOP',
+    flowIds: ['STU-02'],
+    profile: 'anonymous',
+    path: '/',
+    viewport: 'desktop',
+    requiredText: ['Ранее сохраненные пользователи', 'Войти из файла профиля'],
+    screenshot: 'stu-02-restore-desktop.png',
+  },
+  {
+    id: 'PW-FLOW-STU-02-RESTORE-MOBILE',
+    flowIds: ['STU-02'],
+    profile: 'anonymous',
+    path: '/',
+    viewport: 'mobile',
+    requiredText: ['Ранее сохраненные пользователи', 'Войти из файла профиля'],
+    screenshot: 'stu-02-restore-mobile.png',
+  },
+];

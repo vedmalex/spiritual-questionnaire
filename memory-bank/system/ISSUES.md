@@ -2,9 +2,20 @@
 
 ## 🐛 Bugs
 - [ ] [BUG-003] Static prerender runtime emits `React #418` hydration mismatch in browser console (PWA/static build path) - Location: `dist/<profile>/client/index.html` runtime hydration - Priority: Medium
+- [ ] [BUG-004] Full `playwright-cli` flow-pack has 6 failing action scenarios (`STU-05`, `STU-09`, `STU-10`, `STU-12`, `CUR-03`) with missing post-action UI text (action not reaching expected state) - Location: `docs/testing/scenarios/_actions.mjs` + runner integration - Priority: Medium
 
 ## ⚡ Must-Have Items
-- Нет открытых must-have items.
+- [ ] [MH-006] FUTURE milestone: questionnaire rules-engine schema (`UR-083`, `UR-084`) — Priority: High — Task: `TASK-052`
+- [ ] [MH-007] FUTURE milestone: safe sandbox runtime for rule execution (`UR-085`) — Priority: Critical — Task: `TASK-053`
+- [ ] [MH-008] FUTURE milestone: intro/outro and questionnaire/question images (`UR-086`, `UR-087`) — Priority: High — Task: `TASK-054`
+- [ ] [MH-009] FUTURE milestone: recurring questionnaires and reminder consent flow (`UR-088`, `UR-089`) — Priority: High — Task: `TASK-055`
+- [ ] [MH-010] FUTURE milestone: audio/video answer attachments (`UR-090`) — Priority: High — Task: `TASK-056`
+- [ ] [MH-011] FUTURE milestone: transfer layer for rich-media JSON + optional binary package (`UR-091`, `UR-092`) — Priority: High — Task: `TASK-057`
+- [ ] [MH-012] Update skill `spiritual-questionnaire-architect` for FUTURE schema/features (`UR-083..UR-092`) — Priority: High — Task: `TASK-058`
+- [ ] [MH-013] Maintain canonical user-flow guide for `desktop/mobile` and all profiles with regular screenshot refresh via `playwright-cli` (`UR-093..UR-098`) — Priority: High — Task: `TASK-059`
+- [x] [MH-014] FUTURE milestone: student questionnaire folder hierarchy + free reordering (`UR-100`, `UR-101`) — Priority: High — Task: `TASK-064` — ✅ Completed: 2026-02-14
+- [ ] [MH-015] FUTURE milestone: curator folder hierarchy with student/unreviewed counters + sticky routing (`UR-102`, `UR-103`, `UR-104`) — Priority: High — Task: `TASK-065`
+- [ ] [MH-016] FUTURE milestone: import-time folder assignment flow for unknown students + manual re-pack support (`UR-105`, `UR-106`) — Priority: High — Task: `TASK-066`
 ## ✅ Recently Closed
 - [x] [CLOSE-001] Role switch during active usage (`UR-004`) — ✅ Closed: 2026-02-11
 - [x] [CLOSE-002] Curator feedback persistence (`UR-024`) — ✅ Closed: 2026-02-11
@@ -66,16 +77,18 @@
 - [x] [CLOSE-058] Header/report follow-up: fixed reliable print flow, added direct PDF export, removed mobile header combo-boxes, and added quick nav by user-name/app-title taps (`UR-075`, `UR-076`, `UR-077`, `UR-078`) — ✅ Closed: 2026-02-12
 - [x] [CLOSE-059] Header compact navigation: `Результаты/Профиль` moved into user dropdown menu, top bar reduced for student/curator, and dropdown routes validated with Playwright (`UR-079`) — ✅ Closed: 2026-02-12
 - [x] [CLOSE-060] Report print/PDF style isolation: print bundle forced to light readable palette, independent from app dark theme (`UR-080`) — ✅ Closed: 2026-02-12
+- [x] [CLOSE-061] Baseline user manual added to documentation (`docs/testing/user-flow-baseline.md`) with profile+screen split and playwright-cli screenshot refresh flow (`UR-093..UR-096`) — ✅ Closed: 2026-02-12
+- [x] [CLOSE-062] Playwright CLI scenario pack for canonical flow-based UI/UX regression added (JSON matrix + runner + assert/report artifacts) (`UR-099`, `WF-010`) — ✅ Closed: 2026-02-12
 
 ## 🔄 LEVER Opportunities
 - Нет открытых LEVER-задач.
 
 ## 📊 Statistics
-- Total Items: 61
-- Open: 1
-- Closed: 60
+- Total Items: 75
+- Open: 12
+- Closed: 63
 
 ## 📅 Audit Link
 - `memory-bank/system/AUDIT-2026-02-11-user-req.md`
 
-**Last Updated:** 2026-02-12 12:34
+**Last Updated:** 2026-02-14 22:08

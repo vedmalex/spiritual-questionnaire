@@ -1,6 +1,17 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ArchivedUserRecord, Questionnaire } from '../types/questionnaire';
 import { LocalStorageAdapter } from './localStorageAdapter';
+import {
+  STUDENT_FOLDER_ROOT_KEY,
+  createStudentQuestionnaireItemRef,
+  normalizeStudentQuestionnaireFoldersState,
+} from '../utils/studentQuestionnaireFolders';
+import {
+  CURATOR_FOLDER_ROOT_KEY,
+  createCuratorStudentItemRef,
+  normalizeCuratorResultFoldersState,
+  normalizeCuratorStudentKey,
+} from '../utils/curatorResultFolders';
 
 const staticQuestionnaire: Questionnaire = {
   $schema: 'http://json-schema.org/draft-07/schema#',
@@ -138,5 +149,27 @@ describe('LocalStorageAdapter questionnaire identity', () => {
 
     await adapter.deleteArchivedUser('archive_older');
     expect(await adapter.getArchivedUserById('archive_older')).toBeNull();
+  });
+
+  it('stores and reads student questionnaire folder structure', async () => {
+    const state = normalizeStudentQuestionnaireFoldersState(null, ['titiksha', 'local:titiksha']);
+    await adapter.saveStudentQuestionnaireFolders(state);
+
+    const restored = await adapter.getStudentQuestionnaireFolders();
+    expect(restored?.itemOrderByParent[STUDENT_FOLDER_ROOT_KEY]).toEqual([
+      createStudentQuestionnaireItemRef('titiksha'),
+      createStudentQuestionnaireItemRef('local:titiksha'),
+    ]);
+  });
+
+  it('stores and reads curator result folders structure', async () => {
+    const state = normalizeCuratorResultFoldersState(null, ['Student A', 'Student B']);
+    await adapter.saveCuratorResultFolders(state);
+
+    const restored = await adapter.getCuratorResultFolders();
+    expect(restored?.itemOrderByParent[CURATOR_FOLDER_ROOT_KEY]).toEqual([
+      createCuratorStudentItemRef(normalizeCuratorStudentKey('Student A')),
+      createCuratorStudentItemRef(normalizeCuratorStudentKey('Student B')),
+    ]);
   });
 });

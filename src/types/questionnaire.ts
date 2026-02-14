@@ -38,6 +38,7 @@ export interface Metadata {
   source_lecture: string | LocalizedText;
   quality: string;
   languages?: string[];
+  system_folders?: string[];
 }
 
 export type QuestionnaireSource = 'static' | 'local';
@@ -52,6 +53,34 @@ export interface Questionnaire {
   questions: Question[];
   runtimeId?: string;
   source?: QuestionnaireSource;
+}
+
+export interface StudentQuestionnaireFolder {
+  id: string;
+  name: string;
+  parentId: string | null;
+  kind?: 'user' | 'system';
+}
+
+export interface StudentQuestionnaireFoldersState {
+  version: 1;
+  folders: StudentQuestionnaireFolder[];
+  itemOrderByParent: Record<string, string[]>;
+  updatedAt: number;
+}
+
+export interface CuratorResultFolder {
+  id: string;
+  name: string;
+  parentId: string | null;
+}
+
+export interface CuratorResultFoldersState {
+  version: 1;
+  folders: CuratorResultFolder[];
+  itemOrderByParent: Record<string, string[]>;
+  studentFolderByKey: Record<string, string | null>;
+  updatedAt: number;
 }
 
 export interface CuratorFeedback {
@@ -128,6 +157,8 @@ export interface ArchivedUserRecord {
   studentResults: QuizResult[];
   curatorResults: QuizResult[];
   customQuestionnaires: Questionnaire[];
+  studentQuestionnaireFolders?: StudentQuestionnaireFoldersState;
+  curatorResultFolders?: CuratorResultFoldersState;
 }
 
 export interface AppState {

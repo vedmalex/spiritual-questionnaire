@@ -6,12 +6,19 @@
 
 ## Session Context
 - Date: 2026-02-12
-- Active Planning Focus: post-regression stabilization after pause/resume fix
+- Active Planning Focus: FUTURE milestone planning (rules engine, media expansion, recurring flows, folder routing)
 
 ## New Requirement Block
 - Added `UR-035`..`UR-052` in `USER-REQ`.
 - Added workflow baseline: `memory-bank/system/WORKFLOW.md`.
 - Added `UR-043`: результаты на dashboard группируются по опроснику с общей оценкой словами и баллом.
+- Added FUTURE block from `/Users/vedmalex/work/ai-questionary/FUTURE.md` into `USER-REQ`: `UR-083..UR-092`.
+- Planned synchronization of skill `spiritual-questionnaire-architect` with FUTURE features (`TASK-058`).
+- Added user documentation block in `USER-REQ`: `UR-093..UR-096` (desktop/mobile manuals by profile + regular playwright-cli refresh).
+- Added workflow rule `WF-009` for mandatory user-manual maintenance.
+- Added canonical flow-maintenance requirements in `USER-REQ`: `UR-097..UR-098` (Flow ID + regression checkpoints + QA linkage).
+- Added requirement `UR-099`: executable `playwright-cli` scenario pack for canonical Flow ID regression.
+- Added folder-routing block from `/Users/vedmalex/work/ai-questionary/FUTURE.md` into `USER-REQ`: `UR-100..UR-106`.
 
 ## Created Task
 1. `2026-02-11_TASK-005_admin-i18n-workflow-hardening`
@@ -56,8 +63,34 @@
 40. `2026-02-12_TASK-044_header-compact-profile-dropdown-navigation`
 41. `2026-02-12_TASK-045_report-print-theme-isolation`
 42. `2026-02-12_TASK-046_remove-profile-surge-deploy-scripts`
+43. `2026-02-12_TASK-052_questionnaire-rules-engine-schema`
+44. `2026-02-12_TASK-053_safe-rules-runtime-sandbox`
+45. `2026-02-12_TASK-054_questionnaire-intro-outro-and-images`
+46. `2026-02-12_TASK-055_recurring-questionnaire-reminders`
+47. `2026-02-12_TASK-056_audio-video-answer-attachments`
+48. `2026-02-12_TASK-057_rich-media-transfer-formats`
+49. `2026-02-12_TASK-058_spiritual-questionnaire-architect-future-sync`
+50. `2026-02-12_TASK-059_user-manual-playwright-cli-maintenance`
+51. `2026-02-12_TASK-060_playwright-cli-flow-scenario-pack`
+52. `2026-02-12_TASK-061_global-playwright-flow-scenario-skill`
+53. `2026-02-12_TASK-062_playwright-flow-coverage-gap-closure`
+54. `2026-02-12_TASK-063_user-docs-and-canonical-flow-baseline-relocation`
+55. `2026-02-12_TASK-064_student-folder-hierarchy-and-reorder`
+56. `2026-02-12_TASK-065_curator-folder-routing-and-counters`
+57. `2026-02-12_TASK-066_import-folder-assignment-flow`
 
 ## Current State
+- Запущено планирование новой FUTURE-вехи: требования `UR-083..UR-092` добавлены в `USER-REQ`, созданы задачи `TASK-052..TASK-058`.
+- Для skill `spiritual-questionnaire-architect` запланировано отдельное обновление под новую схему/фичи (`TASK-058`).
+- Добавлен и заполнен baseline пользовательских потоков `docs/testing/user-flow-baseline.md` (desktop/mobile + student/curator/admin) со скриншотами, сгенерированными через `playwright-cli`.
+- Введен регулярный процесс обновления инструкции: `npm run docs:user-manual:screenshots` (`WF-009`, open maintenance item `MH-013`).
+- Выполнен follow-up `TASK-059`: инструкция обновлена до канонического flow-baseline формата (стабильные Flow ID, expected result и regression checkpoints для student/curator/admin на desktop/mobile).
+- Выполнен `TASK-060`: добавлен отдельный `playwright-cli` scenario pack (JSON matrix + runner + launcher), который проходит ключевые Flow ID и формирует `assert.json`/`report.md` + screenshots для UI/UX regression; повторный прогон `npm run test:ui:flow-scenarios` подтверждён (`19/19`, `0 failed`).
+- Выполнен `TASK-061`: создан глобальный skill `playwright-flow-scenario-builder` для генерации `scenario-pack.json` из требований/flow-list и автоматического сбора UI-артефактов (`screenshots`, `assert.json`, `report.md`) через `playwright-cli`.
+- Выполнен `TASK-062`: закрыты gaps покрытия `Flow ID` в сценарном пакете (`STU-02/03/08/10/13`, `CUR-02/05`), coverage выровнен до полного (`22/22`), полный прогон `npm run test:ui:flow-scenarios` подтверждён (`31/31`, `0 failed`).
+- Выполнен `TASK-063`: канонический Flow ID baseline перенесен в `docs/testing/user-flow-baseline.md`, а `docs/guides/user-manual.md` переоформлен как пользовательская инструкция на основе сценариев и snapshot-артефактов; ссылки в workflow/docs обновлены под новое разделение.
+- Запущена синхронизация FUTURE-блока по папкам: требования `UR-100..UR-106` выделены, сформирован набор задач `TASK-064..TASK-066` (student hierarchy, curator routing/counters, import assignment flow).
+- Выполнен `TASK-064`: добавлена student folder hierarchy для списка опросников (вложенные папки + свободное перемещение и reorder папок/опросников), добавлена миграция `v6` и backup/archive совместимость для folder state; проверки `npm test`, `npm run build`, `npm run test:ui:flow-scenarios -- --flow-ids \"STU-04\"` подтверждены (`2/2`, `0 failed`). Дополнительно выполнен full-pack `npm run test:ui:flow-scenarios` (`25/31`, `6 failed`) с non-scope падениями старых flow-action сценариев (`STU-05`, `STU-09`, `STU-10`, `STU-12`, `CUR-03`).
 - Dashboard-требование `UR-043` реализовано и зафиксировано отдельной задачей.
 - `UR-036` реализован: добавлена роль `admin` и единый admin-hub.
 - `UR-040` реализован: миграционные маркеры удаленных вопросов + UI отображение.
@@ -125,4 +158,4 @@
 - `memory-bank/system/WORKFLOW.md`
 - `memory-bank/system/AUDIT-2026-02-11-user-req.md`
 
-Last Updated: 2026-02-12 12:34
+Last Updated: 2026-02-14 22:08

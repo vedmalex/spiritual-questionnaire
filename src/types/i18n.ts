@@ -52,6 +52,32 @@ export interface TranslationKeys {
   'quiz.paused.title': string;
   'quiz.paused.description': string;
   'quiz.paused.continue': string;
+  'quiz.folders.title': string;
+  'quiz.folders.subtitle': string;
+  'quiz.folders.studentHint': string;
+  'quiz.folders.createRoot': string;
+  'quiz.folders.createNested': string;
+  'quiz.folders.rename': string;
+  'quiz.folders.delete': string;
+  'quiz.folders.up': string;
+  'quiz.folders.down': string;
+  'quiz.folders.moveTo': string;
+  'quiz.folders.rootOption': string;
+  'quiz.folders.empty': string;
+  'quiz.folders.back': string;
+  'quiz.folders.systemTag': string;
+  'quiz.folders.userTag': string;
+  'quiz.folders.view.tiles': string;
+  'quiz.folders.view.tree': string;
+  'quiz.folders.tree.expand': string;
+  'quiz.folders.tree.collapse': string;
+  'quiz.folders.tree.count': string;
+  'quiz.folders.defaultName': string;
+  'quiz.folders.prompt.create': string;
+  'quiz.folders.prompt.rename': string;
+  'quiz.folders.error.load': string;
+  'quiz.folders.error.save': string;
+  'quiz.folders.error.deleteNotEmpty': string;
   
   // Quiz taker
   'quiz.question': string;
@@ -63,6 +89,7 @@ export interface TranslationKeys {
   'quiz.score.select': string;
   'quiz.score.selected': string;
   'quiz.score.preview': string;
+  'quiz.score.hint': string;
   'quiz.comment.add': string;
   'quiz.comment.required': string;
   'quiz.comment.requiredHint': string;
@@ -156,7 +183,26 @@ export interface TranslationKeys {
   'admin.tab.overview': string;
   'admin.tab.questionnaires': string;
   'admin.tab.translations': string;
+  'admin.tab.folders': string;
   'admin.tab.operations': string;
+  'admin.folders.title': string;
+  'admin.folders.subtitle': string;
+  'admin.folders.create.title': string;
+  'admin.folders.create.subtitle': string;
+  'admin.folders.create.name': string;
+  'admin.folders.create.parent': string;
+  'admin.folders.create.search': string;
+  'admin.folders.create.searchPlaceholder': string;
+  'admin.folders.create.items': string;
+  'admin.folders.create.noItems': string;
+  'admin.folders.create.confirm': string;
+  'admin.folders.rename.title': string;
+  'admin.folders.rename.name': string;
+  'admin.folders.status.created': string;
+  'admin.folders.status.renamed': string;
+  'admin.folders.status.deleted': string;
+  'admin.folders.status.moved': string;
+  'admin.folders.status.reordered': string;
   'admin.ops.migrations.title': string;
   'admin.ops.migrations.description': string;
   'admin.ops.migrations.run': string;
@@ -175,6 +221,7 @@ export interface TranslationKeys {
   'admin.ops.report.missingQuestions': string;
   'admin.overview.editor.description': string;
   'admin.overview.translation.description': string;
+  'admin.overview.folders.description': string;
   'admin.overview.operations.description': string;
 
   // Questionnaire editor
@@ -341,11 +388,31 @@ export interface TranslationKeys {
   'curator.metrics.pending': string;
   'curator.metrics.reviewed': string;
   'curator.metrics.averageScore': string;
+  'curator.folder.title': string;
+  'curator.folder.subtitle': string;
+  'curator.folder.rootOption': string;
+  'curator.folder.studentsCount': string;
+  'curator.folder.pendingCount': string;
+  'curator.folder.create.title': string;
+  'curator.folder.create.subtitle': string;
+  'curator.folder.create.name': string;
+  'curator.folder.create.parent': string;
+  'curator.folder.create.search': string;
+  'curator.folder.create.searchPlaceholder': string;
+  'curator.folder.create.items': string;
+  'curator.folder.create.noItems': string;
+  'curator.folder.create.confirm': string;
+  'curator.folder.rename.title': string;
+  'curator.folder.rename.name': string;
+  'curator.folder.error.load': string;
+  'curator.folder.error.save': string;
+  'curator.folder.error.deleteNotEmpty': string;
   'curator.section.activeGroups': string;
   'curator.section.completedGroups': string;
   'curator.empty.activeGroups': string;
   'curator.group.summary': string;
   'curator.group.reviewedSummary': string;
+  'curator.group.folderAssign': string;
   'curator.status.pending': string;
   'curator.status.inReview': string;
   'curator.status.reviewed': string;
@@ -378,9 +445,18 @@ export interface TranslationKeys {
   'curator.message.importSummary': string;
   'curator.message.exportGroup': string;
   'curator.message.exportAll': string;
+  'curator.message.assignmentApplied': string;
   'curator.error.import': string;
   'curator.error.noReviewed': string;
   'curator.error.groupNoReviewed': string;
+  'curator.import.assignment.title': string;
+  'curator.import.assignment.subtitle': string;
+  'curator.import.assignment.mode': string;
+  'curator.import.assignment.modeExisting': string;
+  'curator.import.assignment.modeNew': string;
+  'curator.import.assignment.folder': string;
+  'curator.import.assignment.newFolderName': string;
+  'curator.import.assignment.apply': string;
 
   // Profile
   'profile.title': string;

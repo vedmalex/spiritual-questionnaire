@@ -60,6 +60,22 @@ function normalizeStringList(value: unknown): string[] {
   return [];
 }
 
+function normalizeSystemFolders(value: unknown): string[] | undefined {
+  if (!Array.isArray(value)) {
+    return undefined;
+  }
+
+  const normalized = value
+    .map((entry) => String(entry || '').trim())
+    .filter(Boolean);
+
+  if (normalized.length === 0) {
+    return undefined;
+  }
+
+  return normalized;
+}
+
 function pickFallbackText(source: Record<string, unknown>, languages: string[]): string {
   for (const language of languages) {
     const candidate = source[language];
@@ -181,6 +197,7 @@ export function normalizeQuestionnaire(input: any): Questionnaire {
       source_lecture: normalizeLocalizedTextValue(metadataSource, languages),
       quality: String(input?.metadata?.quality || ''),
       languages,
+      system_folders: normalizeSystemFolders(metadata?.system_folders),
     },
     grading_system: {
       scale_min: 0,
@@ -223,6 +240,18 @@ export function validateQuestionnaire(input: unknown): QuestionnaireValidationRe
     }
     if (Array.isArray(metadata.languages) && metadata.languages.length === 0) {
       errors.push('metadata.languages не должен быть пустым');
+    }
+    if (metadata.system_folders !== undefined) {
+      if (!Array.isArray(metadata.system_folders)) {
+        errors.push('metadata.system_folders должен быть массивом строк');
+      } else {
+        const hasInvalid = metadata.system_folders.some(
+          (entry: unknown) => typeof entry !== 'string' || !entry.trim()
+        );
+        if (hasInvalid) {
+          errors.push('metadata.system_folders должен содержать непустые строки');
+        }
+      }
     }
   }
 

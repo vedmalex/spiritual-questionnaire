@@ -46,11 +46,14 @@ function parseDashboardTab(value: unknown): 'results' | 'analytics' | 'feedback'
   return value === 'results' || value === 'analytics' || value === 'feedback' ? value : undefined;
 }
 
-function parseAdminTab(value: unknown): 'overview' | 'questionnaires' | 'translations' | 'operations' | undefined {
+function parseAdminTab(
+  value: unknown
+): 'overview' | 'questionnaires' | 'translations' | 'folders' | 'operations' | undefined {
   if (
     value === 'overview' ||
     value === 'questionnaires' ||
     value === 'translations' ||
+    value === 'folders' ||
     value === 'operations'
   ) {
     return value;

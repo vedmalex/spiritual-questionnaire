@@ -1,5 +1,5 @@
 // Data version for migrations
-export const DATA_VERSION = 5;
+export const DATA_VERSION = 7;
 export const APP_BUILD_ID =
   String(import.meta.env.VITE_APP_BUILD_ID || '').trim() || `dev-v${DATA_VERSION}`;
 
@@ -14,6 +14,8 @@ export const STORAGE_KEYS = {
   RESULTS_CURATOR: 'spiritual_questionnaire_results_curator',
   USER_ARCHIVE: 'spiritual_questionnaire_user_archive',
   CUSTOM_QUESTIONNAIRES: 'spiritual_questionnaire_custom_questionnaires',
+  STUDENT_QUESTIONNAIRE_FOLDERS: 'spiritual_questionnaire_student_questionnaire_folders',
+  CURATOR_RESULT_FOLDERS: 'spiritual_questionnaire_curator_result_folders',
   STATIC_QUESTIONNAIRE_INDEX_SNAPSHOT: 'spiritual_questionnaire_static_questionnaire_index_snapshot',
   QUESTIONNAIRE_NOTIFICATION_PERMISSION_PROMPTED:
     'spiritual_questionnaire_notification_permission_prompted',

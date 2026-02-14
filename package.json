@@ -15,6 +15,8 @@
     "build:gh-pages": "VITE_APP_BASE=/spiritual-questionnaire/ npm run build:full && node scripts/prepare-gh-pages.mjs",
     "preview": "vite preview",
     "test": "vitest run",
+    "docs:user-manual:screenshots": "bash scripts/generate-user-manual-screenshots.sh",
+    "test:ui:flow-scenarios": "bash scripts/run-playwright-flow-scenarios.sh",
     "audit:mobile": "node scripts/mobile-audit-playwright.mjs",
     "test:ui:archive": "node scripts/playwright-user-archive-smoke.mjs",
     "test:ui:header-ultrasmall": "node scripts/playwright-header-ultrasmall.mjs"

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { QuestionnaireEditor } from './QuestionnaireEditor';
 import { TranslationManager } from './TranslationManager';
+import { StudentFolderManager } from './StudentFolderManager';
 import { useQuestionnaires } from '../hooks/useQuestionnaires';
 import { runMigrations } from '../services/migration';
 import { parseResultsTransferPayload } from '../utils/resultsTransfer';
@@ -11,7 +12,12 @@ import {
 import { t } from '../utils/i18n';
 import { FormField, FormFileInput } from './ui/FormPrimitives';
 
-export type AdminTab = 'overview' | 'questionnaires' | 'translations' | 'operations';
+export type AdminTab =
+  | 'overview'
+  | 'questionnaires'
+  | 'translations'
+  | 'folders'
+  | 'operations';
 
 interface AdminDashboardProps {
   activeTab?: AdminTab;
@@ -131,6 +137,17 @@ export function AdminDashboard({ activeTab, onTabChange }: AdminDashboardProps) 
           </button>
           <button
             type="button"
+            onClick={() => switchTab('folders')}
+            className={`px-3 py-2 rounded-lg text-sm ${
+              currentTab === 'folders'
+                ? 'bg-primary-600 text-white'
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200'
+            }`}
+          >
+            {t('admin.tab.folders')}
+          </button>
+          <button
+            type="button"
             onClick={() => switchTab('operations')}
             className={`px-3 py-2 rounded-lg text-sm ${
               currentTab === 'operations'
@@ -144,7 +161,7 @@ export function AdminDashboard({ activeTab, onTabChange }: AdminDashboardProps) 
       </section>
 
       {currentTab === 'overview' && (
-        <section className="grid gap-4 md:grid-cols-3">
+        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <button
             type="button"
             onClick={() => switchTab('questionnaires')}
@@ -167,6 +184,16 @@ export function AdminDashboard({ activeTab, onTabChange }: AdminDashboardProps) 
           </button>
           <button
             type="button"
+            onClick={() => switchTab('folders')}
+            className="text-left bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 hover:border-primary-400 hover:bg-primary-50/40 dark:hover:bg-primary-900/20 transition-colors"
+          >
+            <h2 className="font-semibold text-gray-900 dark:text-white mb-1">{t('admin.tab.folders')}</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {t('admin.overview.folders.description')}
+            </p>
+          </button>
+          <button
+            type="button"
             onClick={() => switchTab('operations')}
             className="text-left bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 hover:border-primary-400 hover:bg-primary-50/40 dark:hover:bg-primary-900/20 transition-colors"
           >
@@ -181,6 +208,8 @@ export function AdminDashboard({ activeTab, onTabChange }: AdminDashboardProps) 
       {currentTab === 'questionnaires' && <QuestionnaireEditor />}
 
       {currentTab === 'translations' && <TranslationManager />}
+
+      {currentTab === 'folders' && <StudentFolderManager questionnaires={questionnaires} />}
 
       {currentTab === 'operations' && (
         <section className="space-y-4">

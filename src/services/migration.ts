@@ -4,6 +4,8 @@ import { normalizeQuestionnaire } from '../utils/questionnaireSchema';
 import type { QuizResult, QuizSession } from '../types/questionnaire';
 import { annotateResultsWithSchemaStatus } from '../utils/reconciliation';
 import { getQuestionnaireRuntimeId } from '../utils/questionnaireIdentity';
+import { normalizeStudentQuestionnaireFoldersState } from '../utils/studentQuestionnaireFolders';
+import { normalizeCuratorResultFoldersState } from '../utils/curatorResultFolders';
 
 interface Migration {
   version: number;
@@ -200,6 +202,54 @@ const migrations: Migration[] = [
       }
 
       await runSchemaReconciliationPass('migration v5');
+    },
+  },
+  {
+    version: 6,
+    migrate: async () => {
+      console.log('Running migration v6: normalize student questionnaire folders state');
+
+      const questionnaires = await dataAdapter.getQuestionnaires();
+      const questionnaireIds = questionnaires.map((questionnaire) =>
+        getQuestionnaireRuntimeId(questionnaire)
+      );
+
+      const raw = localStorage.getItem(STORAGE_KEYS.STUDENT_QUESTIONNAIRE_FOLDERS);
+      try {
+        const parsed = raw ? JSON.parse(raw) : null;
+        const normalized = normalizeStudentQuestionnaireFoldersState(parsed, questionnaireIds);
+        localStorage.setItem(
+          STORAGE_KEYS.STUDENT_QUESTIONNAIRE_FOLDERS,
+          JSON.stringify(normalized)
+        );
+      } catch (error) {
+        console.error('Failed to normalize student folder state during v6 migration:', error);
+        const normalized = normalizeStudentQuestionnaireFoldersState(null, questionnaireIds);
+        localStorage.setItem(
+          STORAGE_KEYS.STUDENT_QUESTIONNAIRE_FOLDERS,
+          JSON.stringify(normalized)
+        );
+      }
+    },
+  },
+  {
+    version: 7,
+    migrate: async () => {
+      console.log('Running migration v7: normalize curator result folders state');
+
+      const curatorResults = await dataAdapter.getResults('curator');
+      const studentNames = curatorResults.map((result) => result.userName);
+
+      const raw = localStorage.getItem(STORAGE_KEYS.CURATOR_RESULT_FOLDERS);
+      try {
+        const parsed = raw ? JSON.parse(raw) : null;
+        const normalized = normalizeCuratorResultFoldersState(parsed, studentNames);
+        localStorage.setItem(STORAGE_KEYS.CURATOR_RESULT_FOLDERS, JSON.stringify(normalized));
+      } catch (error) {
+        console.error('Failed to normalize curator folders during v7 migration:', error);
+        const normalized = normalizeCuratorResultFoldersState(null, studentNames);
+        localStorage.setItem(STORAGE_KEYS.CURATOR_RESULT_FOLDERS, JSON.stringify(normalized));
+      }
     },
   },
 ];

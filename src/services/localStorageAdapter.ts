@@ -1,6 +1,8 @@
 import type {
   ArchivedUserRecord,
+  CuratorResultFoldersState,
   Questionnaire,
+  StudentQuestionnaireFoldersState,
   QuizSession,
   QuizResult,
   UserData,
@@ -117,6 +119,50 @@ export class LocalStorageAdapter implements DataAdapter {
     const current = await this.getCustomQuestionnaires();
     const filtered = current.filter((item) => item.metadata.quality !== normalizedQuality);
     localStorage.setItem(STORAGE_KEYS.CUSTOM_QUESTIONNAIRES, JSON.stringify(filtered));
+  }
+
+  async getStudentQuestionnaireFolders(): Promise<StudentQuestionnaireFoldersState | null> {
+    const data = localStorage.getItem(STORAGE_KEYS.STUDENT_QUESTIONNAIRE_FOLDERS);
+    if (!data) {
+      return null;
+    }
+
+    try {
+      const parsed = JSON.parse(data);
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+        return parsed as StudentQuestionnaireFoldersState;
+      }
+      return null;
+    } catch (error) {
+      console.warn('Failed to parse student questionnaire folders payload:', error);
+      return null;
+    }
+  }
+
+  async saveStudentQuestionnaireFolders(state: StudentQuestionnaireFoldersState): Promise<void> {
+    localStorage.setItem(STORAGE_KEYS.STUDENT_QUESTIONNAIRE_FOLDERS, JSON.stringify(state));
+  }
+
+  async getCuratorResultFolders(): Promise<CuratorResultFoldersState | null> {
+    const data = localStorage.getItem(STORAGE_KEYS.CURATOR_RESULT_FOLDERS);
+    if (!data) {
+      return null;
+    }
+
+    try {
+      const parsed = JSON.parse(data);
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+        return parsed as CuratorResultFoldersState;
+      }
+      return null;
+    } catch (error) {
+      console.warn('Failed to parse curator result folders payload:', error);
+      return null;
+    }
+  }
+
+  async saveCuratorResultFolders(state: CuratorResultFoldersState): Promise<void> {
+    localStorage.setItem(STORAGE_KEYS.CURATOR_RESULT_FOLDERS, JSON.stringify(state));
   }
 
   async getUser(): Promise<UserData | null> {

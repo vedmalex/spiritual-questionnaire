@@ -8,6 +8,8 @@ import {
 } from '../utils/userBackup';
 import { normalizeRoleForProfile } from '../config/appProfile';
 import { STORAGE_KEYS } from '../utils/constants';
+import { createDefaultStudentQuestionnaireFoldersState } from '../utils/studentQuestionnaireFolders';
+import { createDefaultCuratorResultFoldersState } from '../utils/curatorResultFolders';
 
 const USER_UPDATED_EVENT = 'spiritual-user-updated';
 
@@ -28,6 +30,10 @@ interface RestoredWorkspaceSnapshot {
   studentResults: ReturnType<typeof createUserBackupPayload>['results'];
   curatorResults: ReturnType<typeof createUserBackupPayload>['curatorResults'];
   customQuestionnaires: ReturnType<typeof createUserBackupPayload>['customQuestionnaires'];
+  studentQuestionnaireFolders: ReturnType<
+    typeof createUserBackupPayload
+  >['studentQuestionnaireFolders'];
+  curatorResultFolders: ReturnType<typeof createUserBackupPayload>['curatorResultFolders'];
   appLanguage: string;
 }
 
@@ -93,6 +99,13 @@ export function useUser() {
         dataAdapter.savePausedSessions(snapshot.pausedSessions || []),
         dataAdapter.saveResults(snapshot.studentResults || [], 'student'),
         dataAdapter.saveResults(snapshot.curatorResults || [], 'curator'),
+        dataAdapter.saveStudentQuestionnaireFolders(
+          snapshot.studentQuestionnaireFolders ||
+            createDefaultStudentQuestionnaireFoldersState()
+        ),
+        dataAdapter.saveCuratorResultFolders(
+          snapshot.curatorResultFolders || createDefaultCuratorResultFoldersState()
+        ),
       ]);
 
       for (const questionnaire of snapshot.customQuestionnaires || []) {
@@ -169,12 +182,22 @@ export function useUser() {
     const currentUser = user || (await dataAdapter.getUser());
     if (!currentUser) return;
 
-    const [session, pausedSessions, studentResults, curatorResults, customQuestionnaires] = await Promise.all([
+    const [
+      session,
+      pausedSessions,
+      studentResults,
+      curatorResults,
+      customQuestionnaires,
+      studentQuestionnaireFolders,
+      curatorResultFolders,
+    ] = await Promise.all([
       dataAdapter.getCurrentSession(),
       dataAdapter.getPausedSessions(),
       dataAdapter.getResults('student'),
       dataAdapter.getResults('curator'),
       dataAdapter.getCustomQuestionnaires(),
+      dataAdapter.getStudentQuestionnaireFolders(),
+      dataAdapter.getCuratorResultFolders(),
     ]);
 
     const payload = createUserBackupPayload({
@@ -184,6 +207,9 @@ export function useUser() {
       studentResults,
       curatorResults,
       customQuestionnaires,
+      studentQuestionnaireFolders:
+        studentQuestionnaireFolders || createDefaultStudentQuestionnaireFoldersState(),
+      curatorResultFolders: curatorResultFolders || createDefaultCuratorResultFoldersState(),
       appLanguage: localStorage.getItem('app-language') || currentUser.language || 'ru',
     });
 
@@ -197,6 +223,9 @@ export function useUser() {
       studentResults,
       curatorResults,
       customQuestionnaires,
+      studentQuestionnaireFolders:
+        studentQuestionnaireFolders || createDefaultStudentQuestionnaireFoldersState(),
+      curatorResultFolders: curatorResultFolders || createDefaultCuratorResultFoldersState(),
     };
     await dataAdapter.saveArchivedUser(archiveRecord);
 
@@ -225,6 +254,8 @@ export function useUser() {
         studentResults: payload.results,
         curatorResults: payload.curatorResults,
         customQuestionnaires: payload.customQuestionnaires,
+        studentQuestionnaireFolders: payload.studentQuestionnaireFolders,
+        curatorResultFolders: payload.curatorResultFolders,
         appLanguage: payload.appLanguage,
       });
     },
@@ -245,6 +276,10 @@ export function useUser() {
         studentResults: record.studentResults,
         curatorResults: record.curatorResults,
         customQuestionnaires: record.customQuestionnaires,
+        studentQuestionnaireFolders:
+          record.studentQuestionnaireFolders || createDefaultStudentQuestionnaireFoldersState(),
+        curatorResultFolders:
+          record.curatorResultFolders || createDefaultCuratorResultFoldersState(),
         appLanguage: record.appLanguage,
       });
     },

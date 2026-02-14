@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import type { QuizResult, UserData } from '../types/questionnaire';
 import { createUserBackupPayload, parseUserBackupPayload } from './userBackup';
+import { createDefaultStudentQuestionnaireFoldersState } from './studentQuestionnaireFolders';
+import { createDefaultCuratorResultFoldersState } from './curatorResultFolders';
 
 const sampleUser: UserData = {
   name: 'Test User',
@@ -40,6 +42,8 @@ describe('user backup payload', () => {
       studentResults: [],
       curatorResults: [sampleCuratorResult],
       customQuestionnaires: [],
+      studentQuestionnaireFolders: createDefaultStudentQuestionnaireFoldersState(),
+      curatorResultFolders: createDefaultCuratorResultFoldersState(),
       appLanguage: 'ru',
     });
 
@@ -49,6 +53,8 @@ describe('user backup payload', () => {
     expect(parsed.pausedSessions).toEqual([]);
     expect(parsed.curatorResults).toHaveLength(1);
     expect(parsed.curatorResults[0].id).toBe(sampleCuratorResult.id);
+    expect(parsed.studentQuestionnaireFolders.folders).toEqual([]);
+    expect(parsed.curatorResultFolders.folders).toEqual([]);
   });
 
   it('keeps compatibility with legacy curator-only backup files', () => {
@@ -67,5 +73,7 @@ describe('user backup payload', () => {
     expect(parsed.pausedSessions).toEqual([]);
     expect(parsed.curatorResults).toHaveLength(1);
     expect(parsed.user.role).toBe('curator');
+    expect(parsed.studentQuestionnaireFolders.folders).toEqual([]);
+    expect(parsed.curatorResultFolders.folders).toEqual([]);
   });
 });

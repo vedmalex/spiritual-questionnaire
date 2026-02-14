@@ -1,6 +1,8 @@
 import type {
   ArchivedUserRecord,
+  CuratorResultFoldersState,
   Questionnaire,
+  StudentQuestionnaireFoldersState,
   QuizSession,
   QuizResult,
   UserData,
@@ -40,6 +42,10 @@ export interface DataAdapter {
   saveCustomQuestionnaire(questionnaire: Questionnaire): Promise<void>;
   getCustomQuestionnaires(): Promise<Questionnaire[]>;
   deleteCustomQuestionnaire(qualityId: string): Promise<void>;
+  getStudentQuestionnaireFolders(): Promise<StudentQuestionnaireFoldersState | null>;
+  saveStudentQuestionnaireFolders(state: StudentQuestionnaireFoldersState): Promise<void>;
+  getCuratorResultFolders(): Promise<CuratorResultFoldersState | null>;
+  saveCuratorResultFolders(state: CuratorResultFoldersState): Promise<void>;
   
   // Migration
   getDataVersion(): Promise<number>;

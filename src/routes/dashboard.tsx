@@ -28,6 +28,7 @@ function normalizeAdminTab(value: unknown): AdminTab | undefined {
     value === 'overview' ||
     value === 'questionnaires' ||
     value === 'translations' ||
+    value === 'folders' ||
     value === 'operations'
   ) {
     return value;
