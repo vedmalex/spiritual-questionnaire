@@ -1,0 +1,571 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Spiritual Assessment Structure",
+  "metadata": {
+    "title": {
+      "ru": "Опросник самопроверки: Правдивость (Арджавам)",
+      "en": "Self-Assessment Questionnaire: Truthfulness (Arjavam)"
+    },
+    "source_lecture": {
+      "ru": "06-Правдивость.md (Ачьюта прабху)",
+      "en": "06-Правдивость.md (Achyuta Prabhu)"
+    },
+    "quality": "arjavam_truthfulness_achyuta_prabhu_lesson_06",
+    "languages": [
+      "ru",
+      "en"
+    ]
+  },
+  "grading_system": {
+    "scale_min": 0,
+    "scale_max": 10,
+    "description": [
+      {
+        "score": 0,
+        "meaning": "не задумывался (отсутствие осознанности)"
+      },
+      {
+        "score": 1,
+        "meaning": "когда вспоминаю, стараюсь, но уже поздно"
+      },
+      {
+        "score": 2,
+        "meaning": "почти никогда не получается"
+      },
+      {
+        "score": 3,
+        "meaning": "часто почти не получается"
+      },
+      {
+        "score": 4,
+        "meaning": "получается редко, требует огромных усилий"
+      },
+      {
+        "score": 5,
+        "meaning": "стараюсь, получается не всегда (50/50)"
+      },
+      {
+        "score": 6,
+        "meaning": "получается чаще, чем не получается"
+      },
+      {
+        "score": 7,
+        "meaning": "иногда получается стабильно (уверенная практика)"
+      },
+      {
+        "score": 8,
+        "meaning": "получается в большинстве случаев"
+      },
+      {
+        "score": 9,
+        "meaning": "почти всегда получается"
+      },
+      {
+        "score": 10,
+        "meaning": "всегда (совершенство)"
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "arjavam_q01_self_honesty_foundation",
+      "question": {
+        "ru": "Насколько вы честны с собой в распознавании собственных слабостей, мотивов и самооправданий до того, как начинаете оценивать других?",
+        "en": "How honest are you with yourself in identifying your weaknesses, motives, and self-justifications before evaluating others?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:01:46]: обман других начинается с самообмана.",
+          "Лекция [00:19:20]: без честности с собой слабости остаются невидимыми.",
+          "БГ 18.42: арджавам как природное качество брахмана.",
+          "БГ 10.4-5: правдивость дана Господом как духовное качество."
+        ],
+        "en": [
+          "Lecture [00:01:46]: deception of others starts with self-deception.",
+          "Lecture [00:19:20]: without self-honesty, weaknesses stay hidden.",
+          "BG 18.42: arjavam is a natural brahminical quality.",
+          "BG 10.4-5: truthfulness is a quality arising from the Lord."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какие неудобные факты о себе я избегаю признавать?",
+          "Где я называю страх или лень духовной осторожностью?",
+          "Как часто я переношу вину на обстоятельства или людей?",
+          "Есть ли у меня ежедневная практика честной внутренней инвентаризации?",
+          "Что изменилось бы сегодня, если бы я перестал себя оправдывать?"
+        ],
+        "en": [
+          "Which uncomfortable facts about myself do I avoid admitting?",
+          "Where do I rename fear or laziness as spiritual prudence?",
+          "How often do I shift blame to circumstances or people?",
+          "Do I maintain a daily honest inner inventory practice?",
+          "What would change today if I stopped self-justifying?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите три повторяющиеся формы самообмана за последний месяц и для каждой зафиксируйте новую честную формулировку и конкретное действие на неделю.",
+        "en": "Describe three recurring forms of self-deception from the last month and, for each, define a new honest statement and one concrete action for this week."
+      },
+      "user_score": null
+    },
+    {
+      "id": "arjavam_q02_reality_vs_illusion_discernment",
+      "question": {
+        "ru": "Насколько вы умеете отделять факты от интерпретаций и различать реальность и иллюзию в сложных жизненных ситуациях?",
+        "en": "How well can you separate facts from interpretations and distinguish reality from illusion in complex life situations?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:02:38]: честность как разум, рассекающий иллюзию.",
+          "Лекция [00:14:33]: брахман говорит то, что видит, не поддаваясь лжи среды.",
+          "БГ 4.34: истина раскрывается через смиренное ученичество.",
+          "БГ 10.4-5: свобода от иллюзии и правдивость связаны."
+        ],
+        "en": [
+          "Lecture [00:02:38]: honesty as intelligence that cuts illusion.",
+          "Lecture [00:14:33]: a brahmana speaks what he sees, not social falsehood.",
+          "BG 4.34: truth is revealed through humble discipleship.",
+          "BG 10.4-5: freedom from illusion and truthfulness are connected."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Перед выводом я проверяю наблюдаемые факты или иду за эмоцией?",
+          "Какие когнитивные искажения чаще всего меня обманывают?",
+          "С кем я сверяю восприятие, когда ситуация туманна?",
+          "Есть ли у меня навык признать: я пока не знаю истины?"
+        ],
+        "en": [
+          "Before concluding, do I verify observable facts or follow emotion?",
+          "Which cognitive biases most often mislead me?",
+          "Whom do I consult when perception is unclear?",
+          "Can I honestly say: I do not know the truth yet?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Разберите одну недавнюю ситуацию по схеме: факты, мои интерпретации, где была иллюзия, как вы перепроверили реальность.",
+        "en": "Analyze one recent situation by structure: facts, my interpretations, where illusion appeared, and how I verified reality."
+      },
+      "user_score": null
+    },
+    {
+      "id": "arjavam_q03_absolute_vs_relative_truth",
+      "question": {
+        "ru": "Насколько ваши представления о честности опираются на шастру и абсолютную истину, а не только на социальные нормы и выгодные правила?",
+        "en": "To what degree is your idea of honesty grounded in shastra and absolute truth rather than social norms and convenient rules?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:06:29]-[00:08:07]: относительная честность уязвима и может обслуживать обман.",
+          "Лекция [00:08:58]: сила слова брахмана в опоре на священные писания.",
+          "БГ 4.34: искать истину у тех, кто ее увидел.",
+          "БГ 18.42: арджавам в системе брахманических качеств."
+        ],
+        "en": [
+          "Lecture [00:06:29]-[00:08:07]: relative honesty is vulnerable and can serve deception.",
+          "Lecture [00:08:58]: brahminical speech gains power when rooted in scripture.",
+          "BG 4.34: approach realized souls to know truth.",
+          "BG 18.42: arjavam within the brahminical quality framework."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "На чем основаны мои моральные решения: на шастре или на привычке среды?",
+          "Когда выгода конфликтует с истиной, как я обычно выбираю?",
+          "Есть ли у меня привычка подтверждать важные выводы ссылкой на шастру?",
+          "Где я оправдываю компромисс фразой все так делают?"
+        ],
+        "en": [
+          "What grounds my ethical decisions: shastra or social habit?",
+          "When benefit conflicts with truth, how do I usually choose?",
+          "Do I validate important conclusions through scriptural reference?",
+          "Where do I justify compromise by saying everyone does this?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Приведите один пример вашей относительной честности и покажите, как это решение выглядело бы при опоре на абсолютную истину и наставления шастры.",
+        "en": "Provide one example of your relative honesty and show how the same decision would look if rooted in absolute truth and scriptural guidance."
+      },
+      "user_score": null
+    },
+    {
+      "id": "arjavam_q04_truthful_speech_austerity",
+      "question": {
+        "ru": "Насколько ваша речь одновременно правдива, благотворна и дисциплинирована, особенно когда правда может быть неприятной?",
+        "en": "How truthful, beneficial, and disciplined is your speech, especially when truth may be unpleasant?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:05:29]: правду нужно говорить ради блага, даже если она неприятна.",
+          "Лекция [00:09:43]: честная обратная связь может лечить ложное эго.",
+          "БГ 17.15: аскеза речи - правдиво, приятно, на благо и без беспокойства.",
+          "БГ 10.4-5 (комментарий лекции): сатьям как изложение фактов как есть."
+        ],
+        "en": [
+          "Lecture [00:05:29]: truth should be spoken for others' benefit, even if unpleasant.",
+          "Lecture [00:09:43]: honest feedback can heal false ego.",
+          "BG 17.15: austerity of speech is truthful, pleasant, beneficial, and non-agitating.",
+          "BG 10.4-5 (lecture commentary): satyam means stating facts as they are."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Я говорю неприятную правду ради пользы или ради самоутверждения?",
+          "Моя форма подачи усиливает принятие истины или закрывает человека?",
+          "Умею ли я сначала проверить контекст и состояние собеседника?",
+          "Сколько в моей речи примесей: сарказм, раздражение, месть?",
+          "Готов ли я не только говорить правду, но и слышать ее о себе?"
+        ],
+        "en": [
+          "Do I speak difficult truth for benefit or for ego assertion?",
+          "Does my delivery increase truth acceptance or shut people down?",
+          "Do I assess context and receiver state before speaking?",
+          "How much sarcasm, irritation, or revenge enters my speech?",
+          "Am I willing not only to speak truth but also receive it about myself?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите один разговор, где вы сказали правду неудачно. Перепишите его по БГ 17.15: формулировка, тон, момент, ожидаемый плод.",
+        "en": "Describe one conversation where you spoke truth poorly. Rewrite it per BG 17.15: wording, tone, timing, expected outcome."
+      },
+      "user_score": null
+    },
+    {
+      "id": "arjavam_q05_fearlessness_and_honesty",
+      "question": {
+        "ru": "Насколько вы сохраняете честность, когда существует риск потери статуса, отношений, выгоды или безопасности?",
+        "en": "How consistently do you remain honest when there is risk of losing status, relationships, benefit, or security?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:10:48]: честность напрямую связана с бесстрашием и неподкупностью.",
+          "Лекция [00:09:43]: честность часто неприемлема для ложного эго окружающих.",
+          "БГ 16.1-3: бесстрашие и правдивость как качества божественной природы.",
+          "БГ 10.4-5: страх и бесстрашие также исходят от Господа."
+        ],
+        "en": [
+          "Lecture [00:10:48]: honesty is directly tied to fearlessness and incorruptibility.",
+          "Lecture [00:09:43]: honesty is often unwelcome to others' false ego.",
+          "BG 16.1-3: fearlessness and truthfulness are divine qualities.",
+          "BG 10.4-5: fear and fearlessness arise from the Lord."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Где я молчу из страха, хотя должен говорить правду?",
+          "На какие виды потерь я реагирую наибольшей неискренностью?",
+          "Могу ли я различить смиренное молчание и трусливое уклонение?",
+          "Есть ли у меня заранее подготовленная честная позиция для трудных разговоров?"
+        ],
+        "en": [
+          "Where do I stay silent from fear while truth should be spoken?",
+          "Which loss types trigger my strongest insincerity?",
+          "Can I distinguish humble silence from fearful avoidance?",
+          "Do I prepare a truthful stance in advance for difficult dialogues?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Назовите один страх, который подталкивает вас ко лжи или умолчанию, и составьте пошаговый сценарий честного действия в ближайшей похожей ситуации.",
+        "en": "Name one fear that pushes you toward lying or concealment, and define a step-by-step truthful response plan for the next similar situation."
+      },
+      "user_score": null
+    },
+    {
+      "id": "arjavam_q06_integrity_under_social_pressure",
+      "question": {
+        "ru": "Насколько вы устойчивы к групповому давлению и способны назвать черное черным, а белое белым, когда большинство говорит обратное?",
+        "en": "How resilient are you to group pressure, able to call black black and white white when the majority says the opposite?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:12:48]-[00:13:39]: эксперимент конформизма у детей и взрослых.",
+          "Лекция [00:14:33]: брахман не поддается мнению толпы.",
+          "Лекция [00:15:13]: Бхагавад-гита как она есть - не подстраиваться под среду.",
+          "БГ 16.1-3: простота и правдивость как признаки праведного характера."
+        ],
+        "en": [
+          "Lecture [00:12:48]-[00:13:39]: conformity experiments with children and adults.",
+          "Lecture [00:14:33]: a brahmana does not submit to crowd opinion.",
+          "Lecture [00:15:13]: Bhagavad-gita as it is - no adaptation to social distortion.",
+          "BG 16.1-3: simplicity and truthfulness mark righteous character."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Как часто я меняю позицию из страха быть неудобным?",
+          "Кто в моем окружении усиливает мою честность, а кто размывает ее?",
+          "Я умею вежливо, но твердо не соглашаться с ложным консенсусом?",
+          "Какая цена моей зависимости от чужого одобрения?"
+        ],
+        "en": [
+          "How often do I shift position from fear of being inconvenient?",
+          "Who in my circle strengthens my honesty, and who dilutes it?",
+          "Can I disagree with false consensus politely but firmly?",
+          "What is the cost of my dependence on external approval?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите эпизод, где вы поддались мнению группы вопреки фактам, и сформулируйте новую линию поведения для аналогичного давления.",
+        "en": "Describe an episode where you submitted to group opinion against facts, and define a new behavior line for similar pressure."
+      },
+      "user_score": null
+    },
+    {
+      "id": "arjavam_q07_public_private_alignment",
+      "question": {
+        "ru": "Насколько совпадают ваши ценности и поведение на публике и в одиночестве, без внешнего контроля и религиозного контекста?",
+        "en": "How aligned are your values and behavior in public and in private, without external control or religious atmosphere?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:20:18]: напоказ против честной жизни от начала до конца дня.",
+          "Лекция [00:21:14]: честно признавать как неудачи, так и успех.",
+          "Лекция [00:16:50]: иллюзия духовного прогресса через внешний образ.",
+          "БГ 18.42: арджавам как целостность деятельности."
+        ],
+        "en": [
+          "Lecture [00:20:18]: display behavior versus honest day-long living.",
+          "Lecture [00:21:14]: honestly admit both failures and successes.",
+          "Lecture [00:16:50]: illusion of spiritual progress through image management.",
+          "BG 18.42: arjavam as integrity in action."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какие мои практики держатся только на внешнем наблюдении?",
+          "Как я провожу время, когда никто меня не видит?",
+          "Есть ли у меня скрытые двойные стандарты поведения?",
+          "Что бы сказал обо мне человек, видящий мою жизнь целиком?"
+        ],
+        "en": [
+          "Which of my practices survive only under external visibility?",
+          "How do I spend time when nobody sees me?",
+          "Do I maintain hidden double standards?",
+          "What would a person say who sees my entire life pattern?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Сделайте честный аудит одного дня: публичный образ и частная реальность. Опишите три несоответствия и конкретный план их устранения.",
+        "en": "Run an honest one-day audit: public image versus private reality. List three mismatches and a concrete correction plan."
+      },
+      "user_score": null
+    },
+    {
+      "id": "arjavam_q08_honest_progress_diagnostics",
+      "question": {
+        "ru": "Насколько вы измеряете духовный прогресс именно приобретением брахманических качеств, а не внешними атрибутами успеха?",
+        "en": "How much do you measure spiritual progress by brahminical qualities rather than external success markers?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:15:45]: ключевой критерий прогресса - качества брахмана.",
+          "Лекция [00:16:50]: самообман рождает обманный прогресс.",
+          "БГ 18.42: список качеств как объективный стандарт.",
+          "ШБ 12.2.1: в Кали-югу правдивость и религия ослабевают, поэтому нужен осознанный контроль."
+        ],
+        "en": [
+          "Lecture [00:15:45]: core progress metric is brahminical qualities.",
+          "Lecture [00:16:50]: self-deception creates false progress.",
+          "BG 18.42: quality list as objective benchmark.",
+          "SB 12.2.1: in Kali-yuga truth and dharma decline, requiring conscious tracking."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какие внешние достижения я ошибочно считаю духовным ростом?",
+          "Есть ли у меня регулярная оценка качеств, а не только активности?",
+          "Какие качества из БГ 18.42 реально растут, а какие стагнируют?",
+          "Готов ли я признать отсутствие прогресса без оправданий?"
+        ],
+        "en": [
+          "Which external achievements do I mistake for spiritual growth?",
+          "Do I regularly assess qualities, not only activity volume?",
+          "Which BG 18.42 qualities are actually growing and which are stagnant?",
+          "Am I willing to admit no progress without excuses?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Составьте таблицу самодиагностики по качествам БГ 18.42 за последние 30 дней и выделите две зоны, где ваш прогресс был иллюзорным.",
+        "en": "Build a 30-day self-diagnostic table based on BG 18.42 qualities and highlight two areas where your progress was illusory."
+      },
+      "user_score": null
+    },
+    {
+      "id": "arjavam_q09_receptivity_to_correction",
+      "question": {
+        "ru": "Насколько вы готовы смиренно принимать правду о себе от духовного наставника и зрелых преданных, не уходя в защиту эго?",
+        "en": "How ready are you to humbly receive truth about yourself from spiritual mentors and mature devotees without ego defense?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:11:59]: качество честности развивается через общение с честными людьми и учителем.",
+          "Лекция [00:19:20]: неискреннему ученику трудно помочь.",
+          "БГ 4.34: смиренный вопрос и служение как путь к истине.",
+          "БГ 16.1-3: скромность и отсутствие стремления к почестям как база обучаемости."
+        ],
+        "en": [
+          "Lecture [00:11:59]: honesty develops through association with truthful people and teacher.",
+          "Lecture [00:19:20]: an insincere student is hard to help.",
+          "BG 4.34: humble inquiry and service lead to truth.",
+          "BG 16.1-3: humility and lack of honor-seeking support teachability."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Что я чувствую первым при замечании: благодарность или сопротивление?",
+          "Как быстро я перехожу от оправданий к конкретному исправлению?",
+          "Есть ли у меня запрос на регулярную обратную связь?",
+          "Какие темы я не позволяю никому затрагивать в моем характере?"
+        ],
+        "en": [
+          "What arises first under correction: gratitude or resistance?",
+          "How quickly do I move from excuses to concrete correction?",
+          "Do I actively request regular feedback?",
+          "Which character areas do I keep untouchable?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Приведите пример недавнего наставления, которое было неприятно слышать, и опишите, как вы превратили его в конкретный план изменений.",
+        "en": "Provide one recent instruction that was hard to hear and explain how you turned it into a concrete change plan."
+      },
+      "user_score": null
+    },
+    {
+      "id": "arjavam_q10_non_corruptible_stance",
+      "question": {
+        "ru": "Насколько вы неподкупны в слове и решениях, когда есть соблазн выгоды, похвалы или комфортного компромисса с истиной?",
+        "en": "How incorruptible are your speech and decisions when tempted by gain, praise, or comfortable compromise with truth?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:03:36]: брахмана нельзя подкупить, чтобы он солгал.",
+          "Лекция [00:10:48]: честный человек не продает слово за выгоду.",
+          "Лекция [00:04:35]: сила правдивости делает слово весомым.",
+          "БГ 16.1-3: отсутствие алчности и правдивость связаны в одном профиле."
+        ],
+        "en": [
+          "Lecture [00:03:36]: a brahmana cannot be bribed into lying.",
+          "Lecture [00:10:48]: truthful people do not sell speech for gain.",
+          "Lecture [00:04:35]: truthfulness gives weight to one’s word.",
+          "BG 16.1-3: truthfulness and freedom from greed appear in one profile."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какие бонусы чаще всего заставляют меня смягчать правду?",
+          "Где я говорю удобную полуправду ради сохранения образа?",
+          "Как часто я нарушаю обещания, данные без внутренней честности?",
+          "Что поможет мне укрепить репутацию надежного слова?"
+        ],
+        "en": [
+          "Which rewards most often make me soften truth?",
+          "Where do I use convenient half-truths to protect image?",
+          "How often do I break promises made without inner integrity?",
+          "What will strengthen my reputation of reliable speech?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите случай, где выгода подтолкнула к компромиссу с правдой. Разберите причины и сформулируйте антикоррупционный принцип для будущих решений.",
+        "en": "Describe a case where gain pushed you toward truth compromise. Analyze causes and define an anti-corruption principle for future decisions."
+      },
+      "user_score": null
+    },
+    {
+      "id": "arjavam_q11_daily_vow_of_truthfulness",
+      "question": {
+        "ru": "Насколько вы способны выполнить и удержать практику одного дня предельной честности в мыслях, речи, обязанностях и отчетности перед собой?",
+        "en": "How capable are you of completing and sustaining one full day of radical honesty in thought, speech, duties, and self-reporting?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:20:18]: рекомендация прожить один день полностью честно по шастрам.",
+          "Лекция [00:21:14]: через повторение таких дней формируется устойчивое естество.",
+          "БГ 17.15: критерии аскезы речи для практического дня правдивости.",
+          "БГ 18.42: честность как повседневно проявляемое качество."
+        ],
+        "en": [
+          "Lecture [00:20:18]: recommendation to live one fully honest day by shastra.",
+          "Lecture [00:21:14]: repeating such days forms stable nature.",
+          "BG 17.15: practical speech-austerity criteria for a truthfulness day.",
+          "BG 18.42: honesty as a daily manifested quality."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Где обычно срывается мой честный день: утро, работа, общение, вечер?",
+          "Какие микропривычки создают фоновую неискренность?",
+          "Есть ли у меня формат фиксации правды и срывов в течение дня?",
+          "Кому я могу отчитаться по итогам дня без приукрашивания?",
+          "Какой один маркер покажет, что день действительно прожит честно?"
+        ],
+        "en": [
+          "Where does my honest day usually break: morning, work, communication, evening?",
+          "Which micro-habits create background insincerity?",
+          "Do I have a format to log truthful moments and breakdowns through the day?",
+          "To whom can I report honestly at day-end without embellishment?",
+          "Which single marker proves the day was truly honest?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Проведите 24-часовой эксперимент полной честности и приложите отчет: ключевые искушения, срывы, победы и решение на следующие 7 дней.",
+        "en": "Run a 24-hour full-honesty experiment and attach a report: key temptations, breakdowns, wins, and a decision for the next 7 days."
+      },
+      "user_score": null
+    },
+    {
+      "id": "arjavam_q12_kali_yuga_truth_mission",
+      "question": {
+        "ru": "Насколько вы воспринимаете личную правдивость как миссию сохранения дхармы в эпоху Кали, а не как индивидуальную черту характера?",
+        "en": "How much do you treat personal truthfulness as a dharma-preserving mission in Kali-yuga, not merely a personality trait?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:01:03]: в Кали-югу правдивость названа ключевой опорой.",
+          "Лекция [00:21:47]: через честную практику человек становится носителем качества.",
+          "ШБ 1.17.24: дхарма держится на правдивости среди четырех опор.",
+          "ШБ 12.2.1: в Кали-югу правдивость и религия постепенно исчезают."
+        ],
+        "en": [
+          "Lecture [00:01:03]: in Kali-yuga truthfulness is presented as a key support.",
+          "Lecture [00:21:47]: through sincere practice one becomes an embodiment of honesty.",
+          "SB 1.17.24: dharma stands on truthfulness among four supports.",
+          "SB 12.2.1: in Kali-yuga truth and religion gradually decline."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Вижу ли я свою правдивость как вклад в здоровье духовного сообщества?",
+          "Как мое отношение к правде влияет на семью, служение и учеников?",
+          "Где я могу стать устойчивой точкой честности для других?",
+          "Какие системные действия укрепят культуру правдивости вокруг меня?",
+          "Что я сделаю в ближайший месяц для защиты этого принципа?"
+        ],
+        "en": [
+          "Do I see my truthfulness as a contribution to community spiritual health?",
+          "How does my relation to truth affect family, service, and students?",
+          "Where can I become a stable point of honesty for others?",
+          "Which systemic actions will strengthen a culture of truth around me?",
+          "What will I do in the next month to defend this principle?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Сформулируйте личную миссию правдивости на 30 дней: 3 обязательства, 3 метрики, 1 человек для еженедельной проверки честности.",
+        "en": "Formulate a 30-day truthfulness mission: 3 commitments, 3 metrics, and 1 accountability partner for weekly honesty review."
+      },
+      "user_score": null
+    }
+  ]
+}

@@ -7,6 +7,8 @@ import {
   parseQuestionnaireFile,
   validateQuestionnaire,
 } from '../utils/questionnaireSchema';
+import { validateQuestionnaireProcessingRules } from '../utils/questionnaireRules';
+import { getDefaultGradingSystem } from '../utils/gradingSystem';
 import { t } from '../utils/i18n';
 import {
   FormField,
@@ -35,7 +37,9 @@ interface EditorState {
   languages: string[];
   localizedTitle: Record<string, string>;
   localizedSourceLecture: Record<string, string>;
+  gradingSystem: Questionnaire['grading_system'];
   questions: EditorQuestion[];
+  processingRules?: Questionnaire['processing_rules'];
 }
 
 function normalizeLanguageCode(value: string): string {
@@ -113,6 +117,7 @@ const createInitialState = (): EditorState => {
     languages,
     localizedTitle: createLocalizedMap(languages),
     localizedSourceLecture: createLocalizedMap(languages),
+    gradingSystem: getDefaultGradingSystem(),
     questions: [createEmptyQuestion(0, languages)],
   };
 };
@@ -164,6 +169,7 @@ function questionnaireToEditorState(questionnaire: Questionnaire): EditorState {
     languages,
     localizedTitle: localizeText(questionnaire.metadata.title, languages),
     localizedSourceLecture: localizeText(questionnaire.metadata.source_lecture, languages),
+    gradingSystem: questionnaire.grading_system,
     questions: questionnaire.questions.map((question, index) => ({
       id: question.id || `question_${index + 1}`,
       localizedQuestions: localizeText(question.question, languages),
@@ -171,6 +177,7 @@ function questionnaireToEditorState(questionnaire: Questionnaire): EditorState {
       localizedSelfCheckPrompts: localizeStringList(question.self_check_prompts, languages),
       requiresComment: Boolean(question.requires_comment),
     })),
+    processingRules: questionnaire.processing_rules,
   };
 }
 
@@ -208,6 +215,7 @@ function editorStateToQuestionnaire(state: EditorState): Questionnaire {
       quality: state.quality.trim(),
       languages,
     },
+    grading_system: state.gradingSystem,
     questions: state.questions.map((question) => ({
       id: question.id.trim(),
       question: buildLocalizedTextPayload(languages, question.localizedQuestions),
@@ -219,6 +227,7 @@ function editorStateToQuestionnaire(state: EditorState): Questionnaire {
       requires_comment: question.requiresComment,
       user_score: null,
     })),
+    processing_rules: state.processingRules,
   });
 }
 
@@ -244,12 +253,23 @@ function formatExistingQuestionnaireLabel(questionnaire: Questionnaire): string 
   return `${baseTitle}${suffix}`;
 }
 
+function formatProcessingRulesForEditor(
+  rules?: Questionnaire['processing_rules']
+): string {
+  if (!rules) {
+    return '';
+  }
+  return JSON.stringify(rules, null, 2);
+}
+
 export function QuestionnaireEditor() {
   const { questionnaires, loading, saveCustomQuestionnaire, deleteCustomQuestionnaire } =
     useQuestionnaires();
   const [state, setState] = useState<EditorState>(createInitialState());
   const [selectedQuality, setSelectedQuality] = useState('');
   const [newLanguageCode, setNewLanguageCode] = useState('');
+  const [processingRulesEnabled, setProcessingRulesEnabled] = useState(false);
+  const [processingRulesText, setProcessingRulesText] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -271,6 +291,61 @@ export function QuestionnaireEditor() {
       [field]: {
         ...prev[field],
         [language]: value,
+      },
+    }));
+  };
+
+  const syncGradingDescriptions = (
+    descriptions: Questionnaire['grading_system']['description'],
+    scaleMin: number,
+    scaleMax: number
+  ): Questionnaire['grading_system']['description'] => {
+    const byScore = new Map<number, string>(
+      descriptions.map((entry) => [entry.score, entry.meaning])
+    );
+    const next: Questionnaire['grading_system']['description'] = [];
+    for (let score = scaleMin; score <= scaleMax; score += 1) {
+      next.push({
+        score,
+        meaning: byScore.get(score) || '',
+      });
+    }
+    return next;
+  };
+
+  const updateGradingScale = (field: 'scale_min' | 'scale_max', rawValue: string) => {
+    const parsed = Number(rawValue);
+    if (!Number.isFinite(parsed)) {
+      return;
+    }
+
+    const rounded = Math.round(parsed);
+    setState((prev) => {
+      const currentMin = prev.gradingSystem.scale_min;
+      const currentMax = prev.gradingSystem.scale_max;
+      const nextMin = field === 'scale_min' ? rounded : currentMin;
+      const nextMax = field === 'scale_max' ? rounded : currentMax;
+      const scaleMin = Math.min(nextMin, nextMax);
+      const scaleMax = Math.max(nextMin, nextMax);
+      return {
+        ...prev,
+        gradingSystem: {
+          scale_min: scaleMin,
+          scale_max: scaleMax,
+          description: syncGradingDescriptions(prev.gradingSystem.description, scaleMin, scaleMax),
+        },
+      };
+    });
+  };
+
+  const updateGradingMeaning = (score: number, meaning: string) => {
+    setState((prev) => ({
+      ...prev,
+      gradingSystem: {
+        ...prev.gradingSystem,
+        description: prev.gradingSystem.description.map((entry) =>
+          entry.score === score ? { ...entry, meaning } : entry
+        ),
       },
     }));
   };
@@ -415,11 +490,59 @@ export function QuestionnaireEditor() {
     );
     if (!questionnaire) return;
 
-    setState(questionnaireToEditorState(questionnaire));
+    const nextState = questionnaireToEditorState(questionnaire);
+    setState(nextState);
+    setProcessingRulesEnabled(Boolean(nextState.processingRules));
+    setProcessingRulesText(formatProcessingRulesForEditor(nextState.processingRules));
+  };
+
+  const buildQuestionnaireWithRules = (): {
+    questionnaire?: Questionnaire;
+    error?: string;
+  } => {
+    let nextProcessingRules: Questionnaire['processing_rules'];
+
+    if (processingRulesEnabled) {
+      const trimmed = processingRulesText.trim();
+      if (!trimmed) {
+        return { error: t('editor.rules.error.empty') };
+      }
+
+      let parsedRules: unknown;
+      try {
+        parsedRules = JSON.parse(trimmed);
+      } catch {
+        return { error: t('editor.rules.error.invalidJson') };
+      }
+
+      const validation = validateQuestionnaireProcessingRules(parsedRules);
+      if (!validation.valid) {
+        return {
+          error: `${t('editor.rules.error.invalidSchema')}\n${validation.errors.join('\n')}`,
+        };
+      }
+
+      nextProcessingRules = parsedRules as Questionnaire['processing_rules'];
+    } else {
+      nextProcessingRules = undefined;
+    }
+
+    const questionnaire = editorStateToQuestionnaire({
+      ...state,
+      processingRules: nextProcessingRules,
+    });
+    return { questionnaire };
   };
 
   const validateCurrentState = () => {
-    const questionnaire = editorStateToQuestionnaire(state);
+    const payload = buildQuestionnaireWithRules();
+    if (!payload.questionnaire) {
+      return {
+        valid: false,
+        errors: [payload.error || t('editor.rules.error.invalidSchema')],
+      };
+    }
+    const questionnaire = payload.questionnaire;
     return validateQuestionnaire(questionnaire);
   };
 
@@ -431,7 +554,14 @@ export function QuestionnaireEditor() {
       return;
     }
 
-    const questionnaire = editorStateToQuestionnaire(state);
+    const payload = buildQuestionnaireWithRules();
+    if (!payload.questionnaire) {
+      setErrorMessage(payload.error || t('editor.rules.error.invalidSchema'));
+      setStatusMessage('');
+      return;
+    }
+
+    const questionnaire = payload.questionnaire;
     await saveCustomQuestionnaire(questionnaire);
 
     setStatusMessage(
@@ -450,7 +580,14 @@ export function QuestionnaireEditor() {
       return;
     }
 
-    const questionnaire = editorStateToQuestionnaire(state);
+    const payload = buildQuestionnaireWithRules();
+    if (!payload.questionnaire) {
+      setErrorMessage(payload.error || t('editor.rules.error.invalidSchema'));
+      setStatusMessage('');
+      return;
+    }
+
+    const questionnaire = payload.questionnaire;
     downloadQuestionnaire(questionnaire);
     setStatusMessage(t('editor.status.exported'));
     setErrorMessage('');
@@ -471,6 +608,8 @@ export function QuestionnaireEditor() {
     }
 
     setState(questionnaireToEditorState(parsed.questionnaire));
+    setProcessingRulesEnabled(Boolean(parsed.questionnaire.processing_rules));
+    setProcessingRulesText(formatProcessingRulesForEditor(parsed.questionnaire.processing_rules));
     setSelectedQuality('');
     setStatusMessage(t('editor.status.imported', { fileName: file.name }));
   };
@@ -491,6 +630,8 @@ export function QuestionnaireEditor() {
     setState(createInitialState());
     setSelectedQuality('');
     setNewLanguageCode('');
+    setProcessingRulesEnabled(false);
+    setProcessingRulesText('');
     setStatusMessage('');
     setErrorMessage('');
   };
@@ -542,6 +683,48 @@ export function QuestionnaireEditor() {
             placeholder="titiksha"
           />
         </FormField>
+
+        <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-3 space-y-3">
+          <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
+            {t('editor.grading.title')}
+          </p>
+          <div className="grid md:grid-cols-2 gap-3">
+            <FormField label={t('editor.grading.scaleMin')}>
+              <FormInput
+                type="number"
+                value={String(state.gradingSystem.scale_min)}
+                onChange={(event) => updateGradingScale('scale_min', event.target.value)}
+              />
+            </FormField>
+            <FormField label={t('editor.grading.scaleMax')}>
+              <FormInput
+                type="number"
+                value={String(state.gradingSystem.scale_max)}
+                onChange={(event) => updateGradingScale('scale_max', event.target.value)}
+              />
+            </FormField>
+          </div>
+
+          <div className="space-y-2">
+            {state.gradingSystem.description.map((entry) => (
+              <div key={`grading-${entry.score}`} className="grid md:grid-cols-[7rem_1fr] gap-2 items-start">
+                <FormField label={t('editor.grading.score', { score: entry.score })}>
+                  <FormInput type="number" value={String(entry.score)} disabled />
+                </FormField>
+                <FormField label={t('editor.grading.meaning')}>
+                  <FormInput
+                    type="text"
+                    value={entry.meaning}
+                    onChange={(event) => updateGradingMeaning(entry.score, event.target.value)}
+                  />
+                </FormField>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            {t('editor.grading.hint')}
+          </p>
+        </div>
 
         <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-3 space-y-3">
           <div className="flex flex-wrap items-center gap-2">
@@ -619,6 +802,52 @@ export function QuestionnaireEditor() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-3 space-y-3">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">
+                {t('editor.rules.title')}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                {t('editor.rules.subtitle')}
+              </p>
+            </div>
+            <label className="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
+              <input
+                type="checkbox"
+                checked={processingRulesEnabled}
+                onChange={(event) => {
+                  setProcessingRulesEnabled(event.target.checked);
+                  setErrorMessage('');
+                  setStatusMessage('');
+                }}
+                className="rounded border-gray-300 dark:border-gray-600"
+              />
+              {t('editor.rules.enabled')}
+            </label>
+          </div>
+
+          {processingRulesEnabled && (
+            <FormField label={t('editor.rules.title')}>
+              <FormTextarea
+                value={processingRulesText}
+                onChange={(event) => {
+                  setProcessingRulesText(event.target.value);
+                  setErrorMessage('');
+                  setStatusMessage('');
+                }}
+                rows={14}
+                className="font-mono text-xs"
+                placeholder={t('editor.rules.placeholder')}
+              />
+            </FormField>
+          )}
+
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            {t('editor.rules.hint')}
+          </p>
         </div>
       </section>
 

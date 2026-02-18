@@ -19,6 +19,7 @@
 - Added canonical flow-maintenance requirements in `USER-REQ`: `UR-097..UR-098` (Flow ID + regression checkpoints + QA linkage).
 - Added requirement `UR-099`: executable `playwright-cli` scenario pack for canonical Flow ID regression.
 - Added folder-routing block from `/Users/vedmalex/work/ai-questionary/FUTURE.md` into `USER-REQ`: `UR-100..UR-106`.
+- Added requirement `UR-107`: honesty/validity checks in processing rules with persisted result flags.
 
 ## Created Task
 1. `2026-02-11_TASK-005_admin-i18n-workflow-hardening`
@@ -81,6 +82,8 @@
 
 ## Current State
 - Запущено планирование новой FUTURE-вехи: требования `UR-083..UR-092` добавлены в `USER-REQ`, созданы задачи `TASK-052..TASK-058`.
+- Выполнены `TASK-052` и `TASK-053`: добавлен декларативный rules-engine в схему опросника и безопасный DSL-runtime (без `eval`) с лимитами глубины/узлов и защитой от циклов.
+- В rules-engine добавлен блок `honesty_checks` для механизмов проверки честности (валидность ответов) с сохранением результатов в `computed_result` и поддержкой import/export.
 - Для skill `spiritual-questionnaire-architect` запланировано отдельное обновление под новую схему/фичи (`TASK-058`).
 - Добавлен и заполнен baseline пользовательских потоков `docs/testing/user-flow-baseline.md` (desktop/mobile + student/curator/admin) со скриншотами, сгенерированными через `playwright-cli`.
 - Введен регулярный процесс обновления инструкции: `npm run docs:user-manual:screenshots` (`WF-009`, open maintenance item `MH-013`).
@@ -158,4 +161,4 @@
 - `memory-bank/system/WORKFLOW.md`
 - `memory-bank/system/AUDIT-2026-02-11-user-req.md`
 
-Last Updated: 2026-02-14 22:08
+Last Updated: 2026-02-14 22:45

@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import type { Questionnaire, QuizResult } from '../types/questionnaire';
-import { getGradeDescription, t } from '../utils/i18n';
+import { t } from '../utils/i18n';
 import { getQuestionnaireRuntimeId } from '../utils/questionnaireIdentity';
+import { getDefaultGradingSystem, getGradingMeaning } from '../utils/gradingSystem';
 
 interface QuestionnaireStatsPanelProps {
   results: QuizResult[];
@@ -148,6 +149,13 @@ export function QuestionnaireStatsPanel({
     () => metrics.filter((metric) => metric.history.length <= 1),
     [metrics]
   );
+  const gradingSystem = useMemo(
+    () =>
+      questionnaires.find(
+        (questionnaire) => getQuestionnaireRuntimeId(questionnaire) === questionnaireId
+      )?.grading_system || getDefaultGradingSystem(),
+    [questionnaireId, questionnaires]
+  );
 
   if (!questionnaireId) {
     return null;
@@ -224,7 +232,11 @@ export function QuestionnaireStatsPanel({
                   <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     {t('questionStats.dynamics.title')}
                   </p>
-                  <QuestionHistorySparkline history={metric.history} />
+                  <QuestionHistorySparkline
+                    history={metric.history}
+                    scaleMin={gradingSystem.scale_min}
+                    scaleMax={gradingSystem.scale_max}
+                  />
                   <div className="overflow-x-auto">
                     <div className="flex gap-2 min-w-max pb-1">
                       {metric.history.map((point, index) => (
@@ -236,10 +248,10 @@ export function QuestionnaireStatsPanel({
                             {new Date(point.completedAt).toLocaleDateString(locale)}
                           </p>
                           <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                            {point.score}/10
+                            {point.score}/{gradingSystem.scale_max}
                           </p>
                           <p className="text-[11px] text-gray-600 dark:text-gray-300">
-                            {getGradeDescription(point.score)}
+                            {getGradingMeaning(gradingSystem, point.score)}
                           </p>
                         </div>
                       ))}
@@ -278,9 +290,11 @@ interface QuestionHistorySparklineProps {
     score: number;
     completedAt: number;
   }>;
+  scaleMin: number;
+  scaleMax: number;
 }
 
-function QuestionHistorySparkline({ history }: QuestionHistorySparklineProps) {
+function QuestionHistorySparkline({ history, scaleMin, scaleMax }: QuestionHistorySparklineProps) {
   const width = Math.max(280, history.length * 72);
   const height = 96;
   const padding = 12;
@@ -290,7 +304,10 @@ function QuestionHistorySparkline({ history }: QuestionHistorySparklineProps) {
 
   const points = history.map((point, index) => {
     const x = padding + index * stepX;
-    const y = padding + (1 - point.score / 10) * drawableHeight;
+    const denominator = scaleMax - scaleMin;
+    const normalized =
+      denominator > 0 ? (point.score - scaleMin) / denominator : 0;
+    const y = padding + (1 - normalized) * drawableHeight;
     return { x, y, score: point.score };
   });
 

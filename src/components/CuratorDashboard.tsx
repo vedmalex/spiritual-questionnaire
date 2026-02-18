@@ -13,6 +13,7 @@ import { dataAdapter } from '../services/localStorageAdapter';
 import { exportResults } from '../utils/exportUtils';
 import { getGradeDescription, getLanguage, t } from '../utils/i18n';
 import { getQuestionnaireRuntimeId } from '../utils/questionnaireIdentity';
+import { getGradingMeaning } from '../utils/gradingSystem';
 import { MarkdownContent } from './ui/MarkdownContent';
 import { MarkdownEditor } from './ui/MarkdownEditor';
 import { hasMarkdownContent, mergeLegacyCommentWithPhotos } from '../utils/markdown';
@@ -94,6 +95,16 @@ function isPendingStatus(status: ReviewStatus): boolean {
 
 function isReviewedStatus(status: ReviewStatus): boolean {
   return status === 'reviewed' || status === 'needs_revision' || status === 'approved';
+}
+
+function getHonestySeverityRank(severity: 'info' | 'warning' | 'critical'): number {
+  if (severity === 'critical') {
+    return 3;
+  }
+  if (severity === 'warning') {
+    return 2;
+  }
+  return 1;
 }
 
 function sanitizeFilenamePart(value: string): string {
@@ -285,6 +296,15 @@ export function CuratorDashboard() {
 
     return next;
   }, [language, questionnaires]);
+
+  const gradingSystemLookup = useMemo(() => {
+    return new Map(
+      questionnaires.map((questionnaire) => [
+        getQuestionnaireRuntimeId(questionnaire),
+        questionnaire.grading_system,
+      ])
+    );
+  }, [questionnaires]);
 
   const groupedResults = useMemo<CuratorResultGroup[]>(() => {
     const groupMap = new Map<string, CuratorResultGroup>();
@@ -564,6 +584,36 @@ export function CuratorDashboard() {
         {labels[status]}
       </span>
     );
+  };
+
+  const getHonestySummary = (result: QuizResult) => {
+    const checks = result.computed_result?.honesty_checks?.checks;
+    if (!checks || checks.length === 0) {
+      return null;
+    }
+
+    const allPassed = result.computed_result?.honesty_checks?.all_passed ?? checks.every((check) => check.passed);
+    const failedChecks = checks.filter((check) => !check.passed);
+    const failedCount =
+      result.computed_result?.honesty_checks?.failed_count ?? failedChecks.length;
+    const worstFailedSeverity =
+      failedChecks.length > 0
+        ? failedChecks.reduce((worst, check) => {
+            if (!worst) {
+              return check.severity;
+            }
+            return getHonestySeverityRank(check.severity) > getHonestySeverityRank(worst)
+              ? check.severity
+              : worst;
+          }, null as 'info' | 'warning' | 'critical' | null)
+        : null;
+
+    return {
+      allPassed,
+      failedCount,
+      failedChecks,
+      worstFailedSeverity,
+    };
   };
 
   const updateReviewStatus = async (result: QuizResult, status: ReviewStatus) => {
@@ -1026,6 +1076,19 @@ export function CuratorDashboard() {
   const renderResultCard = (result: QuizResult) => {
     const expanded = selectedResultId === result.id;
     const schemaLookup = questionLookup.get(result.questionnaireId);
+    const gradingSystem = gradingSystemLookup.get(result.questionnaireId);
+    const scaleMax = gradingSystem?.scale_max ?? 10;
+    const honestySummary = getHonestySummary(result);
+    const honestyBadgeClassName = honestySummary?.allPassed
+      ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
+      : honestySummary?.worstFailedSeverity === 'critical'
+        ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
+        : 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300';
+    const honestySeverityLabelById: Record<'info' | 'warning' | 'critical', string> = {
+      info: t('curator.honesty.severity.info'),
+      warning: t('curator.honesty.severity.warning'),
+      critical: t('curator.honesty.severity.critical'),
+    };
 
     return (
       <div
@@ -1040,6 +1103,15 @@ export function CuratorDashboard() {
                   {result.userName}
                 </h3>
                 {getStatusBadge(result.reviewStatus)}
+                {honestySummary && (
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${honestyBadgeClassName}`}>
+                    {honestySummary.allPassed
+                      ? t('curator.honesty.badge.pass')
+                      : honestySummary.worstFailedSeverity === 'critical'
+                        ? t('curator.honesty.badge.critical', { count: honestySummary.failedCount })
+                        : t('curator.honesty.badge.warning', { count: honestySummary.failedCount })}
+                  </span>
+                )}
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">{result.questionnaireTitle}</p>
               <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -1092,6 +1164,47 @@ export function CuratorDashboard() {
                 </p>
               )}
 
+              {honestySummary && (
+                <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/40 p-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-300">
+                      {t('curator.honesty.title')}
+                    </p>
+                    <p
+                      className={`text-xs font-medium ${
+                        honestySummary.allPassed
+                          ? 'text-green-600'
+                          : honestySummary.worstFailedSeverity === 'critical'
+                            ? 'text-red-600 dark:text-red-300'
+                            : 'text-amber-600 dark:text-amber-300'
+                      }`}
+                    >
+                      {honestySummary.allPassed
+                        ? t('curator.honesty.summary.pass')
+                        : t('curator.honesty.summary.fail', { count: honestySummary.failedCount })}
+                    </p>
+                  </div>
+                  {!honestySummary.allPassed && honestySummary.failedChecks.length > 0 && (
+                    <div className="mt-2 space-y-1">
+                      {honestySummary.failedChecks.map((check) => (
+                        <div
+                          key={check.id}
+                          className="flex flex-wrap items-center gap-2 text-xs text-gray-700 dark:text-gray-200"
+                        >
+                          <span className="font-medium">{check.id}</span>
+                          <span className="px-1.5 py-0.5 rounded bg-white/80 dark:bg-gray-800/70 border border-gray-200 dark:border-gray-600">
+                            {honestySeverityLabelById[check.severity]}
+                          </span>
+                          <span className="text-gray-500 dark:text-gray-400">
+                            {t('curator.honesty.value', { value: check.value })}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
               {Object.entries(result.answers).map(([questionId, details], index) => {
                 const isFeedbackTarget =
                   feedbackTarget?.resultId === result.id && feedbackTarget?.questionId === questionId;
@@ -1111,8 +1224,14 @@ export function CuratorDashboard() {
                         {t('curator.question.label', { index: questionIndex + 1 })}
                       </span>
                       <span className="text-sm text-gray-800 dark:text-gray-100">{questionTitle}</span>
-                      <span className="font-bold text-primary-600">{details.score}/10</span>
-                      <span className="text-xs text-gray-500">{getGradeDescription(details.score)}</span>
+                      <span className="font-bold text-primary-600">
+                        {details.score}/{scaleMax}
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        {gradingSystem
+                          ? getGradingMeaning(gradingSystem, details.score)
+                          : getGradeDescription(details.score)}
+                      </span>
                       {result.absentInCurrentSchemaQuestionIds?.includes(questionId) && (
                         <span className="text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">
                           {t('curator.question.absent')}

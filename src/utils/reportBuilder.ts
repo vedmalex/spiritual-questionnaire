@@ -1,6 +1,7 @@
 import type { LanguageCode } from '../types/i18n';
 import type { Questionnaire, QuizResult } from '../types/questionnaire';
 import { getGradeDescription } from './i18n';
+import { getGradingMeaning } from './gradingSystem';
 import {
   extractMarkdownImageSources,
   hasMarkdownTextContent,
@@ -222,15 +223,41 @@ function toQuestionBlocks(
   });
 }
 
+function getScaleMax(questionnaire: Questionnaire | null): number {
+  return questionnaire?.grading_system.scale_max ?? 10;
+}
+
+function getScoreMeaningForReport(questionnaire: Questionnaire | null, score: number): string {
+  if (questionnaire) {
+    return getGradingMeaning(questionnaire.grading_system, score);
+  }
+  return getGradeDescription(score);
+}
+
+function getOverallGradeForReport(
+  questionnaire: Questionnaire | null,
+  percentage: number
+): string {
+  if (!questionnaire) {
+    return getGradeDescription(Math.round((percentage / 100) * 10));
+  }
+
+  const scale = questionnaire.grading_system;
+  const score = scale.scale_min + ((scale.scale_max - scale.scale_min) * percentage) / 100;
+  return getGradingMeaning(scale, score);
+}
+
 function buildFormattedText(options: {
   result: QuizResult;
+  questionnaire: Questionnaire | null;
   labels: ReportLabels;
   language: LanguageCode;
   generatedAt: number;
   questionBlocks: ReportQuestionBlock[];
 }): string {
-  const { result, labels, language, generatedAt, questionBlocks } = options;
-  const grade = getGradeDescription(Math.round((result.percentage / 100) * 10));
+  const { result, questionnaire, labels, language, generatedAt, questionBlocks } = options;
+  const grade = getOverallGradeForReport(questionnaire, result.percentage);
+  const scaleMax = getScaleMax(questionnaire);
 
   const lines: string[] = [
     `# ${result.questionnaireTitle}`,
@@ -251,7 +278,9 @@ function buildFormattedText(options: {
     lines.push('');
     lines.push(`## ${labels.question} ${index + 1}`);
     lines.push(block.questionText);
-    lines.push(`${labels.score}: ${block.score}/10 - ${getGradeDescription(block.score)}`);
+    lines.push(
+      `${labels.score}: ${block.score}/${scaleMax} - ${getScoreMeaningForReport(questionnaire, block.score)}`
+    );
 
     if (block.commentText) {
       lines.push(`${labels.comment}:`);
@@ -280,13 +309,15 @@ function buildFormattedText(options: {
 
 function buildPlainText(options: {
   result: QuizResult;
+  questionnaire: Questionnaire | null;
   labels: ReportLabels;
   language: LanguageCode;
   generatedAt: number;
   questionBlocks: ReportQuestionBlock[];
 }): string {
-  const { result, labels, language, generatedAt, questionBlocks } = options;
-  const grade = getGradeDescription(Math.round((result.percentage / 100) * 10));
+  const { result, questionnaire, labels, language, generatedAt, questionBlocks } = options;
+  const grade = getOverallGradeForReport(questionnaire, result.percentage);
+  const scaleMax = getScaleMax(questionnaire);
 
   const lines: string[] = [
     `${labels.questionnaire}: ${result.questionnaireTitle}`,
@@ -304,7 +335,9 @@ function buildPlainText(options: {
   questionBlocks.forEach((block, index) => {
     lines.push('');
     lines.push(`${labels.question} ${index + 1}: ${block.questionText}`);
-    lines.push(`${labels.score}: ${block.score}/10 - ${getGradeDescription(block.score)}`);
+    lines.push(
+      `${labels.score}: ${block.score}/${scaleMax} - ${getScoreMeaningForReport(questionnaire, block.score)}`
+    );
 
     if (block.commentText) {
       lines.push(`${labels.comment}: ${block.commentText}`);
@@ -332,14 +365,16 @@ function buildPlainText(options: {
 
 function buildHtml(options: {
   result: QuizResult;
+  questionnaire: Questionnaire | null;
   labels: ReportLabels;
   language: LanguageCode;
   generatedAt: number;
   questionBlocks: ReportQuestionBlock[];
 }): string {
-  const { result, labels, language, generatedAt, questionBlocks } = options;
+  const { result, questionnaire, labels, language, generatedAt, questionBlocks } = options;
 
-  const grade = getGradeDescription(Math.round((result.percentage / 100) * 10));
+  const grade = getOverallGradeForReport(questionnaire, result.percentage);
+  const scaleMax = getScaleMax(questionnaire);
 
   const absentQuestionsHtml =
     result.absentInCurrentSchemaQuestionIds && result.absentInCurrentSchemaQuestionIds.length > 0
@@ -406,8 +441,8 @@ function buildHtml(options: {
         <article class="question-block">
           <h4>${escapeHtml(labels.question)} ${index + 1}</h4>
           <p>${escapeHtml(block.questionText)}</p>
-          <p><strong>${escapeHtml(labels.score)}:</strong> ${block.score}/10 - ${escapeHtml(
-        getGradeDescription(block.score)
+          <p><strong>${escapeHtml(labels.score)}:</strong> ${block.score}/${scaleMax} - ${escapeHtml(
+        getScoreMeaningForReport(questionnaire, block.score)
       )}</p>
           ${safeCommentHtml}
           ${photosHtml}
@@ -549,6 +584,7 @@ export function buildResultReportBundle(options: {
 
   const formattedText = buildFormattedText({
     result,
+    questionnaire,
     labels,
     language,
     generatedAt,
@@ -557,6 +593,7 @@ export function buildResultReportBundle(options: {
 
   const plainText = buildPlainText({
     result,
+    questionnaire,
     labels,
     language,
     generatedAt,
@@ -565,6 +602,7 @@ export function buildResultReportBundle(options: {
 
   const html = buildHtml({
     result,
+    questionnaire,
     labels,
     language,
     generatedAt,

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { DateRange } from 'react-day-picker';
 import type { Questionnaire, QuizResult } from '../types/questionnaire';
 import { getLanguage, t } from '../utils/i18n';
+import { getQuestionnaireRuntimeId } from '../utils/questionnaireIdentity';
 import { QuestionnaireStatsPanel } from './QuestionnaireStatsPanel';
 import { ScoreChart } from './ScoreChart';
 import { DateRangePicker } from './ui/DateRangePicker';
@@ -154,6 +155,10 @@ export function AnalyticsPanel({ results, questionnaires, analyticsUsage }: Anal
   const selectedQuestionnaireTitle =
     questionnaireOptions.find((option) => option.questionnaireId === selectedQuestionnaireId)?.title ||
     selectedQuestionnaireId;
+  const selectedQuestionnaire =
+    questionnaires.find(
+      (questionnaire) => getQuestionnaireRuntimeId(questionnaire) === selectedQuestionnaireId
+    ) || null;
 
   const presetButtonClass = (preset: 'all' | '7d' | '30d'): string =>
     `px-3 py-2 rounded-md text-sm border transition-colors ${
@@ -243,7 +248,7 @@ export function AnalyticsPanel({ results, questionnaires, analyticsUsage }: Anal
         </section>
       ) : (
         <>
-          <ScoreChart results={filteredResults} />
+          <ScoreChart results={filteredResults} gradingSystem={selectedQuestionnaire?.grading_system} />
           <QuestionnaireStatsPanel
             results={filteredResults}
             questionnaires={questionnaires}

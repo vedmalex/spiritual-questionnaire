@@ -1,0 +1,569 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Spiritual Assessment Structure",
+  "metadata": {
+    "title": {
+      "ru": "Опросник самопроверки: Знание (Гьяна)",
+      "en": "Self-Assessment Questionnaire: Knowledge (Gyana)"
+    },
+    "source_lecture": {
+      "ru": "07-Знание.md (Девакинандана прабху)",
+      "en": "07-Знание.md (Devakinandana Prabhu)"
+    },
+    "quality": "gyana_knowledge_devakinandana_prabhu_lesson_07",
+    "languages": [
+      "ru",
+      "en"
+    ]
+  },
+  "grading_system": {
+    "scale_min": 0,
+    "scale_max": 10,
+    "description": [
+      {
+        "score": 0,
+        "meaning": "не задумывался (отсутствие осознанности)"
+      },
+      {
+        "score": 1,
+        "meaning": "когда вспоминаю, стараюсь, но уже поздно"
+      },
+      {
+        "score": 2,
+        "meaning": "почти никогда не получается"
+      },
+      {
+        "score": 3,
+        "meaning": "часто почти не получается"
+      },
+      {
+        "score": 4,
+        "meaning": "получается редко, требует огромных усилий"
+      },
+      {
+        "score": 5,
+        "meaning": "стараюсь, получается не всегда (50/50)"
+      },
+      {
+        "score": 6,
+        "meaning": "получается чаще, чем не получается"
+      },
+      {
+        "score": 7,
+        "meaning": "иногда получается стабильно (уверенная практика)"
+      },
+      {
+        "score": 8,
+        "meaning": "получается в большинстве случаев"
+      },
+      {
+        "score": 9,
+        "meaning": "почти всегда получается"
+      },
+      {
+        "score": 10,
+        "meaning": "всегда (совершенство)"
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "gyana_q01_knowledge_as_character",
+      "question": {
+        "ru": "Насколько ваше понимание знания основано на развитии качеств и поведения, а не на накоплении информации и терминов?",
+        "en": "How much is your understanding of knowledge based on character and conduct, rather than information accumulation and terminology?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:04:18]: знание - это проявление качеств, а не просто память на факты.",
+          "Лекция [00:16:45]: первый аспект знания - проявление качеств в жизни.",
+          "БГ 13.8-12: Кришна называет знанием набор духовных качеств.",
+          "БГ 18.42: гьяна включена в практический профиль брахмана."
+        ],
+        "en": [
+          "Lecture [00:04:18]: knowledge is manifested qualities, not mere memory of facts.",
+          "Lecture [00:16:45]: the first aspect of knowledge is lived character.",
+          "BG 13.8-12: Krishna defines knowledge as a set of spiritual qualities.",
+          "BG 18.42: gyana appears in the practical brahminical profile."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какие качества из БГ 13.8-12 реально выросли у меня за последний месяц?",
+          "Где я путаю эрудицию с духовным прогрессом?",
+          "Что во мне замечают окружающие: мягкость и смирение или только цитаты?",
+          "Насколько мои решения в стрессовых ситуациях отражают шастрическое знание?",
+          "Как я измеряю качество своего знания на практике?"
+        ],
+        "en": [
+          "Which BG 13.8-12 qualities have actually grown in me this month?",
+          "Where do I confuse erudition with spiritual progress?",
+          "What do people notice in me: humility and steadiness, or only quotations?",
+          "How much do my stress decisions reflect scriptural knowledge?",
+          "How do I measure knowledge quality in practice?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Дайте честную оценку трех качеств из БГ 13.8-12: одно сильное, одно среднее, одно слабое. Для слабого пропишите недельный план развития.",
+        "en": "Give an honest assessment of three BG 13.8-12 qualities: one strong, one medium, one weak. For the weak one, provide a weekly growth plan."
+      },
+      "user_score": null
+    },
+    {
+      "id": "gyana_q02_gyana_vijnana_integration",
+      "question": {
+        "ru": "Насколько вы переводите гьяну в вигьяну: из методологии и понимания в устойчивый духовный результат?",
+        "en": "How effectively do you convert gyana into vijnana: from method and understanding into stable spiritual realization?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:05:01]-[00:06:15]: гьяна как путь, вигьяна как практический плод.",
+          "Лекция [00:08:40]: знание должно доходить до переживания и сознания Кришны.",
+          "БГ 7.2: полнота знания о материальной и духовной природе.",
+          "БГ 9.1: сокровенное знание и мудрость, освобождающие от страданий."
+        ],
+        "en": [
+          "Lecture [00:05:01]-[00:06:15]: gyana as path, vijnana as lived fruit.",
+          "Lecture [00:08:40]: knowledge should mature into realized Krishna consciousness.",
+          "BG 7.2: complete knowledge of material and spiritual nature.",
+          "BG 9.1: confidential knowledge and wisdom that free one from suffering."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какая шастрическая идея изменила мое поведение в последние 2 недели?",
+          "Где знание остается в голове и не доходит до решений и привычек?",
+          "Есть ли у меня конкретный мост от изучения к применению?",
+          "Как я проверяю, что полученный вывод стал частью характера?"
+        ],
+        "en": [
+          "Which scriptural insight changed my behavior in the last two weeks?",
+          "Where does knowledge stay in my head without reaching habits and choices?",
+          "Do I have a concrete bridge from study to application?",
+          "How do I verify that an insight became character?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите один недавний пример трансформации: какой принцип вы поняли, как применили, что изменилось в действии и в сознании.",
+        "en": "Describe one recent transformation example: which principle you understood, how you applied it, and what changed in action and consciousness."
+      },
+      "user_score": null
+    },
+    {
+      "id": "gyana_q03_humility_as_gateway",
+      "question": {
+        "ru": "Насколько смирение в вас является реальным входом в знание, а не формальной позой перед старшими?",
+        "en": "How much is humility in you a real gateway to knowledge, rather than a formal pose before seniors?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:09:35]: смирение названо базой предания Кришне и гуру.",
+          "Лекция [00:10:32]: знающий не играет во всезнайку, а остается пытливым.",
+          "БГ 13.8-12: знание начинается с аманитвам и обращением к ачарье.",
+          "БГ 4.34: смиренный вопрос и служение как путь получения истины."
+        ],
+        "en": [
+          "Lecture [00:09:35]: humility is presented as the basis of surrender to Krishna and guru.",
+          "Lecture [00:10:32]: a knowledgeable person does not play all-knowing.",
+          "BG 13.8-12: knowledge begins with humility and approaching acharya.",
+          "BG 4.34: humble inquiry and service open access to truth."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Как я реагирую на корректировку: благодарностью или защитой позиции?",
+          "Легко ли мне признать, что я не понял тему до конца?",
+          "Есть ли у меня зоны, где я не допускаю обратной связи?",
+          "Слышу ли я младших, когда Господь говорит через них?"
+        ],
+        "en": [
+          "How do I react to correction: gratitude or defensive posture?",
+          "Can I easily admit I did not fully understand a topic?",
+          "Do I have areas where I block feedback?",
+          "Do I listen to juniors when the Lord may speak through them?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Приведите пример, когда гордость заблокировала ваше обучение, и опишите, что конкретно вы измените в стиле слушания и задавания вопросов.",
+        "en": "Provide one example where pride blocked your learning, and specify what you will change in your listening and questioning style."
+      },
+      "user_score": null
+    },
+    {
+      "id": "gyana_q04_pariprashna_depth",
+      "question": {
+        "ru": "Насколько ваши вопросы в духовной жизни по-настоящему исследовательские и ведущие к трансформации, а не поверхностные и риторические?",
+        "en": "How truly investigative and transformative are your spiritual questions, rather than superficial or rhetorical?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:09:51]-[00:10:32]: знание как способность задавать вопросы.",
+          "Лекция [00:10:32]: после второй инициации важно углублять пытливость.",
+          "ШБ 1.3.39: совершенное знание приходит через правильные вопросы.",
+          "БГ 4.34: парипрашна как элемент ученичества."
+        ],
+        "en": [
+          "Lecture [00:09:51]-[00:10:32]: knowledge includes the ability to ask questions.",
+          "Lecture [00:10:32]: after second initiation, inquiry should deepen.",
+          "SB 1.3.39: perfect knowledge comes through right questions.",
+          "BG 4.34: pariprashna is a core element of discipleship."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какой процент моих вопросов меняет практику, а не просто расширяет теорию?",
+          "Я прихожу с вопросом после личной работы над темой или без подготовки?",
+          "Есть ли у меня привычка возвращаться к ответу и проверять выполнение?",
+          "Какие вопросы я избегаю из страха вскрыть свои слабости?",
+          "Становятся ли мои вопросы точнее и глубже со временем?"
+        ],
+        "en": [
+          "What percent of my questions changes practice rather than theory only?",
+          "Do I come with questions after personal effort or without preparation?",
+          "Do I return to answers and verify implementation?",
+          "Which questions do I avoid for fear of exposing weakness?",
+          "Are my questions becoming sharper and deeper over time?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Составьте 5 ключевых вопросов по вашей текущей стадии садханы и для каждого укажите, какое действие вы сделаете после получения ответа.",
+        "en": "Compose 5 key questions for your current sadhana stage and, for each, specify one action you will take after receiving the answer."
+      },
+      "user_score": null
+    },
+    {
+      "id": "gyana_q05_scriptural_study_discipline",
+      "question": {
+        "ru": "Насколько стабильно вы поддерживаете дисциплину изучения шастр после инициации, не снижая стандарт после экзаменов и формальных рубежей?",
+        "en": "How consistently do you maintain scriptural study discipline after initiation, without lowering standards after exams and formal milestones?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:11:32]-[00:12:52]: после второй инициации изучение не должно останавливаться.",
+          "Лекция [00:18:12]: важно знать опорные шлоки и выводы писаний.",
+          "ШБ 3.5.4: доступ к глубинному знанию через очищение и преданное служение.",
+          "ШБ 1.2.12: пытливый ученик с знанием и отречением осознает Истину."
+        ],
+        "en": [
+          "Lecture [00:11:32]-[00:12:52]: study must not stop after second initiation.",
+          "Lecture [00:18:12]: key verses and conclusions should be internalized.",
+          "SB 3.5.4: deep knowledge opens through purification and devotion.",
+          "SB 1.2.12: inquisitive student with knowledge and detachment realizes Truth."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какой у меня минимальный недельный стандарт чтения и повторения?",
+          "Что у меня ломает режим изучения чаще всего?",
+          "Фиксирую ли я выводы из шастры и последующие действия?",
+          "Сколько шлок я могу не просто цитировать, а раскрыть по смыслу?"
+        ],
+        "en": [
+          "What is my minimum weekly standard for study and review?",
+          "What most often breaks my study rhythm?",
+          "Do I record scriptural conclusions and follow-up actions?",
+          "How many verses can I not only quote but explain meaningfully?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Составьте реальный 30-дневный план шастрического обучения: объем, время, проверка, повторение шлок и критерии выполнения.",
+        "en": "Build a realistic 30-day scriptural learning plan: volume, time slots, verification, verse review, and completion criteria."
+      },
+      "user_score": null
+    },
+    {
+      "id": "gyana_q06_bhakti_priority_over_dry_jnana",
+      "question": {
+        "ru": "Насколько ваше знание подчинено бхакти и усиливает преданное служение, а не становится сухой интеллектуальной самостоятельностью?",
+        "en": "How much is your knowledge subordinated to bhakti, strengthening devotional service rather than dry intellectual independence?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:13:47]: через бхакти гьяна и вайрагья проявляются естественно.",
+          "Лекция [00:20:03]: главное развивать бхакти, гьяна приходит следом.",
+          "ШБ 3.5.42: слушание с преданностью приносит знание и отрешенность.",
+          "ШБ 1.2.7: преданное служение приносит беспричинное знание и непривязанность."
+        ],
+        "en": [
+          "Lecture [00:13:47]: through bhakti, gyana and vairagya arise naturally.",
+          "Lecture [00:20:03]: bhakti is primary; gyana follows.",
+          "SB 3.5.42: devotional hearing yields knowledge and detachment.",
+          "SB 1.2.7: devotion brings causeless knowledge and detachment."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Усиливает ли мое изучение вкус к служению и святому имени?",
+          "Становлюсь ли я мягче, чище и служащим или более спорящим?",
+          "Есть ли у меня признаки духовной сухости от знания без молитвы?",
+          "Как я возвращаю приоритет бхакти, когда ум уходит в теоретизирование?"
+        ],
+        "en": [
+          "Does my study increase taste for service and holy name?",
+          "Am I becoming softer and service-minded, or more argumentative?",
+          "Do I show signs of dryness from knowledge without prayer?",
+          "How do I restore bhakti priority when mind drifts into theorizing?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите одну ситуацию, где знание отдалило вас от бхакти, и одну ситуацию, где оно усилило бхакти. Сделайте вывод о корректировке фокуса.",
+        "en": "Describe one case where knowledge distanced you from bhakti and one where it strengthened bhakti. Conclude with a focus correction."
+      },
+      "user_score": null
+    },
+    {
+      "id": "gyana_q07_guru_connection_channel",
+      "question": {
+        "ru": "Насколько вы поддерживаете живую связь с духовным учителем как каналом трансцендентного знания, а не только формальную принадлежность?",
+        "en": "How actively do you maintain living connection with spiritual master as a channel of transcendental knowledge, not only formal affiliation?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:14:34]-[00:15:26]: гьяна как связующее звено между учителем и учеником.",
+          "Лекция [00:09:35]: предание гуру - один из центральных элементов знания.",
+          "ШБ 3.7.36: истинный гуру щедро открывает знание ученикам.",
+          "БГ 4.34: через смиренное служение знание передается ученику."
+        ],
+        "en": [
+          "Lecture [00:14:34]-[00:15:26]: gyana links guru and disciple.",
+          "Lecture [00:09:35]: surrender to guru is central to knowledge.",
+          "SB 3.7.36: true guru generously reveals knowledge to disciples.",
+          "BG 4.34: knowledge is transmitted through humble service."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Есть ли у меня регулярный формат получения наставлений и отчета?",
+          "Насколько быстро я внедряю полученные наставления в режим жизни?",
+          "Превращаю ли я наставление в систему действий, а не эмоцию момента?",
+          "Где моя связь с гуру стала номинальной и требует оживления?"
+        ],
+        "en": [
+          "Do I have a regular structure for guidance and reporting?",
+          "How quickly do I implement received instructions into daily life?",
+          "Do I turn guidance into systems, not momentary emotions?",
+          "Where has my guru-connection become nominal and needs revival?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите ваш текущий формат связи с наставником или гуру и укажите три улучшения, которые сделают передачу знания более живой и действенной.",
+        "en": "Describe your current guidance format with mentor or guru and list three improvements to make knowledge transmission more living and effective."
+      },
+      "user_score": null
+    },
+    {
+      "id": "gyana_q08_inner_revelation_readiness",
+      "question": {
+        "ru": "Насколько вы создаете внутренние условия, чтобы знание открывалось из сердца, а не оставалось внешней конструкцией?",
+        "en": "How much are you creating inner conditions for knowledge to arise from within, rather than staying external structure only?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:15:39]: знание проявляется в сердце в свой срок.",
+          "Лекция [00:16:45]: седьмой аспект - внутреннее раскрытие знания ученику.",
+          "БГ 4.38: зрелый плод практики открывается изнутри.",
+          "ШБ 3.5.4: Господь в сердце открывает знание об Абсолютной Истине."
+        ],
+        "en": [
+          "Lecture [00:15:39]: knowledge manifests in the heart in due time.",
+          "Lecture [00:16:45]: the seventh aspect is inner revelation in disciple.",
+          "BG 4.38: ripe fruit of practice unfolds from within.",
+          "SB 3.5.4: the Lord in the heart reveals knowledge of Absolute Truth."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Есть ли у меня регулярные условия внутренней тишины и молитвы?",
+          "Очищаю ли я сердце от мотивов признания и самоутверждения?",
+          "Замечаю ли я внутренние подсказки после шраванам и киртанам?",
+          "Становится ли мое знание более цельным и мирным со временем?"
+        ],
+        "en": [
+          "Do I maintain regular conditions for inner silence and prayer?",
+          "Am I cleansing motives of recognition and self-assertion?",
+          "Do I notice inner guidance after hearing and chanting?",
+          "Is my knowledge becoming more integrated and peaceful over time?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите ваш личный режим, который помогает знанию переходить из чтения в внутреннее осознание: время, практика, препятствия, признаки результата.",
+        "en": "Describe your personal regimen that moves knowledge from reading to inner realization: timing, practice, obstacles, and result markers."
+      },
+      "user_score": null
+    },
+    {
+      "id": "gyana_q09_knowledge_and_detachment_link",
+      "question": {
+        "ru": "Насколько ваше знание приводит к реальному ослаблению материальных привязанностей, а не сосуществует с ними без изменений?",
+        "en": "How much does your knowledge lead to real weakening of material attachments, rather than coexisting with them unchanged?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:13:13]-[00:13:47]: знание без освобождения от привязанностей признается неполным.",
+          "Лекция [00:13:47]: гьяна и вайрагья должны идти вместе под бхакти.",
+          "ШБ 3.5.42 (комм.): знание бессмысленно, если не освобождает от привязанностей.",
+          "ШБ 1.2.7: бхакти дает знание и непривязанность одновременно."
+        ],
+        "en": [
+          "Lecture [00:13:13]-[00:13:47]: knowledge without detachment is incomplete.",
+          "Lecture [00:13:47]: gyana and vairagya should move together under bhakti.",
+          "SB 3.5.42 (purport): knowledge is meaningless if it does not reduce attachment.",
+          "SB 1.2.7: bhakti gives knowledge and detachment together."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какая конкретная привязанность в моей жизни ослабла благодаря шастре?",
+          "Где я оправдываю зависимость красивой философией?",
+          "Как знание влияет на мои выборы в деньгах, отношениях и медиа?",
+          "Есть ли у меня честный трекер привязанностей и их динамики?"
+        ],
+        "en": [
+          "Which specific attachment has weakened through scriptural practice?",
+          "Where do I justify dependency using elegant philosophy?",
+          "How does knowledge affect choices in money, relations, and media?",
+          "Do I have an honest tracker of attachments and trends?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Выберите одну сильную привязанность и распишите 14-дневный план ее ослабления через бхакти-практику и шастрическое напоминание.",
+        "en": "Choose one strong attachment and create a 14-day weakening plan through bhakti practice and scriptural reminders."
+      },
+      "user_score": null
+    },
+    {
+      "id": "gyana_q10_scripture_memory_and_application",
+      "question": {
+        "ru": "Насколько вы развиваете культуру запоминания шлок и умение применять их для служения и проповеди, а не для демонстрации превосходства?",
+        "en": "How well are you developing verse memorization and application for service and preaching, rather than for superiority display?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:17:26]-[00:19:01]: шлоки нужны для ясной проповеди и понимания науки самоосознания.",
+          "Лекция [00:18:12]: минимум опорных шлок из ключевых писаний.",
+          "Лекция [00:19:01]: важно знать выводы писаний и уметь передавать своими словами.",
+          "БГ 4.34: знание передается живо через ученическую преемственность."
+        ],
+        "en": [
+          "Lecture [00:17:26]-[00:19:01]: verses are for clear preaching and self-realization science.",
+          "Lecture [00:18:12]: maintain a minimum core set of key verses.",
+          "Lecture [00:19:01]: know scriptural conclusions and express them in your own words.",
+          "BG 4.34: knowledge is transmitted through living disciplic succession."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Сколько шлок я могу объяснить по смыслу без формального чтения?",
+          "Использую ли я шлоки для помощи людям или для победы в спорах?",
+          "Есть ли у меня системный график повторения изученных шлок?",
+          "Как я соединяю шлоку с конкретной жизненной задачей человека?"
+        ],
+        "en": [
+          "How many verses can I explain meaningfully without reading text?",
+          "Do I use verses to help people or to win arguments?",
+          "Do I have a systematic review cycle for memorized verses?",
+          "How do I connect a verse to a real-life need of a person?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Соберите персональный набор из 12 опорных шлок по теме знания и для каждой укажите, в какой практической ситуации вы ее применяете.",
+        "en": "Build a personal set of 12 core verses on knowledge and specify one practical situation where each verse is applied."
+      },
+      "user_score": null
+    },
+    {
+      "id": "gyana_q11_second_initiation_responsibility",
+      "question": {
+        "ru": "Насколько вы воспринимаете вторую инициацию как обязательство к углублению знания и служения, а не как статусный рубеж?",
+        "en": "How much do you treat second initiation as obligation for deeper knowledge and service, rather than a status milestone?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:06:15]-[00:07:17]: важно личное стремление к качествам, а не внешнее давление.",
+          "Лекция [00:11:32]-[00:12:52]: после посвящения изучение и самодисциплина должны расти.",
+          "Лекция [00:16:45]: знание проявляется в нескольких практических аспектах жизни.",
+          "БГ 18.42: знание является действующим качеством брахмана."
+        ],
+        "en": [
+          "Lecture [00:06:15]-[00:07:17]: personal aspiration to qualities is essential, not external pressure.",
+          "Lecture [00:11:32]-[00:12:52]: post-initiation study and discipline should increase.",
+          "Lecture [00:16:45]: knowledge manifests in several practical life aspects.",
+          "BG 18.42: knowledge is an active brahminical quality."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Что в моей практике реально изменилось после второй инициации?",
+          "Увеличились ли глубина шраванам, уровень вопросов и качество служения?",
+          "Какие обязательства я принял, но не внедрил в режим?",
+          "Есть ли у меня долгосрочная карта роста по качеству гьяны?"
+        ],
+        "en": [
+          "What actually changed in my practice after second initiation?",
+          "Did hearing depth, question quality, and service maturity increase?",
+          "Which commitments did I accept but fail to implement?",
+          "Do I have a long-term growth map for gyana quality?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Напишите краткий контракт на 90 дней после второй инициации: 5 обязательств по знанию, показатели исполнения и формат еженедельного отчета.",
+        "en": "Write a 90-day post-initiation contract: 5 knowledge commitments, execution metrics, and a weekly reporting format."
+      },
+      "user_score": null
+    },
+    {
+      "id": "gyana_q12_integrated_weekly_implementation",
+      "question": {
+        "ru": "Насколько вы способны еженедельно интегрировать все семь аспектов знания из лекции в единый проверяемый стандарт жизни?",
+        "en": "How capable are you of integrating all seven lecture aspects of knowledge into one verifiable weekly life standard?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:16:45]: семь аспектов знания - качества, действие, вопросы, шастра, привязанность к Кришне, связь с гуру, раскрытие в сердце.",
+          "Лекция [00:20:03]: приоритет бхакти как правильный контекст проявления гьяны.",
+          "БГ 4.38: зрелость практики приводит к внутреннему знанию.",
+          "ШБ 1.2.12: серьезный пытливый ученик реализует Истину через служение."
+        ],
+        "en": [
+          "Lecture [00:16:45]: seven aspects - qualities, action, inquiry, shastra, attachment to Krishna, guru-link, inner revelation.",
+          "Lecture [00:20:03]: bhakti priority is the right context for gyana manifestation.",
+          "BG 4.38: mature practice leads to inner knowledge.",
+          "SB 1.2.12: serious inquisitive student realizes Truth through service."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Есть ли у меня конкретные метрики по каждому из 7 аспектов на неделю?",
+          "Какие аспекты у меня стабильно растут, а какие выпадают?",
+          "Как я фиксирую разрыв между знанием и действием в течение дня?",
+          "Кто помогает мне честно проверять динамику, без самообмана?",
+          "Какой один шаг даст наибольший прирост целостности уже на этой неделе?"
+        ],
+        "en": [
+          "Do I have concrete weekly metrics for each of the 7 aspects?",
+          "Which aspects are consistently growing and which are dropping out?",
+          "How do I track the knowledge-action gap during the day?",
+          "Who helps me verify progress honestly without self-deception?",
+          "Which one step gives the biggest integrity gain this week?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Составьте недельный протокол интеграции 7 аспектов гьяны: ежедневные действия, вечерняя проверка, шкала 0-10 и корректировка на следующий цикл.",
+        "en": "Create a weekly 7-aspect gyana integration protocol: daily actions, evening review, 0-10 scale, and next-cycle correction."
+      },
+      "user_score": null
+    }
+  ]
+}

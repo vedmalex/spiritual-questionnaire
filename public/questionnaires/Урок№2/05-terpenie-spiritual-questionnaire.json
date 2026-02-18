@@ -1,0 +1,569 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Spiritual Assessment Structure",
+  "metadata": {
+    "title": {
+      "ru": "Опросник самопроверки: Терпение (титикша)",
+      "en": "Self-Assessment Questionnaire: Tolerance (Titiksha)"
+    },
+    "source_lecture": {
+      "ru": "05-Терпение.md (Эката прабху)",
+      "en": "05-Терпение.md (Ekata Prabhu)"
+    },
+    "quality": "titiksha_patience_ekata_prabhu_lesson_05",
+    "languages": [
+      "ru",
+      "en"
+    ]
+  },
+  "grading_system": {
+    "scale_min": 0,
+    "scale_max": 10,
+    "description": [
+      {
+        "score": 0,
+        "meaning": "не задумывался (отсутствие осознанности)"
+      },
+      {
+        "score": 1,
+        "meaning": "когда вспоминаю, стараюсь, но уже поздно"
+      },
+      {
+        "score": 2,
+        "meaning": "почти никогда не получается"
+      },
+      {
+        "score": 3,
+        "meaning": "часто почти не получается"
+      },
+      {
+        "score": 4,
+        "meaning": "получается редко, требует огромных усилий"
+      },
+      {
+        "score": 5,
+        "meaning": "стараюсь, получается не всегда (50/50)"
+      },
+      {
+        "score": 6,
+        "meaning": "получается чаще, чем не получается"
+      },
+      {
+        "score": 7,
+        "meaning": "иногда получается стабильно (уверенная практика)"
+      },
+      {
+        "score": 8,
+        "meaning": "получается в большинстве случаев"
+      },
+      {
+        "score": 9,
+        "meaning": "почти всегда получается"
+      },
+      {
+        "score": 10,
+        "meaning": "всегда (совершенство)"
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "titiksha_q01_not_indifference",
+      "question": {
+        "ru": "Когда в конфликте вам больно и обидно, насколько вы способны оставаться деятельно терпеливым (не убегать в холодное равнодушие, но и не взрываться реакцией)?",
+        "en": "When conflict causes pain and offense, how capable are you of active tolerance (neither emotional shutdown nor explosive reaction)?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:01:36]: терпение не равно равнодушию; аналогия дерева.",
+          "Лекция [00:17:06]: игнорирование проблемы не решает ситуацию.",
+          "БГ 2.14: переносить изменчивости счастья и горя, оставаясь невозмутимым.",
+          "ЧЧ Ади 17.28: дерево не протестует даже когда его рубят."
+        ],
+        "en": [
+          "Lecture [00:01:36]: tolerance is not indifference; tree analogy.",
+          "Lecture [00:17:06]: ignoring a problem is not a solution.",
+          "BG 2.14: tolerate temporary dualities while staying steady.",
+          "CC Adi 17.28: the tree does not protest when cut."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "В недавнем конфликте я стремился понять и служить, или только защитить эго?",
+          "Я откладывал разговор из страха, называя это терпением?",
+          "После напряжения я становлюсь внутренне мягче или жестче?",
+          "Есть ли у меня практика восстановления (молитва, джапа, пауза) перед ответом?",
+          "Как быстро я возвращаюсь к уважительному тону после боли?"
+        ],
+        "en": [
+          "In a recent conflict, did I aim to serve and understand, or only defend ego?",
+          "Did I postpone needed dialogue and call it “tolerance”?",
+          "After tension, do I become softer inside or more rigid?",
+          "Do I have a recovery practice (prayer, japa, pause) before responding?",
+          "How quickly do I return to respectful speech after being hurt?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите один конкретный конфликт за последние 7 дней: что вы чувствовали, как действовали, где проявилось равнодушие/вспышка, и как бы вы пересобрали ситуацию в духе БГ 2.14.",
+        "en": "Describe one specific conflict from the last 7 days: feelings, actions, where indifference/explosion appeared, and how you would rebuild the response in the spirit of BG 2.14."
+      },
+      "user_score": null
+    },
+    {
+      "id": "titiksha_q02_threefold_diagnosis",
+      "question": {
+        "ru": "Насколько точно вы умеете диагностировать источник своего нетерпения по трем категориям страданий (адхидайвика, адхибхаутика, адхьятмика), прежде чем действовать?",
+        "en": "How accurately can you diagnose the source of your impatience through the threefold suffering model (adhidaivika, adhibhautika, adhyatmika) before acting?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:07:09]: разбор трех видов страданий.",
+          "Лекция [00:08:24]-[00:14:11]: практические примеры по каждой категории.",
+          "ШБ 5.14.25: обусловленная душа постоянно испытывает тройственные страдания.",
+          "БГ 2.56: мудрец невозмутим, терпя тройственные страдания."
+        ],
+        "en": [
+          "Lecture [00:07:09]: three kinds of suffering explained.",
+          "Lecture [00:08:24]-[00:14:11]: applied examples for each category.",
+          "SB 5.14.25: conditioned soul constantly faces threefold suffering.",
+          "BG 2.56: the sage remains undisturbed amid threefold misery."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Когда я раздражен, я сначала определяю тип воздействия или сразу обвиняю кого-то?",
+          "Какой тип страдания чаще всего запускает мою реактивность?",
+          "Путаю ли я внешнюю причину и внутреннее состояние ума?",
+          "Какие 2-3 маркера помогают мне быстро распознать категорию?",
+          "После диагностики моя реакция становится более зрелой?"
+        ],
+        "en": [
+          "When irritated, do I classify the pressure type first or immediately blame someone?",
+          "Which suffering type most often triggers my reactivity?",
+          "Do I confuse external trigger with inner mind-state?",
+          "Which 2-3 markers help me identify the category quickly?",
+          "After diagnosis, does my response become more mature?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Разберите три последние ситуации нетерпения (по одной на каждый тип страдания) и покажите, как изменилась бы ваша реакция при правильной диагностике.",
+        "en": "Break down your three latest impatience episodes (one per suffering type) and show how your response would change with proper diagnosis."
+      },
+      "user_score": null
+    },
+    {
+      "id": "titiksha_q03_adhidaivika_resilience",
+      "question": {
+        "ru": "Когда условия среды резко не совпадают с вашими планами (погода, сбои, ограничения), насколько вы сохраняете служение без ропота и претензий?",
+        "en": "When environmental conditions disrupt your plans (weather, outages, limitations), how well do you continue service without complaint and entitlement?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:08:24]: претензии к стихиям как проявление нетерпения.",
+          "Лекция [00:30:18]: главное лекарство - не предъявлять претензий.",
+          "БГ 2.14: холод/жара и другие двойственности временные.",
+          "БГ 6.7: для обуздавшего ум нет разницы между жарой и холодом."
+        ],
+        "en": [
+          "Lecture [00:08:24]: impatience expressed as complaints against nature.",
+          "Lecture [00:30:18]: core medicine is giving up claims.",
+          "BG 2.14: heat/cold dualities are temporary.",
+          "BG 6.7: one with controlled mind remains equal in heat and cold."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Сколько времени я теряю на жалобы вместо адаптации?",
+          "Моя первая реакция на дискомфорт - молитва и действие или ропот?",
+          "Остается ли у меня уважительный тон к людям в период внешнего стресса?",
+          "Как я перестраиваю режим садханы при форс-мажоре?"
+        ],
+        "en": [
+          "How much time do I lose complaining instead of adapting?",
+          "Is my first response to discomfort prayerful action or grumbling?",
+          "Do I keep respectful speech under environmental stress?",
+          "How do I reconfigure sadhana routine during force-majeure periods?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите недавний форс-мажор: какие претензии возникли, что помогло их остановить, и какой конкретный протокол вы вводите на будущее (3 шага).",
+        "en": "Describe a recent force-majeure event: which claims arose, what stopped them, and the exact 3-step protocol you will use next time."
+      },
+      "user_score": null
+    },
+    {
+      "id": "titiksha_q04_adhibhautika_relationships",
+      "question": {
+        "ru": "Насколько вы способны общаться с людьми без внутренней установки мне должны, особенно когда они не соответствуют вашим ожиданиям?",
+        "en": "How well can you relate to people without the inner script “they owe me,” especially when they fail your expectations?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:09:56]-[00:12:20]: претензии к другим как корень нетерпения.",
+          "Лекция [00:20:13]: нетерпение усиливается системой тотальной критики.",
+          "БГ 12.15: преданный не причиняет беспокойств и не приходит в беспокойство.",
+          "ШБ 4.11.13: терпение, милосердие, дружелюбие, беспристрастие в общении."
+        ],
+        "en": [
+          "Lecture [00:09:56]-[00:12:20]: claims toward others are a root of impatience.",
+          "Lecture [00:20:13]: total criticism amplifies inner disturbance.",
+          "BG 12.15: devotee neither disturbs others nor is disturbed.",
+          "SB 4.11.13: tolerance, compassion, friendliness, impartiality in dealings."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Я чаще формулирую просьбы в духе служения или обвинения?",
+          "Могу ли я отделить факт ошибки человека от своей гордыни?",
+          "Как я реагирую, когда меня обслуживают медленно/некачественно?",
+          "После общения людям со мной легче или тяжелее?",
+          "Насколько я умею сочетать твердость и уважение одновременно?"
+        ],
+        "en": [
+          "Do I frame requests as service or as accusation?",
+          "Can I separate someone’s mistake from my wounded pride?",
+          "How do I react to slow or poor service?",
+          "After interacting with me, do people feel lighter or heavier?",
+          "How well do I combine firmness and respect at the same time?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Возьмите одного «сложного» человека и опишите новую стратегию общения на 2 недели: цель, границы, язык уважения, критерии успеха.",
+        "en": "Pick one “difficult” person and define a 2-week communication strategy: goal, boundaries, language of respect, and success metrics."
+      },
+      "user_score": null
+    },
+    {
+      "id": "titiksha_q05_adhyatmika_mind_work",
+      "question": {
+        "ru": "Когда источник страдания - ваш собственный ум и тело, насколько вы умеете останавливать цикл «желание -> гнев/жадность -> суета» и возвращаться в трезвое сознание?",
+        "en": "When suffering comes from your own mind and body, how effectively can you interrupt the cycle “desire -> anger/greed -> agitation” and return to clarity?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:14:11]-[00:15:24]: неудовлетворенное вожделение как источник внутреннего нетерпения.",
+          "Лекция [00:20:13]: претензии к себе тоже разрушают спокойствие.",
+          "БГ 2.56: мудрец свободен от привязанности, страха и гнева.",
+          "БГ 6.7: обуздавший ум обретает умиротворение."
+        ],
+        "en": [
+          "Lecture [00:14:11]-[00:15:24]: unfulfilled desire drives inner impatience.",
+          "Lecture [00:20:13]: self-directed claims also destroy peace.",
+          "BG 2.56: sage is free from attachment, fear, and anger.",
+          "BG 6.7: mind control brings deep peace."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какой именно триггер запускает мою внутреннюю суету чаще всего?",
+          "Есть ли у меня рабочий алгоритм остановки (пауза, дыхание, мантра, запись)?",
+          "Я различаю здоровую дисциплину и саморазрушительную самокритику?",
+          "Как быстро я возвращаюсь к обязанностям после эмоционального всплеска?"
+        ],
+        "en": [
+          "Which exact trigger most often launches my inner agitation?",
+          "Do I have a practical interruption algorithm (pause, breath, mantra, journaling)?",
+          "Can I distinguish healthy discipline from self-destructive self-criticism?",
+          "How quickly do I return to duty after an emotional spike?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите ваш личный «антикризисный протокол» для ума (5 пунктов) и укажите, где вы его уже применили или сорвали за последнюю неделю.",
+        "en": "Write your personal 5-step “mind crisis protocol” and show where you applied or failed it during the last week."
+      },
+      "user_score": null
+    },
+    {
+      "id": "titiksha_q06_non_disturbing_presence",
+      "question": {
+        "ru": "Насколько ваше присутствие реально уменьшает тревогу и напряжение у окружающих, а не увеличивает их?",
+        "en": "To what degree does your presence actually reduce others’ anxiety and tension rather than increase it?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:19:01]: терпение связано с принципом никого не беспокоить.",
+          "БГ 12.15: критерий духовной зрелости - не быть источником тревоги.",
+          "ШБ 4.11.13: Господь доволен терпеливым и дружелюбным преданным."
+        ],
+        "en": [
+          "Lecture [00:19:01]: tolerance is tied to non-disturbing conduct.",
+          "BG 12.15: spiritual maturity means not becoming a source of fear/anxiety.",
+          "SB 4.11.13: the Lord is pleased by tolerant and friendly dealings."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "После моих слов люди чувствуют поддержку или давление?",
+          "Я умею корректировать без унижения и раздражения?",
+          "Что в моем тоне чаще всего ранит других?",
+          "Есть ли у меня привычка сначала слушать, а потом оценивать?"
+        ],
+        "en": [
+          "After my words, do people feel supported or pressured?",
+          "Can I correct without humiliation and irritation?",
+          "Which part of my tone most often hurts others?",
+          "Do I consistently listen first and evaluate second?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Соберите обратную связь минимум от двух людей: что в вашем общении их успокаивает, а что тревожит. Зафиксируйте одно обязательное изменение речи на ближайшие 14 дней.",
+        "en": "Gather feedback from at least two people: what in your communication calms them, and what disturbs them. Commit to one mandatory speech change for the next 14 days."
+      },
+      "user_score": null
+    },
+    {
+      "id": "titiksha_q07_claims_fast",
+      "question": {
+        "ru": "Насколько вы способны практиковать принцип «без претензий» к миру, людям и себе в течение полного дня без срывов?",
+        "en": "How capable are you of practicing a full day of “no claims” toward the world, other people, and yourself without breakdowns?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:20:13]: претензии ко всему - к стихиям, людям и себе.",
+          "Лекция [00:30:18]: главное лекарство - никому не предъявлять претензий.",
+          "БГ 18.26: в благости деятель невозмутим в успехе и неудаче."
+        ],
+        "en": [
+          "Lecture [00:20:13]: claims arise toward nature, people, and oneself.",
+          "Lecture [00:30:18]: main medicine is to stop demanding from everyone.",
+          "BG 18.26: in goodness one remains steady in success and failure."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какая форма претензий у меня доминирует: внешняя, межличностная или внутренняя?",
+          "Замечаю ли я претензию в момент ее появления или постфактум?",
+          "Чем я заменяю претензию практически: молитвой, просьбой, действием, принятием?",
+          "Как меняется качество дня, когда претензий меньше?"
+        ],
+        "en": [
+          "Which claim pattern dominates in me: external, interpersonal, or internal?",
+          "Do I catch a claim as it appears or only afterward?",
+          "What practical replacement do I apply: prayer, request, action, acceptance?",
+          "How does the quality of my day change when claims decrease?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Сделайте 24-часовой «пост от претензий» и ведите журнал: ситуация, мысль-претензия, чем заменили, итог. В комментарии подведите честную статистику.",
+        "en": "Run a 24-hour “claim fast” and log: trigger, claim-thought, replacement action, result. In your comment, provide an honest summary with numbers."
+      },
+      "user_score": null
+    },
+    {
+      "id": "titiksha_q08_servant_identity",
+      "question": {
+        "ru": "Насколько устойчиво в реальных решениях проявляется ваша идентичность слуги (а не контролирующего и наслаждающегося)?",
+        "en": "How consistently does your servant identity (rather than controller/enjoyer identity) appear in real decisions?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:09:56]: корень претензий - позиция верховного контролера.",
+          "Лекция [00:21:54]: видеть духовную природу всех существ.",
+          "Лекция [00:30:18]: наша природа - слуга, а не господин.",
+          "ШБ 3.29.16: видеть единую духовную природу живых существ."
+        ],
+        "en": [
+          "Lecture [00:09:56]: claims come from the controller mentality.",
+          "Lecture [00:21:54]: see the spiritual nature in all beings.",
+          "Lecture [00:30:18]: our nature is servant, not master.",
+          "SB 3.29.16: perceive one spiritual nature in all living beings."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Перед решением я спрашиваю «как послужить?» или «как мне удобнее?»",
+          "Как часто я жертвую отношением ради контроля результата?",
+          "Есть ли у меня повторяющиеся сценарии доминирования в семье/служении?",
+          "Какой признак показывает, что я реально в позиции слуги?"
+        ],
+        "en": [
+          "Before deciding, do I ask “how can I serve?” or “what is most convenient for me?”",
+          "How often do I sacrifice relationships to control outcomes?",
+          "Do I have recurring dominance patterns in family/service?",
+          "Which marker proves I am actually acting as a servant?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Выберите одну сферу (семья, работа, служение) и покажите, какие 3 решения за неделю вы перевели из «контроля» в «служение».",
+        "en": "Choose one domain (family, work, service) and show which 3 weekly decisions you shifted from “control” to “service.”"
+      },
+      "user_score": null
+    },
+    {
+      "id": "titiksha_q09_perseverance_in_bhakti",
+      "question": {
+        "ru": "Когда первые попытки в садхане не дают быстрого результата, насколько вы сохраняете энтузиазм, уверенность и терпение без отката?",
+        "en": "When early attempts in sadhana do not yield quick results, how well do you sustain enthusiasm, confidence, and patience without regression?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:22:51]: не прекращать служение из-за первых неудач.",
+          "Лекция [00:25:44]: терпение должно приводить к уверенности и энтузиазму.",
+          "ШБ 3.29.16 (комм.): успех в служении требует великого терпения.",
+          "НН 3: utsahat, niscayat, dhairyat - энтузиазм, уверенность, терпение."
+        ],
+        "en": [
+          "Lecture [00:22:51]: do not stop service after initial failures.",
+          "Lecture [00:25:44]: tolerance should mature into confidence and enthusiasm.",
+          "SB 3.29.16 (purport): success in devotion requires great patience.",
+          "NOI 3: utsahat, niscayat, dhairyat - enthusiasm, confidence, patience."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "После неудачи я упрощаю дисциплину или вообще бросаю ее?",
+          "Что для меня признак зрелого терпения в садхане, а не пассивности?",
+          "Какие мини-ритмы помогают мне держать стабильность 30 дней?",
+          "Есть ли у меня наставническая отчетность по прогрессу?"
+        ],
+        "en": [
+          "After failure, do I simplify discipline wisely or abandon it entirely?",
+          "What is mature patience in sadhana for me, not passive waiting?",
+          "Which micro-rhythms help me stay steady for 30 days?",
+          "Do I maintain accountability with a mentor/senior?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите один цикл «попробовал -> не получилось -> откат» и пересоберите его в практический 30-дневный план по принципам НН 3.",
+        "en": "Describe one “tried -> failed -> regressed” cycle and redesign it into a practical 30-day plan aligned with NOI 3 principles."
+      },
+      "user_score": null
+    },
+    {
+      "id": "titiksha_q10_prayerful_dependence",
+      "question": {
+        "ru": "Насколько ваше терпение связано с молитвенным преданием Кришне, а не только с личным упрямством и самонапряжением?",
+        "en": "How much is your tolerance rooted in prayerful surrender to Krishna, rather than personal stubbornness and self-strain alone?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:23:54]-[00:25:44]: пример Шрилы Прабхупады (Джаладута, трудности миссии).",
+          "Лекция [00:25:44]: терпение + молитва рождают уверенность и решимость.",
+          "ШБ 10.14.8: смиренно ждать милости, терпеливо снося последствия прошлого.",
+          "БГ 18.26: действовать решительно без ложного эго."
+        ],
+        "en": [
+          "Lecture [00:23:54]-[00:25:44]: Srila Prabhupada example (Jaladuta, mission hardships).",
+          "Lecture [00:25:44]: tolerance plus prayer yields confidence and determination.",
+          "SB 10.14.8: humbly wait for mercy while tolerating karmic reactions.",
+          "BG 18.26: act with determination without false ego."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "В стрессе я усиливаю контроль или усиливаю молитву?",
+          "Могу ли я честно признать предел своей силы и обратиться за милостью?",
+          "Моя решимость основана на доверии Кришне или на страхе провала?",
+          "Как часто я осмысляю трудности как духовную тренировку, а не наказание?"
+        ],
+        "en": [
+          "Under stress, do I increase control tactics or deepen prayer?",
+          "Can I honestly admit my limits and seek mercy?",
+          "Is my determination based on trust in Krishna or fear of failure?",
+          "How often do I read hardship as training rather than punishment?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите одну тяжелую ситуацию, в которой вы заменили внутренний контроль на молитвенное обращение. Укажите, что изменилось в мотивации и действиях.",
+        "en": "Describe one difficult situation where you replaced inner control with prayerful reliance. Explain what changed in motivation and behavior."
+      },
+      "user_score": null
+    },
+    {
+      "id": "titiksha_q11_nama_and_tolerance",
+      "question": {
+        "ru": "Насколько ваше повторение святого имени реально трансформирует характер: меньше ли в вас претензий, гнева и обидчивости?",
+        "en": "How much does your chanting of the holy name actually transform character: fewer claims, less anger, and less offense-taking?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:27:12]: терпение естественно развивается через искреннее повторение мантры.",
+          "Лекция [00:29:02]: погружение в садхана-бхакти делает человека терпеливым.",
+          "ЧЧ antya.20.21: тр̣н̣а̄д апи сунӣчена... можно постоянно воспевать имя.",
+          "ЧЧ Ади 17.28: аналогия дерева как стандарт выносливости."
+        ],
+        "en": [
+          "Lecture [00:27:12]: tolerance naturally develops through sincere chanting.",
+          "Lecture [00:29:02]: immersion in sadhana-bhakti develops patience.",
+          "CC Antya 20.21: trnad api sunicena as basis for constant chanting.",
+          "CC Adi 17.28: tree analogy as endurance standard."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "После качественной джапы мои реакции становятся мягче и осознаннее?",
+          "Я связываю трудности дня с углублением святого имени или с претензиями?",
+          "Какие признаки показывают, что моя джапа влияет на общение с людьми?",
+          "Где есть разрыв между количеством кругов и качеством сознания?"
+        ],
+        "en": [
+          "After quality japa, do my reactions become softer and more aware?",
+          "Do I process daily hardships through deeper chanting or through claims?",
+          "Which signs show that japa is improving my relationships?",
+          "Where is the gap between number of rounds and quality of consciousness?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Дайте честный разбор вашей джапы за 7 дней: качество внимания, главные отвлечения, связь с нетерпением, и 2 конкретные коррекции на следующую неделю.",
+        "en": "Give an honest 7-day japa review: attention quality, key distractions, link to impatience, and 2 concrete corrections for next week."
+      },
+      "user_score": null
+    },
+    {
+      "id": "titiksha_q12_integrated_weekly_commitment",
+      "question": {
+        "ru": "Насколько вы способны перевести тему терпения в измеримый недельный стандарт: конкретные обеты, метрики и проверка результата?",
+        "en": "How well can you convert the topic of tolerance into a measurable weekly standard: clear vows, metrics, and outcome review?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:30:18]: фокус на цели и служении Кришне вместо двойственности.",
+          "Лекция [00:31:12]: итоговый призыв к практическому применению.",
+          "БГ 2.14: устойчивость в приходящих двойственностях.",
+          "БГ 18.26: невозмутимость в успехе/неудаче при решительном действии.",
+          "НН 3: системная практика через энтузиазм, уверенность, терпение."
+        ],
+        "en": [
+          "Lecture [00:30:18]: focus on Krishna-centered service, not duality swings.",
+          "Lecture [00:31:12]: final call to practical implementation.",
+          "BG 2.14: steadiness amid temporary dualities.",
+          "BG 18.26: equanimity in success/failure with determined action.",
+          "NOI 3: structured practice through enthusiasm, confidence, patience."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Есть ли у меня 2-3 наблюдаемых метрики терпения на неделю?",
+          "Как и когда я фиксирую срывы: сразу или постфактум?",
+          "Кто проверяет мою честность в самооценке?",
+          "Какие критерии покажут реальный прогресс через 7 дней?",
+          "Какой шаг я сделаю, если неделя прошла с низким баллом?"
+        ],
+        "en": [
+          "Do I have 2-3 observable tolerance metrics for the week?",
+          "How and when do I log breakdowns: immediately or retrospectively?",
+          "Who checks the honesty of my self-scoring?",
+          "Which criteria will prove real progress in 7 days?",
+          "What corrective step will I take if the week ends with a low score?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Составьте личный недельный контракт: 3 обета терпения, ежедневный формат отчета, критерии оценки (0-10) и решение на случай срыва.",
+        "en": "Create a personal weekly contract: 3 tolerance vows, daily reporting format, scoring criteria (0-10), and a fallback protocol for breakdowns."
+      },
+      "user_score": null
+    }
+  ]
+}

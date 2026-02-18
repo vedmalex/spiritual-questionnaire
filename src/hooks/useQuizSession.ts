@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import type { QuizSession, QuizResult, Questionnaire, AnswerDetails, UserRole } from '../types/questionnaire';
 import { dataAdapter } from '../services/localStorageAdapter';
 import { getQuestionnaireRuntimeId, isLocalQuestionnaire } from '../utils/questionnaireIdentity';
+import { evaluateQuestionnaireProcessingRules } from '../utils/questionnaireRules';
+import { calculateScalePercentage } from '../utils/gradingSystem';
 
 interface CreateSessionOptions {
   returnUrl?: string;
@@ -325,9 +327,17 @@ export function useQuizSession(userName: string, userRole: UserRole) {
     if (!session) return;
 
     const answers = session.answers;
-    const totalScore = Object.values(answers).reduce((sum, detail) => sum + (detail.score || 0), 0);
-    const maxPossibleScore = questionnaire.questions.length * 10;
-    const percentage = Math.round((totalScore / maxPossibleScore) * 100);
+    const baseTotalScore = Object.values(answers).reduce((sum, detail) => sum + (detail.score || 0), 0);
+    const baseMaxPossibleScore = questionnaire.questions.length * questionnaire.grading_system.scale_max;
+    const basePercentage = calculateScalePercentage(
+      baseTotalScore,
+      questionnaire.questions.length,
+      questionnaire.grading_system
+    );
+    const rulesEvaluation = evaluateQuestionnaireProcessingRules(questionnaire, answers);
+    const totalScore = rulesEvaluation.scoreOverride?.totalScore ?? baseTotalScore;
+    const maxPossibleScore = rulesEvaluation.scoreOverride?.maxPossibleScore ?? baseMaxPossibleScore;
+    const percentage = rulesEvaluation.scoreOverride?.percentage ?? basePercentage;
     const completedAt =
       session.sourceResultId && session.sourceResultCompletedAt
         ? session.sourceResultCompletedAt
@@ -346,7 +356,33 @@ export function useQuizSession(userName: string, userRole: UserRole) {
       percentage,
       reviewStatus: 'pending',
       absentInCurrentSchemaQuestionIds: [],
+      ...(rulesEvaluation.applied
+        ? {
+            computed_result: {
+              version: 1,
+              engine: 'rules-v1' as const,
+              metrics: rulesEvaluation.metrics,
+              ranking: rulesEvaluation.ranking,
+              ...(rulesEvaluation.honestyChecks
+                ? {
+                    honesty_checks: {
+                      all_passed: rulesEvaluation.honestyChecks.allPassed,
+                      failed_count: rulesEvaluation.honestyChecks.failedCount,
+                      checks: rulesEvaluation.honestyChecks.checks,
+                    },
+                  }
+                : {}),
+              ...(rulesEvaluation.errors.length > 0
+                ? { errors: rulesEvaluation.errors }
+                : {}),
+            },
+          }
+        : {}),
     };
+
+    if (rulesEvaluation.errors.length > 0) {
+      console.warn('Questionnaire processing rules evaluation completed with errors:', rulesEvaluation.errors);
+    }
 
     if (session.sourceResultId) {
       await dataAdapter.updateResult(result, 'student');

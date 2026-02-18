@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import type { CuratorFeedback, Questionnaire, QuizResult } from '../types/questionnaire';
-import { t, getGradeDescription, getLanguage } from '../utils/i18n';
+import { t, getLanguage } from '../utils/i18n';
 import type { ExportFormat } from '../utils/exportUtils';
 import { trackFormActivity } from '../utils/analytics';
 import { dataAdapter } from '../services/localStorageAdapter';
@@ -24,6 +24,7 @@ import {
   hasMarkdownContent,
   mergeLegacyCommentWithPhotos,
 } from '../utils/markdown';
+import { getGradingMeaning } from '../utils/gradingSystem';
 
 interface DashboardProps {
   results: QuizResult[];
@@ -52,7 +53,8 @@ interface QuestionnaireResultGroup {
   questionnaireTitle: string;
   attempts: number;
   overallPercentage: number;
-  overallScoreTen: number;
+  overallScoreValue: number;
+  scaleMax: number;
   overallScoreLabel: string;
   lastCompletedAt: number;
   results: QuizResult[];
@@ -219,17 +221,25 @@ export function Dashboard({
       const maxPossible = sortedItems.reduce((sum, item) => sum + item.maxPossibleScore, 0);
       const overallPercentage =
         maxPossible > 0 ? Math.round((totalScore / maxPossible) * 100) : 0;
-      const overallScoreTen = Number((overallPercentage / 10).toFixed(1));
-      const overallScoreLabel = getGradeDescription(
-        Math.max(0, Math.min(10, Math.round(overallScoreTen)))
+      const schema = questionnaires.find(
+        (questionnaire) => getQuestionnaireRuntimeId(questionnaire) === questionnaireId
       );
+      const scaleMin = schema?.grading_system.scale_min ?? 0;
+      const scaleMax = schema?.grading_system.scale_max ?? 10;
+      const overallScoreValue = Number(
+        (scaleMin + ((scaleMax - scaleMin) * overallPercentage) / 100).toFixed(1)
+      );
+      const overallScoreLabel = schema
+        ? getGradingMeaning(schema.grading_system, overallScoreValue)
+        : String(Math.round(overallScoreValue));
 
       return {
         questionnaireId,
         questionnaireTitle,
         attempts,
         overallPercentage,
-        overallScoreTen,
+        overallScoreValue,
+        scaleMax,
         overallScoreLabel,
         lastCompletedAt: sortedItems[0]?.completedAt || 0,
         results: sortedItems,
@@ -237,7 +247,7 @@ export function Dashboard({
     });
 
     return groups.sort((a, b) => b.lastCompletedAt - a.lastCompletedAt);
-  }, [results]);
+  }, [questionnaires, results]);
 
   const language = getLanguage();
 
@@ -257,6 +267,15 @@ export function Dashboard({
 
     return next;
   }, [language, questionnaires]);
+
+  const gradingSystemLookup = useMemo(() => {
+    return new Map(
+      questionnaires.map((questionnaire) => [
+        getQuestionnaireRuntimeId(questionnaire),
+        questionnaire.grading_system,
+      ])
+    );
+  }, [questionnaires]);
 
   const feedbackThreads = useMemo<FeedbackResultThread[]>(() => {
     return results
@@ -914,7 +933,7 @@ export function Dashboard({
                           {t('dashboard.group.overall')}
                         </p>
                         <p className="text-xl font-bold text-primary-600 dark:text-primary-400">
-                          {group.overallScoreTen}/10
+                          {group.overallScoreValue}/{group.scaleMax}
                         </p>
                         <p className="text-sm text-gray-700 dark:text-gray-300 break-words">
                           {group.overallScoreLabel} ({group.overallPercentage}%)
@@ -1020,6 +1039,8 @@ export function Dashboard({
                                 )}
                                 {Object.entries(result.answers).map(([questionId, details], idx) => {
                                   const schemaQuestion = questionLookup.get(result.questionnaireId)?.get(questionId);
+                                  const gradingSystem = gradingSystemLookup.get(result.questionnaireId);
+                                  const scaleMax = gradingSystem?.scale_max ?? 10;
                                   const questionIndex = schemaQuestion?.index ?? idx;
                                   const questionTitle = schemaQuestion?.title || questionId;
                                   const isAbsentQuestion =
@@ -1060,7 +1081,7 @@ export function Dashboard({
                                             {questionTitle}
                                           </span>
                                           <span className="shrink-0 font-semibold text-gray-900 dark:text-white">
-                                            {details.score}/10
+                                            {details.score}/{scaleMax}
                                           </span>
                                           {hasAnswerComment && <span className="shrink-0 text-xs text-gray-500">📝</span>}
                                           {imageCount > 0 && (
@@ -1085,7 +1106,10 @@ export function Dashboard({
                                             <strong>{t('quiz.question')}:</strong> {questionTitle}
                                           </p>
                                           <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                                            <strong>{t('quiz.score.selected')}:</strong> {getGradeDescription(details.score)}
+                                            <strong>{t('quiz.score.selected')}:</strong>{' '}
+                                            {gradingSystem
+                                              ? getGradingMeaning(gradingSystem, details.score)
+                                              : String(details.score)}
                                           </p>
 
                                           {hasAnswerComment && (

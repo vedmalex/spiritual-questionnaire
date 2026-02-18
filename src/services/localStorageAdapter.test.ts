@@ -67,11 +67,11 @@ describe('LocalStorageAdapter questionnaire identity', () => {
           return {
             ok: true,
             status: 200,
-            json: async () => ['titiksha.json'],
+            json: async () => ['Урок№1/titiksha.json'],
           } as Response;
         }
 
-        if (url.endsWith('/questionnaires/titiksha.json')) {
+        if (url.endsWith('/questionnaires/Урок№1/titiksha.json')) {
           return {
             ok: true,
             status: 200,
@@ -99,6 +99,7 @@ describe('LocalStorageAdapter questionnaire identity', () => {
       'local:titiksha',
     ]);
     expect(questionnaires.map((item) => item.source)).toEqual(['static', 'local']);
+    expect(questionnaires[0]?.metadata.system_folders).toEqual(['Урок№1']);
   });
 
   it('resolves local questionnaire by runtime id without colliding with static', async () => {

@@ -16,6 +16,10 @@ import {
   withQuestionnaireRuntimeIdentity,
 } from '../utils/questionnaireIdentity';
 import { toPublicPath } from '../utils/publicPath';
+import {
+  normalizeQuestionnaireIndexEntry,
+  withServerFolderMetadata,
+} from '../utils/questionnaireServerFolders';
 
 export class LocalStorageAdapter implements DataAdapter {
   private getResultsStorageKey(scope: ResultsScope = 'student'): string {
@@ -73,13 +77,14 @@ export class LocalStorageAdapter implements DataAdapter {
       const files: string[] = await response.json();
       
       const questionnaires = await Promise.all(
-        files.map(async (file) => {
+        files.map(async (fileRaw) => {
+          const file = normalizeQuestionnaireIndexEntry(fileRaw);
           const res = await fetch(toPublicPath(`questionnaires/${file}`));
           if (!res.ok) {
             throw new Error(`Failed to load "${file}": HTTP ${res.status}`);
           }
           const parsed = await res.json();
-          return normalizeQuestionnaire(parsed);
+          return withServerFolderMetadata(normalizeQuestionnaire(parsed), file);
         })
       );
       

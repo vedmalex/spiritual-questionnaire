@@ -24,20 +24,43 @@ const outDir = process.env.BUILD_OUT_DIR || 'dist'
 const QUESTIONNAIRES_DIR = path.join('public', 'questionnaires')
 const QUESTIONNAIRES_INDEX_FILE = 'index.json'
 
+async function collectQuestionnaireFiles(
+  absoluteDir: string,
+  relativeDir = ''
+): Promise<string[]> {
+  const entries = await fs.readdir(absoluteDir, { withFileTypes: true })
+  const files: string[] = []
+
+  for (const entry of entries) {
+    const absolutePath = path.join(absoluteDir, entry.name)
+    const relativePath = relativeDir
+      ? path.posix.join(relativeDir, entry.name)
+      : entry.name
+
+    if (entry.isDirectory()) {
+      files.push(...(await collectQuestionnaireFiles(absolutePath, relativePath)))
+      continue
+    }
+
+    if (
+      entry.isFile() &&
+      relativePath.toLowerCase().endsWith('.json') &&
+      relativePath !== QUESTIONNAIRES_INDEX_FILE
+    ) {
+      files.push(relativePath)
+    }
+  }
+
+  return files
+}
+
 async function generateQuestionnairesIndex(rootDir: string): Promise<void> {
   const questionnairesDir = path.resolve(rootDir, QUESTIONNAIRES_DIR)
   await fs.mkdir(questionnairesDir, { recursive: true })
 
-  const entries = await fs.readdir(questionnairesDir, { withFileTypes: true })
-  const files = entries
-    .filter(
-      (entry) =>
-        entry.isFile() &&
-        entry.name.toLowerCase().endsWith('.json') &&
-        entry.name !== QUESTIONNAIRES_INDEX_FILE
-    )
-    .map((entry) => entry.name)
-    .sort((left, right) => left.localeCompare(right))
+  const files = (await collectQuestionnaireFiles(questionnairesDir)).sort((left, right) =>
+    left.localeCompare(right)
+  )
 
   const nextContent = `${JSON.stringify(files)}\n`
   const indexPath = path.join(questionnairesDir, QUESTIONNAIRES_INDEX_FILE)
@@ -52,6 +75,12 @@ function questionnairesIndexPlugin(): Plugin {
   let rootDir = process.cwd()
   let generationInFlight: Promise<void> | null = null
 
+  const isWithinQuestionnairesDir = (targetPath: string): boolean => {
+    const questionnairesDir = path.resolve(rootDir, QUESTIONNAIRES_DIR)
+    const relative = path.relative(questionnairesDir, targetPath)
+    return Boolean(relative) && !relative.startsWith('..') && !path.isAbsolute(relative)
+  }
+
   const runGeneration = (): Promise<void> => {
     if (!generationInFlight) {
       generationInFlight = generateQuestionnairesIndex(rootDir).finally(() => {
@@ -62,15 +91,13 @@ function questionnairesIndexPlugin(): Plugin {
   }
 
   const shouldRegenerateFor = (filePath: string): boolean => {
-    const questionnairesDir = path.resolve(rootDir, QUESTIONNAIRES_DIR)
-    const relative = path.relative(questionnairesDir, filePath)
-    if (!relative || relative.startsWith('..') || path.isAbsolute(relative)) {
+    if (!isWithinQuestionnairesDir(filePath)) {
       return false
     }
     if (path.basename(filePath) === QUESTIONNAIRES_INDEX_FILE) {
       return false
     }
-    return relative.toLowerCase().endsWith('.json')
+    return filePath.toLowerCase().endsWith('.json')
   }
 
   return {
@@ -93,9 +120,18 @@ function questionnairesIndexPlugin(): Plugin {
         void runGeneration()
       }
 
+      const regenerateForDirectory = (dirPath: string) => {
+        if (!isWithinQuestionnairesDir(dirPath)) {
+          return
+        }
+        void runGeneration()
+      }
+
       server.watcher.on('add', regenerateIfNeeded)
       server.watcher.on('unlink', regenerateIfNeeded)
       server.watcher.on('change', regenerateIfNeeded)
+      server.watcher.on('addDir', regenerateForDirectory)
+      server.watcher.on('unlinkDir', regenerateForDirectory)
     },
   }
 }

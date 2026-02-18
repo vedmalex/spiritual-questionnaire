@@ -165,6 +165,70 @@ describe('useQuizSession', () => {
     expect(dataAdapter.clearSession).toHaveBeenCalledTimes(1);
   });
 
+  it('applies processing_rules score override on completion', async () => {
+    const rulesQuestionnaire: Questionnaire = {
+      ...questionnaire,
+      processing_rules: {
+        version: 1,
+        metrics: [
+          {
+            id: 'weighted',
+            expression: {
+              op: 'sum_answers',
+              question_ids: ['q1'],
+              weights: { q1: 2 },
+            },
+          },
+        ],
+        honesty_checks: [
+          {
+            id: 'baseline-consistency',
+            pass_expression: {
+              op: 'gte',
+              args: [
+                { op: 'metric', metric_id: 'weighted' },
+                { op: 'const', value: 10 },
+              ],
+            },
+            value_expression: { op: 'metric', metric_id: 'weighted' },
+            severity: 'warning',
+          },
+        ],
+        score: {
+          total_expression: { op: 'metric', metric_id: 'weighted' },
+          max_expression: { op: 'const', value: 20 },
+        },
+      },
+    };
+
+    const { result } = renderHook(() => useQuizSession('Alice', 'student'));
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    await act(async () => {
+      await result.current.createSession(rulesQuestionnaire);
+    });
+
+    await act(async () => {
+      await result.current.updateAnswer('q1', { score: 8 });
+    });
+
+    let completed: QuizResult | undefined;
+    await act(async () => {
+      completed = await result.current.completeSession(rulesQuestionnaire);
+    });
+
+    expect(completed?.totalScore).toBe(16);
+    expect(completed?.maxPossibleScore).toBe(20);
+    expect(completed?.percentage).toBe(80);
+    expect(completed?.computed_result?.metrics.weighted).toBe(16);
+    expect(completed?.computed_result?.ranking).toEqual(['weighted']);
+    expect(completed?.computed_result?.honesty_checks?.all_passed).toBe(true);
+    expect(completed?.computed_result?.honesty_checks?.failed_count).toBe(0);
+    expect(completed?.computed_result?.honesty_checks?.checks[0]?.id).toBe(
+      'baseline-consistency'
+    );
+  });
+
   it('keeps local questionnaire answers isolated by runtime id', async () => {
     const { result } = renderHook(() => useQuizSession('Alice', 'student'));
 

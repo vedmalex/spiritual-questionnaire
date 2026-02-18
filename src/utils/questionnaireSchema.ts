@@ -1,21 +1,23 @@
 import type {
-  GradingDescription,
   LocalizedText,
   LocalizedStringList,
   Questionnaire,
   Question,
 } from '../types/questionnaire';
-import { GRADING_DESCRIPTIONS } from './constants';
+import {
+  normalizeQuestionnaireProcessingRules,
+  validateQuestionnaireProcessingRules,
+} from './questionnaireRules';
+import {
+  clampScoreToScale,
+  normalizeGradingSystemInput,
+  validateGradingSystemInput,
+} from './gradingSystem';
 
 export interface QuestionnaireValidationResult {
   valid: boolean;
   errors: string[];
 }
-
-const EXACT_GRADING_DESCRIPTIONS: GradingDescription[] = GRADING_DESCRIPTIONS.map((item) => ({
-  score: item.score,
-  meaning: item.meaning,
-}));
 
 const DEFAULT_LANGUAGES = ['ru', 'en'];
 
@@ -153,10 +155,15 @@ function collectLanguagesFromQuestions(rawQuestions: unknown[]): string[] {
   return pool;
 }
 
-function normalizeQuestion(question: any, index: number, languages: string[]): Question {
+function normalizeQuestion(
+  question: any,
+  index: number,
+  languages: string[],
+  questionnaire: Pick<Questionnaire, 'grading_system'>
+): Question {
   const normalizedScore =
     typeof question?.user_score === 'number' && Number.isFinite(question.user_score)
-      ? Math.max(0, Math.min(10, Math.round(question.user_score)))
+      ? clampScoreToScale(Math.round(question.user_score), questionnaire.grading_system)
       : null;
 
   return {
@@ -171,6 +178,7 @@ function normalizeQuestion(question: any, index: number, languages: string[]): Q
 
 export function normalizeQuestionnaire(input: any): Questionnaire {
   const rawQuestions = Array.isArray(input?.questions) ? input.questions : [];
+  const gradingSystem = normalizeGradingSystemInput(input?.grading_system);
   const metadata = input?.metadata || {};
   const metadataTitle = metadata?.title;
   const metadataSource = metadata?.source_lecture;
@@ -183,9 +191,17 @@ export function normalizeQuestionnaire(input: any): Questionnaire {
 
   const questions = Array.isArray(input?.questions)
     ? input.questions.map((question: any, index: number) =>
-        normalizeQuestion(question, index, languages)
+        normalizeQuestion(
+          question,
+          index,
+          languages,
+          {
+            grading_system: gradingSystem,
+          }
+        )
       )
     : [];
+  const processingRules = normalizeQuestionnaireProcessingRules(input?.processing_rules);
 
   return {
     $schema: input?.$schema || 'http://json-schema.org/draft-07/schema#',
@@ -199,12 +215,9 @@ export function normalizeQuestionnaire(input: any): Questionnaire {
       languages,
       system_folders: normalizeSystemFolders(metadata?.system_folders),
     },
-    grading_system: {
-      scale_min: 0,
-      scale_max: 10,
-      description: EXACT_GRADING_DESCRIPTIONS,
-    },
+    grading_system: gradingSystem,
     questions,
+    ...(processingRules ? { processing_rules: processingRules } : {}),
   };
 }
 
@@ -217,9 +230,17 @@ export function validateQuestionnaire(input: unknown): QuestionnaireValidationRe
 
   const questionnaire = input as any;
   const metadata = questionnaire.metadata || {};
+  const gradingSystem = questionnaire.grading_system;
   const strictLanguages = Array.isArray(metadata?.languages)
     ? uniqueLanguages(metadata.languages)
     : [];
+
+  if (gradingSystem !== undefined) {
+    const gradingErrors = validateGradingSystemInput(gradingSystem);
+    if (gradingErrors.length > 0) {
+      errors.push(...gradingErrors);
+    }
+  }
 
   if (!metadata || typeof metadata !== 'object') {
     errors.push('Отсутствует metadata');
@@ -336,6 +357,13 @@ export function validateQuestionnaire(input: unknown): QuestionnaireValidationRe
         }
       }
     });
+  }
+
+  if (questionnaire.processing_rules !== undefined) {
+    const rulesValidation = validateQuestionnaireProcessingRules(questionnaire.processing_rules);
+    if (!rulesValidation.valid) {
+      errors.push(...rulesValidation.errors);
+    }
   }
 
   return { valid: errors.length === 0, errors };

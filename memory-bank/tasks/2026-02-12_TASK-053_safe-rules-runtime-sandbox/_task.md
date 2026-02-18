@@ -12,5 +12,5 @@
 - QA-проверки и артефакты.
 
 ## Status
-- Implementation: ⏳ Planned
-- QA: ⏳ Planned
+- Implementation: ✅ Completed (2026-02-14)
+- QA: ✅ Completed (unit/build checks)

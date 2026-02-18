@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { QuizResult } from '../types/questionnaire';
-import { getGradeDescription, t } from '../utils/i18n';
+import type { GradingSystem, QuizResult } from '../types/questionnaire';
+import { t } from '../utils/i18n';
+import { getDefaultGradingSystem, getGradingMeaning } from '../utils/gradingSystem';
 
 interface ScoreChartProps {
   results: QuizResult[];
+  gradingSystem?: GradingSystem | null;
 }
 
 interface DailyScoreMetric {
@@ -48,17 +50,24 @@ function parseMonthKey(monthKey: string): { year: number; monthIndex: number } |
   };
 }
 
-function toScoreHue(score: number): number {
-  const clamped = Math.max(0, Math.min(10, score));
-  return Math.round((clamped / 10) * 120);
+function toScoreHue(score: number, gradingSystem: GradingSystem): number {
+  const denominator = gradingSystem.scale_max - gradingSystem.scale_min;
+  if (denominator <= 0) {
+    return 0;
+  }
+  const normalized =
+    (Math.max(gradingSystem.scale_min, Math.min(gradingSystem.scale_max, score)) -
+      gradingSystem.scale_min) /
+    denominator;
+  return Math.round(normalized * 120);
 }
 
-function getScoreColor(score: number): string {
-  return `hsl(${toScoreHue(score)} 70% 42%)`;
+function getScoreColor(score: number, gradingSystem: GradingSystem): string {
+  return `hsl(${toScoreHue(score, gradingSystem)} 70% 42%)`;
 }
 
-function getScoreBackground(score: number): string {
-  return `hsla(${toScoreHue(score)} 70% 42% / 0.15)`;
+function getScoreBackground(score: number, gradingSystem: GradingSystem): string {
+  return `hsla(${toScoreHue(score, gradingSystem)} 70% 42% / 0.15)`;
 }
 
 function getMonthLabel(monthKey: string, locale: string): string {
@@ -68,7 +77,8 @@ function getMonthLabel(monthKey: string, locale: string): string {
   return date.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
 }
 
-export function ScoreChart({ results }: ScoreChartProps) {
+export function ScoreChart({ results, gradingSystem }: ScoreChartProps) {
+  const safeGradingSystem = gradingSystem || getDefaultGradingSystem();
   const locale =
     typeof document !== 'undefined' ? document.documentElement.lang || 'ru-RU' : 'ru-RU';
   const weekdayLabels = useMemo(() => {
@@ -79,18 +89,31 @@ export function ScoreChart({ results }: ScoreChartProps) {
     );
   }, [locale]);
   const distribution = useMemo(() => {
-    const dist = new Array(11).fill(0).map((_, score) => ({ score, count: 0 }));
+    const dist = Array.from(
+      { length: safeGradingSystem.scale_max - safeGradingSystem.scale_min + 1 },
+      (_, index) => ({
+        score: safeGradingSystem.scale_min + index,
+        count: 0,
+      })
+    );
+    const indexByScore = new Map<number, number>(dist.map((entry, index) => [entry.score, index]));
 
     for (const result of results) {
       for (const answer of Object.values(result.answers)) {
-        if (answer.score >= 0 && answer.score <= 10) {
-          dist[answer.score].count += 1;
+        if (
+          answer.score >= safeGradingSystem.scale_min &&
+          answer.score <= safeGradingSystem.scale_max
+        ) {
+          const bucketIndex = indexByScore.get(Math.round(answer.score));
+          if (bucketIndex !== undefined) {
+            dist[bucketIndex].count += 1;
+          }
         }
       }
     }
 
     return dist;
-  }, [results]);
+  }, [results, safeGradingSystem.scale_max, safeGradingSystem.scale_min]);
 
   const dailyMetrics = useMemo<DailyScoreMetric[]>(() => {
     const map = new Map<string, { sum: number; count: number; attempts: number; timestamp: number }>();
@@ -111,7 +134,10 @@ export function ScoreChart({ results }: ScoreChartProps) {
       existing.attempts += 1;
 
       for (const answer of Object.values(result.answers)) {
-        if (answer.score >= 0 && answer.score <= 10) {
+        if (
+          answer.score >= safeGradingSystem.scale_min &&
+          answer.score <= safeGradingSystem.scale_max
+        ) {
           existing.sum += answer.score;
           existing.count += 1;
         }
@@ -136,7 +162,7 @@ export function ScoreChart({ results }: ScoreChartProps) {
         };
       })
       .sort((a, b) => a.timestamp - b.timestamp);
-  }, [results]);
+  }, [results, safeGradingSystem.scale_max, safeGradingSystem.scale_min]);
 
   const monthKeys = useMemo(
     () => Array.from(new Set(dailyMetrics.map((metric) => metric.monthKey))).sort(),
@@ -241,14 +267,14 @@ export function ScoreChart({ results }: ScoreChartProps) {
                 <div className="h-4 md:h-5 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-300"
-                    style={{ width: `${width}%`, backgroundColor: getScoreColor(score) }}
+                    style={{ width: `${width}%`, backgroundColor: getScoreColor(score, safeGradingSystem) }}
                   />
                 </div>
 
                 <span className="text-xs md:text-sm text-gray-700 dark:text-gray-300">{count}</span>
 
                 <span className="hidden md:block text-xs text-gray-500 dark:text-gray-400 truncate">
-                  {getGradeDescription(score)}
+                  {getGradingMeaning(safeGradingSystem, score)}
                 </span>
               </div>
             );
@@ -345,10 +371,15 @@ export function ScoreChart({ results }: ScoreChartProps) {
                         ? 'ring-2 ring-primary-500 border-primary-400'
                         : ''
                     }`}
-                    style={metric ? { backgroundColor: getScoreBackground(metric.averageScore) } : undefined}
+                    style={
+                      metric
+                        ? { backgroundColor: getScoreBackground(metric.averageScore, safeGradingSystem) }
+                        : undefined
+                    }
                     title={
                       metric
-                        ? `${metric.dateKey}: ${metric.averageScore}/10 • ${getGradeDescription(
+                        ? `${metric.dateKey}: ${metric.averageScore}/${safeGradingSystem.scale_max} • ${getGradingMeaning(
+                            safeGradingSystem,
                             Math.round(metric.averageScore)
                           )}`
                         : `${selectedMonth}-${String(day).padStart(2, '0')}`
@@ -373,7 +404,10 @@ export function ScoreChart({ results }: ScoreChartProps) {
                   {t('chart.timeline.summary', {
                     date: selectedDateMetric.dateKey,
                     score: selectedDateMetric.averageScore.toFixed(2),
-                    grade: getGradeDescription(Math.round(selectedDateMetric.averageScore)),
+                    grade: getGradingMeaning(
+                      safeGradingSystem,
+                      Math.round(selectedDateMetric.averageScore)
+                    ),
                     attempts: selectedDateMetric.attempts,
                     answersCount: selectedDateMetric.answersCount,
                   })}

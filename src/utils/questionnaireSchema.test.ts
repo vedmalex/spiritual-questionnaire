@@ -117,4 +117,84 @@ describe('questionnaireSchema', () => {
     expect(invalid.valid).toBe(false);
     expect(invalid.errors.some((error) => error.includes('system_folders'))).toBe(true);
   });
+
+  it('accepts valid processing_rules and rejects unsafe operators', () => {
+    const valid = validateQuestionnaire({
+      metadata: {
+        title: { ru: 'Sample', en: 'Sample' },
+        source_lecture: { ru: 'Lecture', en: 'Lecture' },
+        quality: 'sample-quality',
+        languages: ['ru', 'en'],
+      },
+      questions: [
+        {
+          id: 'q1',
+          question: { ru: 'Question', en: 'Question' },
+          context_sources: { ru: ['src'], en: ['src'] },
+          self_check_prompts: { ru: ['prompt'], en: ['prompt'] },
+          requires_comment: false,
+        },
+      ],
+      processing_rules: {
+        version: 1,
+        metrics: [
+          {
+            id: 'm1',
+            expression: {
+              op: 'sum_answers',
+              question_ids: ['q1'],
+            },
+          },
+        ],
+        honesty_checks: [
+          {
+            id: 'honesty',
+            pass_expression: {
+              op: 'gte',
+              args: [
+                { op: 'metric', metric_id: 'm1' },
+                { op: 'const', value: 0 },
+              ],
+            },
+            severity: 'warning',
+          },
+        ],
+      },
+    });
+
+    expect(valid.valid).toBe(true);
+
+    const invalid = validateQuestionnaire({
+      metadata: {
+        title: { ru: 'Sample', en: 'Sample' },
+        source_lecture: { ru: 'Lecture', en: 'Lecture' },
+        quality: 'sample-quality',
+        languages: ['ru', 'en'],
+      },
+      questions: [
+        {
+          id: 'q1',
+          question: { ru: 'Question', en: 'Question' },
+          context_sources: { ru: ['src'], en: ['src'] },
+          self_check_prompts: { ru: ['prompt'], en: ['prompt'] },
+          requires_comment: false,
+        },
+      ],
+      processing_rules: {
+        version: 1,
+        metrics: [
+          {
+            id: 'm1',
+            expression: {
+              op: 'eval',
+              code: 'alert(1)',
+            },
+          },
+        ],
+      },
+    });
+
+    expect(invalid.valid).toBe(false);
+    expect(invalid.errors.some((error) => error.includes('not supported'))).toBe(true);
+  });
 });

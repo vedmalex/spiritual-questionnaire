@@ -2,6 +2,10 @@ import type { Questionnaire } from '../types/questionnaire';
 import { normalizeQuestionnaire } from '../utils/questionnaireSchema';
 import { toPublicPath } from '../utils/publicPath';
 import { withQuestionnaireRuntimeIdentity } from '../utils/questionnaireIdentity';
+import {
+  normalizeQuestionnaireIndexEntry,
+  withServerFolderMetadata,
+} from '../utils/questionnaireServerFolders';
 import { dataAdapter } from './localStorageAdapter';
 
 export interface QuestionnaireLoadProgress {
@@ -45,13 +49,10 @@ async function loadStaticQuestionnairesOnce(): Promise<Questionnaire[]> {
 
   const questionnaires = await Promise.all(
     files.map(async (fileNameRaw) => {
-      const fileName = String(fileNameRaw || '').trim();
-      if (!fileName) {
-        throw new Error('Empty file name in questionnaires index');
-      }
+      const fileName = normalizeQuestionnaireIndexEntry(fileNameRaw);
       const filePath = toPublicPath(`questionnaires/${fileName}`);
       const parsed = await fetchJson<unknown>(filePath);
-      return normalizeQuestionnaire(parsed);
+      return withServerFolderMetadata(normalizeQuestionnaire(parsed), fileName);
     })
   );
 

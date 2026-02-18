@@ -11,6 +11,7 @@
 ## Deliverables
 - Vite plugin для авто-генерации `index.json`.
 - Hook в dev-watch на события add/unlink/change JSON-файлов.
+- Рекурсивный обход `public/questionnaires/**` с поддержкой вложенных папок в `index.json`.
 - Проверка на build и в dev-режиме.
 
 ## Status

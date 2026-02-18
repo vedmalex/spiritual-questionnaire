@@ -5,8 +5,8 @@
 - [ ] [BUG-004] Full `playwright-cli` flow-pack has 6 failing action scenarios (`STU-05`, `STU-09`, `STU-10`, `STU-12`, `CUR-03`) with missing post-action UI text (action not reaching expected state) - Location: `docs/testing/scenarios/_actions.mjs` + runner integration - Priority: Medium
 
 ## ⚡ Must-Have Items
-- [ ] [MH-006] FUTURE milestone: questionnaire rules-engine schema (`UR-083`, `UR-084`) — Priority: High — Task: `TASK-052`
-- [ ] [MH-007] FUTURE milestone: safe sandbox runtime for rule execution (`UR-085`) — Priority: Critical — Task: `TASK-053`
+- [x] [MH-006] FUTURE milestone: questionnaire rules-engine schema (`UR-083`, `UR-084`) — Priority: High — Task: `TASK-052` — ✅ Completed: 2026-02-14
+- [x] [MH-007] FUTURE milestone: safe sandbox runtime for rule execution (`UR-085`) — Priority: Critical — Task: `TASK-053` — ✅ Completed: 2026-02-14
 - [ ] [MH-008] FUTURE milestone: intro/outro and questionnaire/question images (`UR-086`, `UR-087`) — Priority: High — Task: `TASK-054`
 - [ ] [MH-009] FUTURE milestone: recurring questionnaires and reminder consent flow (`UR-088`, `UR-089`) — Priority: High — Task: `TASK-055`
 - [ ] [MH-010] FUTURE milestone: audio/video answer attachments (`UR-090`) — Priority: High — Task: `TASK-056`
@@ -85,10 +85,10 @@
 
 ## 📊 Statistics
 - Total Items: 75
-- Open: 12
-- Closed: 63
+- Open: 10
+- Closed: 65
 
 ## 📅 Audit Link
 - `memory-bank/system/AUDIT-2026-02-11-user-req.md`
 
-**Last Updated:** 2026-02-14 22:08
+**Last Updated:** 2026-02-14 22:45

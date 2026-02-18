@@ -1,0 +1,571 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Spiritual Assessment Structure",
+  "metadata": {
+    "title": {
+      "ru": "Опросник самопроверки: Религиозность (Астикьям)",
+      "en": "Self-Assessment Questionnaire: Religiosity (Astikyam)"
+    },
+    "source_lecture": {
+      "ru": "09-Религиозность.md (Е.М. Чайтанья Чандра Чаран прабху)",
+      "en": "09-Religioznost.md (H.H. Chaitanya Chandra Charan Prabhu)"
+    },
+    "quality": "astikyam_religiosity_chaitanya_chandra_charan_lesson_09",
+    "languages": [
+      "ru",
+      "en"
+    ]
+  },
+  "grading_system": {
+    "scale_min": 0,
+    "scale_max": 10,
+    "description": [
+      {
+        "score": 0,
+        "meaning": "не задумывался (отсутствие осознанности)"
+      },
+      {
+        "score": 1,
+        "meaning": "когда вспоминаю, стараюсь, но уже поздно"
+      },
+      {
+        "score": 2,
+        "meaning": "почти никогда не получается"
+      },
+      {
+        "score": 3,
+        "meaning": "часто почти не получается"
+      },
+      {
+        "score": 4,
+        "meaning": "получается редко, требует огромных усилий"
+      },
+      {
+        "score": 5,
+        "meaning": "стараюсь, получается не всегда (50/50)"
+      },
+      {
+        "score": 6,
+        "meaning": "получается чаще, чем не получается"
+      },
+      {
+        "score": 7,
+        "meaning": "иногда получается стабильно (уверенная практика)"
+      },
+      {
+        "score": 8,
+        "meaning": "получается в большинстве случаев"
+      },
+      {
+        "score": 9,
+        "meaning": "почти всегда получается"
+      },
+      {
+        "score": 10,
+        "meaning": "всегда (совершенство)"
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "astikyam_q01_discern_dharma_adharma",
+      "question": {
+        "ru": "Насколько вы способны отличать дхарму от адхармы в сложных, неоднозначных обстоятельствах, а не только в теории?",
+        "en": "How capable are you of distinguishing dharma from adharma in complex ambiguous situations, not only in theory?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:00:21]-[00:02:12]: людям трудно различать религию и безбожие в зависимости от обстоятельств.",
+          "Лекция [00:00:55]: нужен сторонний взгляд, потому что внутри ситуации легко запутаться.",
+          "ШБ 6.2.5-6: обычные люди не знают, как отличить религиозность от безбожия.",
+          "БГ 16.24: что делать и чего не делать — определять на основе шастры."
+        ],
+        "en": [
+          "Lecture [00:00:21]-[00:02:12]: people struggle to distinguish religion from irreligion contextually.",
+          "Lecture [00:00:55]: external perspective is needed when one is inside confusion.",
+          "SB 6.2.5-6: common people do not know how to distinguish religiosity and atheism.",
+          "BG 16.24: determine what to do or avoid based on scripture."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "В трудной ситуации я сверяюсь с шастрой и старшими или с эмоцией и выгодой?",
+          "Как часто я оправдываю сомнительное решение фразой так сложились обстоятельства?",
+          "Есть ли у меня привычка брать второе мнение, когда внутренне неясно?",
+          "Могу ли я признать, что пока не различаю дхарму и адхарму в конкретном вопросе?",
+          "Сколько решений за последний месяц я пересмотрел после духовной консультации?"
+        ],
+        "en": [
+          "In hard situations, do I consult shastra and seniors or emotion and convenience?",
+          "How often do I justify doubtful choices by saying circumstances forced it?",
+          "Do I have a habit of seeking a second perspective when inner clarity is low?",
+          "Can I admit I still cannot distinguish dharma and adharma in a case?",
+          "How many decisions in the last month were corrected after spiritual counsel?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Разберите один конкретный этический конфликт по схеме: факты, ваш первый импульс, шастрический критерий, совет старших, окончательное решение.",
+        "en": "Analyze one concrete ethical conflict: facts, your first impulse, scriptural criterion, senior guidance, and final decision."
+      },
+      "user_score": null
+    },
+    {
+      "id": "astikyam_q02_responsibility_for_dependents",
+      "question": {
+        "ru": "Насколько вы ощущаете ответственность за тех, кто вам доверился, включая заботу об их духовном направлении, а не только о внешнем комфорте?",
+        "en": "How deeply do you feel responsibility for those who trust you, including their spiritual direction, not only external comfort?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:02:51]-[00:03:55]: доверившемуся нельзя изменять; нужно указать путь к Богу.",
+          "Лекция [00:03:55]: религиозность начинается с указания правильного духовного направления.",
+          "ШБ 6.2.5-6: тяжкий грех — злоупотреблять доверием беззащитных.",
+          "БГ 12.13-14: истинный преданный дружелюбен и заботлив ко всем существам."
+        ],
+        "en": [
+          "Lecture [00:02:51]-[00:03:55]: betraying trust is grave; one should direct dependents toward God.",
+          "Lecture [00:03:55]: religiosity begins by pointing to the right spiritual path.",
+          "SB 6.2.5-6: abuse of trust toward dependent beings is a heavy sin.",
+          "BG 12.13-14: true devotee is compassionate and friendly to all."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Я забочусь только о материальном благополучии близких или и о духовной судьбе?",
+          "Мои советы дают людям связь с Богом или лишь краткосрочное удобство?",
+          "Есть ли у меня регулярный формат духовной поддержки тех, кто от меня зависит?",
+          "Где я избегаю этой ответственности из страха быть неудобным?"
+        ],
+        "en": [
+          "Do I care only for material welfare or also spiritual destiny of dependents?",
+          "Do my recommendations connect people with God or only short-term comfort?",
+          "Do I maintain a regular spiritual support format for those who depend on me?",
+          "Where do I avoid this responsibility out of fear of discomfort?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите одну сферу (семья, служение, работа), где вам доверяют. Пропишите, как вы будете усиливать в ней духовную ответственность в ближайшие 30 дней.",
+        "en": "Choose one domain (family, service, work) where people trust you. Define how you will strengthen spiritual responsibility there in the next 30 days."
+      },
+      "user_score": null
+    },
+    {
+      "id": "astikyam_q03_five_forms_of_adharma_check",
+      "question": {
+        "ru": "Насколько честно вы отслеживаете в себе пять форм адхармы: видхарма, пара-дхарма, абхаса, упадхарма и чхала-дхарма?",
+        "en": "How honestly do you track the five forms of adharma within yourself: vidharma, para-dharma, abhasa, upa-dharma, and chhala-dharma?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:04:28]-[00:06:54]: подробный разбор пяти форм безбожия.",
+          "Лекция [00:06:54]: обманная религия как карьера на религиозном авторитете.",
+          "ШБ 7.15.12: пять разновидностей адхармы, которые нужно отвергнуть.",
+          "БГ 16.23: произвольное действие вне шастры не дает совершенства."
+        ],
+        "en": [
+          "Lecture [00:04:28]-[00:06:54]: detailed breakdown of five adharma forms.",
+          "Lecture [00:06:54]: deceptive religion as career built on religious authority.",
+          "SB 7.15.12: five branches of irreligion must be rejected.",
+          "BG 16.23: acting by whim outside scripture gives no perfection."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Где я беру на себя стандарты, которым фактически не следую?",
+          "В чем моя религиозность становится показной перед другими?",
+          "Есть ли у меня привычка брать удобные части практики и отрезать неудобные?",
+          "Появляется ли у меня соблазн подменять шастру личными интерпретациями ради влияния?",
+          "Какая из пяти форм адхармы у меня проявляется чаще всего?"
+        ],
+        "en": [
+          "Where do I adopt standards I do not actually follow?",
+          "Where does my religiosity become performative before others?",
+          "Do I keep convenient parts of practice while cutting inconvenient ones?",
+          "Do I tend to replace shastra with personal interpretations for influence?",
+          "Which of the five adharma forms appears most often in me?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Сделайте личную диагностику по 5 формам адхармы: по каждой дайте один честный пример и одну корректировку поведения на 2 недели.",
+        "en": "Run a personal diagnosis across all 5 adharma forms: for each, provide one honest example and one behavior correction for two weeks."
+      },
+      "user_score": null
+    },
+    {
+      "id": "astikyam_q04_honest_stepwise_commitment",
+      "question": {
+        "ru": "Насколько вы идете путем дхармы честно и поэтапно: держите реальные обеты, не притворяясь совершенным и не бросая практику?",
+        "en": "How honestly and stepwise do you follow dharma: keeping real vows without pretending perfection or abandoning practice?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:07:37]: лучше честно следовать посильным принципам, чем имитировать совершенство.",
+          "Лекция [00:07:37]: скрывание недостатков ведет к адхарме.",
+          "ШБ 7.15.12: подлинная религиозная жизнь отвергает ложные формы дхармы.",
+          "БГ 3.35: лучше свой долг, даже несовершенно, чем чужой безукоризненно."
+        ],
+        "en": [
+          "Lecture [00:07:37]: better honest doable practice than imitation of perfection.",
+          "Lecture [00:07:37]: hiding weaknesses leads toward adharma.",
+          "SB 7.15.12: genuine religious life rejects false dharma forms.",
+          "BG 3.35: better own duty imperfectly than another’s perfectly."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Мои обеты соответствуют моему текущему уровню честно?",
+          "Где я играю роль продвинутого, скрывая реальное состояние?",
+          "Есть ли у меня регулярная отчетность по минимальному стандарту практики?",
+          "Как я восстанавливаюсь после срыва: оправдываюсь или возвращаюсь к дисциплине?"
+        ],
+        "en": [
+          "Do my vows honestly match my current level?",
+          "Where do I play advanced while hiding real state?",
+          "Do I keep regular accountability for minimum practice standard?",
+          "After relapse, do I justify myself or return to discipline?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите ваш реалистичный стандарт практики на 21 день (например, круги, регуляции, чтение, отчет) и механизм честного отслеживания.",
+        "en": "Describe your realistic 21-day practice standard (rounds, regulations, reading, reporting) and your honest tracking mechanism."
+      },
+      "user_score": null
+    },
+    {
+      "id": "astikyam_q05_surrender_as_core_dharma",
+      "question": {
+        "ru": "Насколько вы строите религиозность вокруг принципа полного предания Кришне, а не вокруг внешней принадлежности и ритуальной идентичности?",
+        "en": "How much is your religiosity centered on full surrender to Krishna rather than external affiliation and ritual identity?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:08:45]: истинная дхарма — не противоречить идее предания Кришне.",
+          "Лекция [00:08:45]-[00:09:52]: все прочее без предания становится безбожием.",
+          "БГ 18.66: оставь все и предайся Мне.",
+          "БГ 4.39: вера, обуздание чувств и поиск знания ведут к высшему покою."
+        ],
+        "en": [
+          "Lecture [00:08:45]: true dharma must not contradict surrender to Krishna.",
+          "Lecture [00:08:45]-[00:09:52]: everything without surrender drifts toward irreligion.",
+          "BG 18.66: abandon all and surrender unto Me.",
+          "BG 4.39: faith, sense-control, and inquiry lead to higher peace."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Что у меня в центре: воля Кришны или социальное мнение обо мне?",
+          "Мои религиозные действия усиливают зависимость от Бога или от статуса?",
+          "Я готов отказаться от удобного, но неугодного Кришне поведения?",
+          "Как часто я осознанно произношу внутренний акт предания перед решениями?"
+        ],
+        "en": [
+          "What is central for me: Krishna’s will or social image?",
+          "Do my religious activities increase dependence on God or on status?",
+          "Am I ready to leave convenient but non-devotional behaviors?",
+          "How often do I consciously perform an inner act of surrender before decisions?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите одну область, где вы удерживаете контроль вместо предания. Сформулируйте практический шаг предания на ближайшую неделю.",
+        "en": "Describe one area where you keep control instead of surrender. Define one practical surrender step for next week."
+      },
+      "user_score": null
+    },
+    {
+      "id": "astikyam_q06_wealth_and_dharma_use",
+      "question": {
+        "ru": "Насколько вы используете ресурсы (деньги, время, связи, компетенции) как инструмент дхармы и философского роста, а не только семейного комфорта?",
+        "en": "How much do you use resources (money, time, networks, skills) as instruments of dharma and philosophical growth, not only family comfort?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:09:52]-[00:10:41]: истинный плод богатства — религиозность и философское понимание.",
+          "Лекция [00:10:41]: материалистичное использование богатства не избавляет от страданий.",
+          "ШБ 11.5.12: богатство должно вести к восприятию Абсолютной Истины.",
+          "ШБ 1.2.9: религиозная деятельность не для материальной выгоды и чувственных наслаждений."
+        ],
+        "en": [
+          "Lecture [00:09:52]-[00:10:41]: true fruit of wealth is religiosity and philosophical realization.",
+          "Lecture [00:10:41]: materialistic wealth use does not remove suffering.",
+          "SB 11.5.12: wealth should lead to perception of Absolute Truth.",
+          "SB 1.2.9: religious action is not for material gain or refined sensuality."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какая доля моих ресурсов реально работает на дхарму и служение?",
+          "Где я оправдываю материальные вложения, игнорируя духовные приоритеты?",
+          "Приводит ли мой образ жизни к философской ясности или к еще большей суете?",
+          "Как я учу семью связывать благополучие с духовной целью, а не только с комфортом?"
+        ],
+        "en": [
+          "What share of my resources truly serves dharma and service?",
+          "Where do I justify material investments while neglecting spiritual priorities?",
+          "Does my lifestyle produce philosophical clarity or more agitation?",
+          "How do I train family to connect prosperity with spiritual purpose, not only comfort?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Сделайте аудит ресурсов за последний месяц и укажите 3 корректировки, которые прямо усилят ваш духовный вектор.",
+        "en": "Run a one-month resource audit and specify 3 adjustments that directly strengthen your spiritual vector."
+      },
+      "user_score": null
+    },
+    {
+      "id": "astikyam_q07_good_name_and_four_pillars",
+      "question": {
+        "ru": "Насколько вы осознанно защищаете доброе имя через четыре опоры дхармы: аскетизм, чистоту, милосердие и правдивость?",
+        "en": "How consciously do you protect good reputation through the four dharma pillars: austerity, purity, mercy, and truthfulness?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:12:06]-[00:15:20]: потеря религиозности ведет к потере доброго имени.",
+          "Лекция [00:15:20]: четыре столпа дхармы определяют репутацию человека.",
+          "ЧЧ Ади 12.52: вайшнав не должен губить религиозность и доброе имя.",
+          "ШБ 1.17.24: четыре опоры дхармы — аскетизм, чистота, милосердие, правдивость."
+        ],
+        "en": [
+          "Lecture [00:12:06]-[00:15:20]: losing religiosity leads to losing good name.",
+          "Lecture [00:15:20]: four dharma pillars define one’s reputation.",
+          "CC Adi 12.52: Vaishnava should not destroy religiosity and good name.",
+          "SB 1.17.24: four supports of dharma are austerity, purity, mercy, truthfulness."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какая из четырех опор в моей жизни сейчас наиболее проседает?",
+          "Есть ли поступки, которые внешне успешны, но подрывают мое доброе имя?",
+          "Как мои решения отражаются на доверии людей ко мне в долгую?",
+          "Что я делаю ежедневно для укрепления каждой опоры дхармы?"
+        ],
+        "en": [
+          "Which of the four pillars is currently weakest in my life?",
+          "Do I make externally successful choices that internally damage my reputation?",
+          "How do my decisions affect long-term trust in me?",
+          "What do I do daily to strengthen each dharma pillar?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Оцените себя по четырем столпам дхармы (0-10) и выберите один столп для 30-дневной интенсивной коррекции.",
+        "en": "Score yourself on the four dharma pillars (0-10) and choose one pillar for a 30-day intensive correction."
+      },
+      "user_score": null
+    },
+    {
+      "id": "astikyam_q08_motivation_purification",
+      "question": {
+        "ru": "Насколько ваши религиозные практики освобождаются от мотива материальной выгоды и становятся поиском освобождения и любви к Богу?",
+        "en": "How much are your religious practices being purified from material gain motives toward liberation and love of God?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:16:52]: сомневающийся идет в религию с теми же материальными желаниями.",
+          "Лекция [00:16:52]: при неисполнении желаний человек может оставить религию.",
+          "ШБ 1.2.9: дхарма не для выгоды и утонченного удовлетворения чувств.",
+          "ШБ 7.5.30: привязанные к грихаврате не пробуждают склонность к служению Кришне."
+        ],
+        "en": [
+          "Lecture [00:16:52]: doubtful person may approach religion with the same material desires.",
+          "Lecture [00:16:52]: unmet desires can cause one to abandon religion.",
+          "SB 1.2.9: dharma is not for gain or refined sense gratification.",
+          "SB 7.5.30: griha-vrata attachment blocks inclination to serve Krishna."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Что я на самом деле ожидаю от религии: Бога или исполнение списка желаний?",
+          "Как я реагирую, когда мои планы не исполняются после молитвы?",
+          "Есть ли у меня сделка с Богом вместо отношений с Богом?",
+          "Что в моей практике останется, если убрать внешние бонусы?"
+        ],
+        "en": [
+          "What do I truly seek from religion: God or a fulfilled wish list?",
+          "How do I react when my plans are not fulfilled after prayer?",
+          "Do I hold a bargain with God instead of relationship with God?",
+          "What in my practice remains if external rewards are removed?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите 2 ваши главные духовные мотивации сейчас и честно отметьте, где в них присутствует материальный расчет. Дайте план очищения мотива.",
+        "en": "Describe your top 2 current spiritual motivations and honestly mark where material calculation is mixed in. Provide a motive-purification plan."
+      },
+      "user_score": null
+    },
+    {
+      "id": "astikyam_q09_forgiveness_and_compassion_field",
+      "question": {
+        "ru": "Насколько вы строите религиозную жизнь в поле прощения и сострадания, а не в поле осуждения, жесткости и карательного подхода?",
+        "en": "How much do you build religious life in a field of forgiveness and compassion rather than judgment, harshness, and punitive attitude?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:19:48]-[00:21:13]: истинная религия умеет прощать и очищать, а не только наказывать.",
+          "Лекция [00:21:13]: в пространстве истинной религии человек быстро очищается.",
+          "ШБ 6.3.26: преданное служение и святое имя освобождают от греховных последствий.",
+          "БГ 12.13-14: дружелюбие, терпение и отсутствие зависти — признаки дорогого Господу преданного."
+        ],
+        "en": [
+          "Lecture [00:19:48]-[00:21:13]: true religion forgives and purifies, not only punishes.",
+          "Lecture [00:21:13]: in true religion-space one is quickly purified.",
+          "SB 6.3.26: devotion and holy name release one from sinful reactions.",
+          "BG 12.13-14: friendliness, tolerance, non-envy mark one dear to the Lord."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Когда кто-то ошибается, я стремлюсь восстановить человека или списать его?",
+          "Умею ли я отделять поступок от личности и оставлять шанс на рост?",
+          "Как я применяю милость, не разрушая принципов и дисциплины?",
+          "Насколько моя позиция помогает людям приближаться к Богу?"
+        ],
+        "en": [
+          "When someone fails, do I try to restore them or write them off?",
+          "Can I separate action from person and preserve room for growth?",
+          "How do I apply mercy without destroying principles and discipline?",
+          "How much does my stance help people move closer to God?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите случай, где вы могли проявить прощение по-божественному, но выбрали жесткость. Как вы перепоступите в подобной ситуации теперь?",
+        "en": "Describe a case where you could show divine forgiveness but chose harshness. How will you re-act in a similar case now?"
+      },
+      "user_score": null
+    },
+    {
+      "id": "astikyam_q10_competition_to_service_shift",
+      "question": {
+        "ru": "Насколько вы выходите из логики конкуренции и личной выгоды в логику служения, взаимопомощи и миротворчества?",
+        "en": "How much are you moving from competition and personal gain logic to service, mutual support, and peace-making logic?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:24:32]-[00:25:47]: безбожие развивается как конкуренция ради выгоды.",
+          "Лекция [00:25:47]: истинная религиозность устраняет зависть и конкуренцию.",
+          "Лекция [00:25:47]: в среде дхармы люди не брошены и поддерживают друг друга.",
+          "БГ 12.13-14: отсутствие зависти и дружелюбие ко всем живым существам."
+        ],
+        "en": [
+          "Lecture [00:24:32]-[00:25:47]: atheistic life escalates as gain-driven competition.",
+          "Lecture [00:25:47]: true religiosity removes envy and rivalry.",
+          "Lecture [00:25:47]: in dharmic space people are supported, not abandoned.",
+          "BG 12.13-14: non-envy and friendliness toward all beings."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Где я все еще мыслю по принципу каждый сам за себя?",
+          "Как я реагирую на успех другого — поддержкой или внутренним соперничеством?",
+          "Стал ли я источником умиротворения в своей среде?",
+          "Насколько легко мне просить помощь и давать помощь без гордости?"
+        ],
+        "en": [
+          "Where do I still think by everyone-for-themselves logic?",
+          "How do I react to others’ success: support or inner rivalry?",
+          "Have I become a source of peace in my environment?",
+          "How easily do I ask and offer help without pride?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Выберите одну среду (семья, команда, ятра) и опишите, какие 3 действия переведут ее из конкурентного режима в режим дхармического сотрудничества.",
+        "en": "Choose one environment (family, team, yatra) and define 3 actions that shift it from competitive mode to dharmic cooperation mode."
+      },
+      "user_score": null
+    },
+    {
+      "id": "astikyam_q11_brahminical_integrity_in_kali",
+      "question": {
+        "ru": "Насколько вы способны сохранять брахманическую религиозность в условиях Кали-юги, не подстраиваясь под интриги, давление и низкие стандарты среды?",
+        "en": "How capable are you of preserving brahminical religiosity in Kali-yuga conditions without adapting to intrigue, pressure, and low standards?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:27:47]-[00:31:16]: брахман создает среду качествами, а не ждет идеальных условий.",
+          "Лекция [00:29:46]: пример Чанакьи — сила брахмана в разуме и учительской функции.",
+          "Лекция [00:31:16]: защита брахмана происходит через данные Кришной качества.",
+          "БГ 16.23-16.24: нельзя пренебрегать шастрой и действовать по прихоти."
+        ],
+        "en": [
+          "Lecture [00:27:47]-[00:31:16]: brahmana creates environment through qualities, not perfect conditions.",
+          "Lecture [00:29:46]: Chanakya example—brahmin strength is in intelligence and teaching role.",
+          "Lecture [00:31:16]: Krishna protects brahmana through divine qualities.",
+          "BG 16.23-16.24: one must not ignore scripture and act whimsically."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "В сложной среде я понижаю стандарты или удерживаю принципы?",
+          "Есть ли у меня стратегии выживания, которые разрушают внутреннюю чистоту?",
+          "Как я сохраняю независимость мышления без агрессии и гордыни?",
+          "Создаю ли я вокруг себя пространство правды, обучения и умиротворения?"
+        ],
+        "en": [
+          "In difficult environments, do I lower standards or hold principles?",
+          "Do I use survival strategies that damage inner purity?",
+          "How do I keep independent thinking without aggression and pride?",
+          "Am I building a local space of truth, learning, and peace around me?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите ваш текущий внешний контекст (работа/семья/общество) и план из 4 шагов, как сохранить в нем брахманические стандарты без фанатизма и компромисса.",
+        "en": "Describe your current external context (work/family/community) and a 4-step plan to preserve brahminical standards there without fanaticism or compromise."
+      },
+      "user_score": null
+    },
+    {
+      "id": "astikyam_q12_exit_grhavrata_cycle",
+      "question": {
+        "ru": "Насколько вы выходите из цикла «жевания пережеванного» (гриха-врата) и укрепляете устойчивую склонность к служению Кришне через общение с махатмами?",
+        "en": "How much are you exiting the cycle of “chewing the chewed” (griha-vrata) and strengthening steady inclination to serve Krishna through association with mahatmas?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:16:52]: путь ради материальной выгоды оставляет человека неудовлетворенным.",
+          "Лекция [00:32:09]: стремление к знанию и обучению — обязательная природа брахмана.",
+          "ШБ 7.5.30: гриха-врата не пробуждает склонности к служению Кришне.",
+          "ШБ 6.3.26: неустанное имя и преданное служение освобождают от бед.",
+          "БГ 18.66: итог дхармы — предание Верховному Господу."
+        ],
+        "en": [
+          "Lecture [00:16:52]: gain-driven path leaves one dissatisfied.",
+          "Lecture [00:32:09]: aspiration for knowledge and teaching is core brahmin nature.",
+          "SB 7.5.30: griha-vrata does not awaken service-inclination to Krishna.",
+          "SB 6.3.26: constant holy name and devotion free one from calamity.",
+          "BG 18.66: culmination of dharma is surrender to the Supreme Lord."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какие повторяющиеся материальные сценарии удерживают меня в старом круге?",
+          "Есть ли у меня регулярное общение с теми, кто реально ведет к Кришне?",
+          "Как меняется мой вкус: к служению или к прежним компенсациям чувств?",
+          "Что я делаю ежедневно, чтобы не откатиться в режим духовной инерции?",
+          "Какой один шаг сегодня выведет меня из цикла повторяющихся ошибок?"
+        ],
+        "en": [
+          "Which recurring material patterns keep me in old loops?",
+          "Do I have regular association with those who truly lead to Krishna?",
+          "How is my taste shifting: toward service or old sensory compensations?",
+          "What do I do daily to prevent sliding into spiritual inertia?",
+          "Which one step today will break my repeated error cycle?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Составьте 30-дневный план выхода из одного повторяющегося цикла гриха-врата: триггеры, новая практика, поддержка наставника, критерии прогресса.",
+        "en": "Create a 30-day exit plan from one repeated griha-vrata cycle: triggers, new practice, mentor support, and progress criteria."
+      },
+      "user_score": null
+    }
+  ]
+}

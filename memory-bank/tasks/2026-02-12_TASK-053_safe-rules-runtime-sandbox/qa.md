@@ -1,11 +1,12 @@
 # QA
 
 ## Automated checks
-- [ ] `npm run test`
-- [ ] `npm run build`
+- [x] `npm run test -- src/utils/questionnaireRules.test.ts src/utils/questionnaireSchema.test.ts src/hooks/useQuizSession.test.tsx src/utils/resultsTransfer.test.ts`
+- [x] `npm run build`
 
 ## Playwright CLI checks
-- [ ] Добавить/обновить сценарии UI-поведения.
+- [ ] N/A для задачи runtime/sandbox. По запросу пользователя `playwright-cli` не запускался в этом цикле.
 
 ## Evidence
-- Planned.
+- `vitest`: 4 files, 22 tests, all passed.
+- `build:full`: successful.

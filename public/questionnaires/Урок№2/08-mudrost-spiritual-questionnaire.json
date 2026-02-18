@@ -1,0 +1,569 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Spiritual Assessment Structure",
+  "metadata": {
+    "title": {
+      "ru": "Опросник самопроверки: Мудрость (Вигьяна)",
+      "en": "Self-Assessment Questionnaire: Wisdom (Vijnana)"
+    },
+    "source_lecture": {
+      "ru": "08-Мудрость.md (Малика Мала матаджи)",
+      "en": "08-Mudrost.md (Malika Mala Mataji)"
+    },
+    "quality": "vijnana_wisdom_malika_mala_lesson_08",
+    "languages": [
+      "ru",
+      "en"
+    ]
+  },
+  "grading_system": {
+    "scale_min": 0,
+    "scale_max": 10,
+    "description": [
+      {
+        "score": 0,
+        "meaning": "не задумывался (отсутствие осознанности)"
+      },
+      {
+        "score": 1,
+        "meaning": "когда вспоминаю, стараюсь, но уже поздно"
+      },
+      {
+        "score": 2,
+        "meaning": "почти никогда не получается"
+      },
+      {
+        "score": 3,
+        "meaning": "часто почти не получается"
+      },
+      {
+        "score": 4,
+        "meaning": "получается редко, требует огромных усилий"
+      },
+      {
+        "score": 5,
+        "meaning": "стараюсь, получается не всегда (50/50)"
+      },
+      {
+        "score": 6,
+        "meaning": "получается чаще, чем не получается"
+      },
+      {
+        "score": 7,
+        "meaning": "иногда получается стабильно (уверенная практика)"
+      },
+      {
+        "score": 8,
+        "meaning": "получается в большинстве случаев"
+      },
+      {
+        "score": 9,
+        "meaning": "почти всегда получается"
+      },
+      {
+        "score": 10,
+        "meaning": "всегда (совершенство)"
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "vijnana_q01_from_information_to_transformation",
+      "question": {
+        "ru": "Насколько ваши духовные знания переходят из уровня информации в устойчивую внутреннюю трансформацию сердца и поведения?",
+        "en": "How much are your spiritual insights moving from information level to stable inner transformation of heart and behavior?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:01:16]: вигьяна как реализованное знание в сердце и отношениях.",
+          "Лекция [00:13:00]: знания становятся живыми, когда появляется личный вкус к практике.",
+          "БГ 7.2: знание и са-виджняна во всей полноте.",
+          "ШБ 1.2.20: позитивное научное знание возникает в очищенном сознании."
+        ],
+        "en": [
+          "Lecture [00:01:16]: vijnana as realized knowledge in heart and relationships.",
+          "Lecture [00:13:00]: knowledge becomes alive when personal taste for practice appears.",
+          "BG 7.2: complete knowledge with realization (sa-vijnana).",
+          "SB 1.2.20: positive realized knowledge arises in purified consciousness."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какая одна шастрическая идея реально изменила мои ежедневные решения за последние 2 недели?",
+          "Где я продолжаю блестяще объяснять теорию, но жить по-старому?",
+          "Какие признаки в отношениях показывают, что знание стало зрелее?",
+          "Стал ли я мягче, терпеливее и служащим из-за изучения шастры?",
+          "Как я фиксирую переход от понимания к действию?"
+        ],
+        "en": [
+          "Which one scriptural insight actually changed my daily decisions in the last two weeks?",
+          "Where do I still explain theory well but live the old pattern?",
+          "Which relationship markers show that my knowledge matured?",
+          "Have I become softer, more tolerant, and service-minded through study?",
+          "How do I track the shift from understanding to action?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите один конкретный случай, где вы применили услышанное знание и получили иной результат в отношениях, речи или выборе поведения.",
+        "en": "Describe one concrete case where you applied heard knowledge and obtained a different result in relationships, speech, or behavior."
+      },
+      "user_score": null
+    },
+    {
+      "id": "vijnana_q02_not_body_realization",
+      "question": {
+        "ru": "Насколько глубоко вы живете в осознании «я не есть это тело», особенно в ситуациях давления чувств, боли и эмоциональных качелей?",
+        "en": "How deeply do you live the realization “I am not this body,” especially under sensory pressure, pain, and emotional swings?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:02:08]: мудрец - тот, кто реализовал знание «я не тело».",
+          "Лекция [00:03:42]: в смирении и терпении раскрывается эта реализация.",
+          "БГ 2.13: трезвомыслящего не смущает смена телесных состояний.",
+          "БГ 12.13-14: невозмутимость и терпение как признаки зрелости."
+        ],
+        "en": [
+          "Lecture [00:02:08]: a sage is one who realizes “I am not the body.”",
+          "Lecture [00:03:42]: humility and tolerance reveal this realization.",
+          "BG 2.13: sober person is not bewildered by bodily change.",
+          "BG 12.13-14: steadiness and tolerance mark maturity."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Когда я страдаю, я вспоминаю о душе или полностью сливаюсь с телесной ролью?",
+          "Что во мне чаще управляет выбором: страх тела или долг души?",
+          "Как быстро я возвращаюсь к духовной перспективе после триггера?",
+          "Есть ли у меня практика, которая помогает разотождествляться с реакцией ума?"
+        ],
+        "en": [
+          "When I suffer, do I remember the soul or fully merge with bodily identity?",
+          "What drives my choices more often: bodily fear or soul-duty?",
+          "How quickly do I return to spiritual perspective after a trigger?",
+          "Do I have a practice that helps disidentify from mind reactions?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Разберите один недавний эмоционально сложный эпизод и покажите, как в нем проявились или не проявились признаки осознания «я не тело».",
+        "en": "Analyze one recent emotionally difficult episode and show where signs of “I am not the body” realization did or did not appear."
+      },
+      "user_score": null
+    },
+    {
+      "id": "vijnana_q03_vega_control",
+      "question": {
+        "ru": "Насколько вы способны управлять вегами речи, ума, гнева, языка и других побуждений, не разрушая отношения и практику?",
+        "en": "How capable are you of governing urges of speech, mind, anger, tongue, and other impulses without damaging relationships and practice?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:02:53]: контроль вегам как практический критерий мудрости.",
+          "Лекция [00:03:42]: зрелая медитация приходит естественно через практику.",
+          "НН 1: контроль побуждений как квалификация духовного лидера.",
+          "БГ 12.13-14: обуздание чувств и устойчивость в радости и горе."
+        ],
+        "en": [
+          "Lecture [00:02:53]: control of vegas is a practical wisdom criterion.",
+          "Lecture [00:03:42]: mature meditation comes naturally through practice.",
+          "NOI 1: urge-control as qualification of spiritual leadership.",
+          "BG 12.13-14: sense-control and steadiness in pleasure/pain."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Какая вега чаще всего ломает мой духовный ритм?",
+          "Что я делаю в первые 60 секунд после вспышки гнева?",
+          "Моя речь после усталости становится чище или токсичнее?",
+          "Насколько я осознан в теме еды, режима и триггеров тела?",
+          "Есть ли у меня рабочий протокол саморегуляции?"
+        ],
+        "en": [
+          "Which urge most often breaks my spiritual rhythm?",
+          "What do I do in the first 60 seconds after an anger spike?",
+          "Does my speech become cleaner or more toxic under fatigue?",
+          "How conscious am I about food, schedule, and body triggers?",
+          "Do I have a working self-regulation protocol?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Составьте личный план контроля одной самой проблемной веги на 14 дней: триггеры, превентивные меры, действия при срыве, формат отчета.",
+        "en": "Create a 14-day control plan for your most problematic urge: triggers, prevention, relapse actions, and reporting format."
+      },
+      "user_score": null
+    },
+    {
+      "id": "vijnana_q04_humility_and_respect_practice",
+      "question": {
+        "ru": "Насколько естественно в вас проявляются смирение и уважение к другим без ожидания почета к себе?",
+        "en": "How naturally do humility and respect for others manifest in you without expecting honor for yourself?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:03:42]-[00:04:37]: мудрый не требует почета и учится уважать других.",
+          "Лекция [00:09:37]: путь мудрости начинается с правдивости и прикладного самоанализа.",
+          "ЧЧ Ади 17.31: тр̣н̣а̄д апи сунӣчена как платформа непрерывного имени.",
+          "НН 5: культура правильного почтения и служения преданным."
+        ],
+        "en": [
+          "Lecture [00:03:42]-[00:04:37]: wise person does not demand honor and learns to honor others.",
+          "Lecture [00:09:37]: wisdom path starts with truthfulness and applied self-analysis.",
+          "CC Adi 17.31: trnad api sunicena as platform for constant holy name.",
+          "NOI 5: culture of proper respect and service to devotees."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Что во мне включается, когда меня не замечают и не ценят?",
+          "Я способен искренне радоваться успехам других без сравнения с собой?",
+          "Как я проявляю почтение к тем, кто младше или неудобен для меня?",
+          "Есть ли у меня скрытая потребность в признании как топливо служения?"
+        ],
+        "en": [
+          "What activates in me when I am unseen or unappreciated?",
+          "Can I genuinely rejoice in others’ success without comparison?",
+          "How do I offer respect to those junior or difficult for me?",
+          "Do I hold hidden need for recognition as fuel for service?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите ситуацию, где ваше эго требовало почета, и покажите, как в следующий раз вы примените принцип тр̣н̣а̄д апи сунӣчена практически.",
+        "en": "Describe a situation where your ego demanded honor and show how you will apply trnad api sunicena practically next time."
+      },
+      "user_score": null
+    },
+    {
+      "id": "vijnana_q05_cooperation_maturity",
+      "question": {
+        "ru": "Насколько вы способны к зрелому сотрудничеству: слушать, слышать, не растворяться и при этом помогать общему делу?",
+        "en": "How capable are you of mature cooperation: listening, hearing, not dissolving yourself, and still advancing the shared mission?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:04:37]: мудрость проявляется в способности сотрудничать и слышать других.",
+          "Лекция [00:11:09]: путь к мудрости включает анализ, сотрудничество и видение успехов других.",
+          "БГ 6.32: видеть равенство других через сопоставление с собой.",
+          "БГ 12.13-14: дружелюбие ко всем живым существам."
+        ],
+        "en": [
+          "Lecture [00:04:37]: wisdom manifests as cooperation and deep listening.",
+          "Lecture [00:11:09]: path includes analysis, cooperation, and seeing others’ progress.",
+          "BG 6.32: seeing others as equal by comparing with oneself.",
+          "BG 12.13-14: friendliness toward all living beings."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Я умею слушать до конца, не готовя контраргумент заранее?",
+          "Могу ли я сохранить позицию без давления и борьбы за контроль?",
+          "После общения со мной команда становится сильнее или напряженнее?",
+          "Как я реагирую на идеи, которые не совпадают с моим подходом?"
+        ],
+        "en": [
+          "Can I listen fully without preparing counter-arguments in advance?",
+          "Can I keep my stance without pressure and control struggle?",
+          "After interacting with me, does the team become stronger or tenser?",
+          "How do I respond to ideas that differ from my approach?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Выберите один текущий проект в служении и распишите, какие 3 шага сделают ваше сотрудничество более мудрым и созидательным.",
+        "en": "Choose one current service project and specify 3 steps that will make your cooperation wiser and more constructive."
+      },
+      "user_score": null
+    },
+    {
+      "id": "vijnana_q06_kala_desa_patra_decisions",
+      "question": {
+        "ru": "Насколько вы учитываете время, место и обстоятельства (кала-деша-патра), принимая решения и давая советы?",
+        "en": "How well do you account for time, place, and circumstance (kala-desa-patra) when making decisions and giving guidance?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:05:21]: мудрость как действие согласно кала-деша-патра.",
+          "Лекция [00:06:02]: выстраивание речи и действий в системе координат Кришны.",
+          "БГ 10.10: Господь дает разум преданным, служащим с любовью.",
+          "БГ 4.34: связь с гуру помогает получать верный вектор решений."
+        ],
+        "en": [
+          "Lecture [00:05:21]: wisdom acts according to kala-desa-patra.",
+          "Lecture [00:06:02]: speech and action aligned with Krishna-centered coordinates.",
+          "BG 10.10: the Lord grants intelligence to loving servants.",
+          "BG 4.34: guru connection helps obtain right decision direction."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Мои советы универсальные или адаптированы к человеку и ситуации?",
+          "Проверяю ли я зрелость и ресурсность человека перед рекомендацией?",
+          "Есть ли у меня привычка молиться перед важным решением?",
+          "Как часто мои правильные принципы дают плохой результат из-за неверной подачи?"
+        ],
+        "en": [
+          "Are my recommendations generic or tailored to person and context?",
+          "Do I assess a person’s maturity and capacity before advising?",
+          "Do I pray before important decisions?",
+          "How often do correct principles fail due to poor delivery timing?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Разберите одно решение, где вы ошиблись в кала-деша-патра, и сформулируйте новый алгоритм из 4 шагов для подобных случаев.",
+        "en": "Analyze one decision where you missed kala-desa-patra and formulate a new 4-step algorithm for similar cases."
+      },
+      "user_score": null
+    },
+    {
+      "id": "vijnana_q07_process_over_fault_finding",
+      "question": {
+        "ru": "Насколько вы сохраняете фокус на процессе очищения и собственного роста вместо зацикливания на недостатках других и несовершенстве среды?",
+        "en": "How well do you stay focused on purification process and personal growth instead of fixation on others’ faults and environmental imperfection?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:08:13]: метафора душа — видеть не грязь, а сам процесс очищения.",
+          "Лекция [00:08:54]: важен вкус к процессу, а не гонка за финальным результатом.",
+          "ШБ 1.2.18: регулярное слушание и служение очищают сердце от тревог.",
+          "ШБ 1.2.20: в чистой благости приходит позитивное знание."
+        ],
+        "en": [
+          "Lecture [00:08:13]: shower metaphor—focus on cleansing process, not draining dirt.",
+          "Lecture [00:08:54]: cultivate taste for process, not result-chasing.",
+          "SB 1.2.18: regular hearing and service cleanse heart anxieties.",
+          "SB 1.2.20: in pure goodness, positive knowledge arises."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Сколько времени я трачу на критику среды и сколько — на личную практику?",
+          "Моя фокусировка на чужих недостатках увеличивает мою чистоту?",
+          "Как я реагирую, когда вижу несовершенство в вайшнавском сообществе?",
+          "Есть ли у меня привычка возвращаться к своему внутреннему фронту работы?"
+        ],
+        "en": [
+          "How much time do I spend criticizing environment versus practicing personally?",
+          "Does my focus on others’ faults increase my own purity?",
+          "How do I react when I see imperfection in devotee community?",
+          "Do I habitually return to my own inner work front?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите ситуацию, где вы застряли в критике, и предложите альтернативный мудрый сценарий с акцентом на очищение и вклад в общее благо.",
+        "en": "Describe a situation where you got stuck in criticism and propose an alternative wise scenario focused on purification and contribution."
+      },
+      "user_score": null
+    },
+    {
+      "id": "vijnana_q08_truthful_introspection_feedback",
+      "question": {
+        "ru": "Насколько вы практикуете правдивую интроспекцию и запрашиваете честную обратную связь в долгосрочных отношениях?",
+        "en": "How consistently do you practice truthful introspection and actively seek honest feedback within long-term relationships?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:09:37]-[00:10:14]: правдивость с собой и прикладной анализ своей жизни.",
+          "Лекция [00:10:14]: ценность прямой обратной связи и долгосрочных отношений.",
+          "НН 5: зрелое общение с преданными строится на уважении и служении.",
+          "БГ 4.34: смиренное вопрошание как основа получения знания."
+        ],
+        "en": [
+          "Lecture [00:09:37]-[00:10:14]: self-truthfulness and applied life analysis.",
+          "Lecture [00:10:14]: value of direct feedback and long-term relationships.",
+          "NOI 5: mature devotee association rests on respect and service.",
+          "BG 4.34: humble inquiry is foundational for receiving knowledge."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Как часто я сам прошу обратную связь, а не жду критики извне?",
+          "Умею ли я не оправдываться, когда слышу неприятную правду о себе?",
+          "Есть ли у меня 2-3 человека, которые могут говорить мне прямо?",
+          "Как я превращаю обратную связь в конкретные корректировки?"
+        ],
+        "en": [
+          "How often do I proactively request feedback instead of waiting for criticism?",
+          "Can I avoid self-defense when hearing uncomfortable truth about myself?",
+          "Do I have 2-3 people who can speak directly to me?",
+          "How do I convert feedback into concrete corrections?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Соберите обратную связь минимум от двух преданных по теме вашей зрелости/мудрости и зафиксируйте три обязательных изменения на ближайшие 14 дней.",
+        "en": "Collect feedback from at least two devotees on your maturity/wisdom and commit to three required changes for the next 14 days."
+      },
+      "user_score": null
+    },
+    {
+      "id": "vijnana_q09_sadhu_sanga_priority",
+      "question": {
+        "ru": "Насколько приоритетно и качественно вы строите сат-сангу, понимая, что без нее путь мудрости почти невозможен?",
+        "en": "How prioritised and qualitative is your sadhu-sanga, recognizing that wisdom path is nearly impossible without it?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:11:09]-[00:12:11]: путь к мудрости невозможен без преданных и сат-санги.",
+          "Лекция [00:12:11]: век Санкиртаны требует совместного движения.",
+          "ЧЧ madhya.22.83: общение с преданными — коренная причина и постоянная опора бхакти.",
+          "ШБ 1.2.18: служение чистому преданному очищает сердце."
+        ],
+        "en": [
+          "Lecture [00:11:09]-[00:12:11]: wisdom path is impossible without devotees and sadhu-sanga.",
+          "Lecture [00:12:11]: Sankirtana age requires collective movement.",
+          "CC Madhya 22.83: sadhu association is root cause and ongoing support of bhakti.",
+          "SB 1.2.18: serving pure devotees cleanses the heart."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Мое окружение поднимает мой стандарт или размывает его?",
+          "Есть ли у меня регулярное общение с теми, кто реально старше по реализации?",
+          "Насколько я сам вношу вклад в качество общей сат-санги?",
+          "Как я защищаю время для ассоциации от второстепенных дел?"
+        ],
+        "en": [
+          "Does my circle elevate my standard or dilute it?",
+          "Do I have regular association with those senior in realization?",
+          "How much do I personally contribute to sadhu-sanga quality?",
+          "How do I protect association time from secondary distractions?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Составьте карту вашей сат-санги: кто вас поднимает, где есть провалы, какие два шага вы сделаете для усиления окружения на ближайший месяц.",
+        "en": "Create a map of your sadhu-sanga: who elevates you, where gaps exist, and two steps to strengthen association in the next month."
+      },
+      "user_score": null
+    },
+    {
+      "id": "vijnana_q10_holy_name_navigation",
+      "question": {
+        "ru": "Насколько святое имя реально является вашим ежедневным навигатором решений, а не только формально выполненной нормой?",
+        "en": "How much is the holy name truly your daily decision navigator, rather than a formally completed quota?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:12:11]: святое имя названо главным навигатором пути.",
+          "Лекция [00:13:00]: зрелость проявляется, когда появляется внутреннее желание практики.",
+          "ЧЧ Ади 17.31: смиренный настрой делает непрерывное воспевание возможным.",
+          "БГ 10.10: Господь дает разум тому, кто служит с любовью и преданностью."
+        ],
+        "en": [
+          "Lecture [00:12:11]: holy name is called the main navigator of the path.",
+          "Lecture [00:13:00]: maturity appears when practice desire becomes internal.",
+          "CC Adi 17.31: humble mood makes continuous chanting possible.",
+          "BG 10.10: the Lord grants intelligence to loving devotees."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Моя джапа влияет на мои решения в течение дня или заканчивается на четках?",
+          "Есть ли связь между качеством джапы и качеством моих реакций?",
+          "Становлюсь ли я внимательнее к голосу Параматмы после имени?",
+          "Как часто я осознанно прошу руководство перед сложным шагом?"
+        ],
+        "en": [
+          "Does my japa shape daily decisions or end at the beads?",
+          "Is there clear link between japa quality and reaction quality?",
+          "Do I become more attentive to Paramatma guidance after chanting?",
+          "How often do I consciously seek guidance before difficult actions?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Дайте 7-дневный отчет: как качество святого имени влияло на ваши решения, конфликты и внутреннее состояние. Укажите 2 корректировки джапы.",
+        "en": "Provide a 7-day report: how holy name quality influenced your decisions, conflicts, and inner state. Include 2 japa corrections."
+      },
+      "user_score": null
+    },
+    {
+      "id": "vijnana_q11_helping_others_grow",
+      "question": {
+        "ru": "Насколько рядом с вами реально растут другие люди, получая поддержку, ясность и вдохновение к духовному развитию?",
+        "en": "To what extent do people around you actually grow, receiving support, clarity, and inspiration for spiritual development?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:13:45]: признак мудрости — рядом с человеком начинают расти другие.",
+          "Лекция [00:05:21]: мудрый помогает младшим и сострадает.",
+          "БГ 12.13-14: дружелюбие и отсутствие эго как база влияния.",
+          "БГ 6.32: способность видеть других через эмпатию и равенство."
+        ],
+        "en": [
+          "Lecture [00:13:45]: a sign of wisdom is that others start growing nearby.",
+          "Lecture [00:05:21]: wise person helps juniors with compassion.",
+          "BG 12.13-14: friendliness and egolessness as impact foundation.",
+          "BG 6.32: seeing others through empathy and equality."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Людям рядом со мной легче расти или они чувствуют давление?",
+          "Я чаще наставляю или реально сопровождаю человека в процессе?",
+          "Есть ли примеры, где кто-то укрепился благодаря моему участию?",
+          "Как я предотвращаю зависимость людей от себя и веду к Кришне?"
+        ],
+        "en": [
+          "Do people around me grow easier or feel pressured?",
+          "Do I mostly instruct, or truly accompany people through process?",
+          "Are there cases where someone strengthened due to my support?",
+          "How do I prevent dependency on me and direct people to Krishna?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Опишите один реальный кейс помощи другому преданному: что вы сделали, какой был плод, что бы вы улучшили в своем подходе.",
+        "en": "Describe one real case of helping another devotee: what you did, what fruit came, and what you would improve in your approach."
+      },
+      "user_score": null
+    },
+    {
+      "id": "vijnana_q12_daily_gratitude_and_renewal",
+      "question": {
+        "ru": "Насколько вы практикуете мудрость как ежедневное обновление: цените каждое мгновение как дар Бога и подводите честные итоги дня?",
+        "en": "How much do you practice wisdom as daily renewal: valuing each moment as God’s gift and making honest day-end reviews?"
+      },
+      "context_sources": {
+        "ru": [
+          "Лекция [00:06:02]: мудрый человек подводит ежедневный итог своей внутренней парикрамы.",
+          "Лекция [00:14:30]: мудрость — ценить каждое мгновение жизни как подарок Бога.",
+          "Лекция [00:08:54]: вкус к бесконечному процессу важнее фиксации на результате.",
+          "БГ 10.10: при преданном служении Господь дает направляющий разум."
+        ],
+        "en": [
+          "Lecture [00:06:02]: wise person reviews daily inner parikrama.",
+          "Lecture [00:14:30]: wisdom means valuing each life moment as God’s gift.",
+          "Lecture [00:08:54]: taste for endless process is more important than result fixation.",
+          "BG 10.10: in devotional service, the Lord grants guiding intelligence."
+        ]
+      },
+      "self_check_prompts": {
+        "ru": [
+          "Есть ли у меня вечерняя практика честного подведения итогов?",
+          "Становится ли благодарность моей естественной реакцией в трудностях?",
+          "Как часто я проживаю день в спешке, теряя присутствие с Кришной?",
+          "Какая одна корректировка завтра сделает мой путь мудрее?",
+          "Вижу ли я каждый новый день как шанс служения, а не как рутину?"
+        ],
+        "en": [
+          "Do I have an evening practice of honest review?",
+          "Is gratitude becoming my natural response in difficulty?",
+          "How often do I rush through the day and lose Krishna-centered presence?",
+          "Which one adjustment tomorrow will make my path wiser?",
+          "Do I see each new day as service opportunity rather than routine?"
+        ]
+      },
+      "requires_comment": true,
+      "student_comment": {
+        "ru": "Составьте 7-дневный протокол мудрости: утреннее намерение, дневные маркеры, вечерняя рефлексия и критерии оценки 0-10.",
+        "en": "Create a 7-day wisdom protocol: morning intention, daytime markers, evening reflection, and 0-10 evaluation criteria."
+      },
+      "user_score": null
+    }
+  ]
+}

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import type { Questionnaire, AnswerDetails } from '../types/questionnaire';
-import { GRADING_DESCRIPTIONS } from '../utils/constants';
-import { t, getGradeDescription } from '../utils/i18n';
+import { t } from '../utils/i18n';
 import {
   extractMarkdownImageSources,
   hasMarkdownTextContent,
   mergeLegacyCommentWithPhotos,
 } from '../utils/markdown';
 import { MarkdownEditor } from './ui/MarkdownEditor';
+import { getGradingMeaning } from '../utils/gradingSystem';
 
 interface QuizTakerProps {
   questionnaire: Questionnaire;
@@ -49,6 +49,17 @@ export function QuizTaker({
   const commentRequired = Boolean(currentQuestion.requires_comment);
   const hasRequiredComment = !commentRequired || hasMarkdownTextContent(currentComment);
   const canProceed = currentScore !== undefined && hasRequiredComment;
+  const gradingSystem = questionnaire.grading_system;
+  const gradingScores =
+    gradingSystem.description.length > 0
+      ? gradingSystem.description
+          .map((entry) => entry.score)
+          .filter((score, index, source) => Number.isFinite(score) && source.indexOf(score) === index)
+          .sort((left, right) => left - right)
+      : Array.from(
+          { length: gradingSystem.scale_max - gradingSystem.scale_min + 1 },
+          (_, index) => gradingSystem.scale_min + index
+        );
 
   useEffect(() => {
     setShowComment(commentRequired || Boolean(currentComment));
@@ -66,7 +77,7 @@ export function QuizTaker({
   const handleCommentChange = (comment: string) => {
     const nextPhotos = extractMarkdownImageSources(comment);
     onAnswer(currentQuestion.id, {
-      score: currentScore || 0,
+      score: currentScore ?? gradingSystem.scale_min,
       comment,
       photos: nextPhotos,
       curatorFeedback: currentFeedback,
@@ -162,8 +173,8 @@ export function QuizTaker({
             {t('quiz.score.select')}
           </h3>
 
-          <div className="grid grid-cols-6 sm:grid-cols-11 gap-2">
-            {GRADING_DESCRIPTIONS.map(({ score }) => (
+          <div className="flex flex-wrap gap-2">
+            {gradingScores.map((score) => (
               <button
                 key={score}
                 type="button"
@@ -173,7 +184,7 @@ export function QuizTaker({
                 onFocus={() => setHoveredScore(score)}
                 onBlur={() => setHoveredScore(null)}
                 className={`
-                  w-full p-3 rounded-lg text-sm font-medium transition-all
+                  min-w-[3rem] px-3 py-3 rounded-lg text-sm font-medium transition-all
                   ${currentScore === score
                     ? 'bg-primary-600 text-white ring-2 ring-primary-600 ring-offset-2 dark:ring-offset-gray-800'
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
@@ -197,7 +208,7 @@ export function QuizTaker({
                 <strong className="text-primary-600 dark:text-primary-400">
                   {hoveredScore ?? currentScore}
                 </strong>{' '}
-                - {getGradeDescription(hoveredScore ?? currentScore ?? 0)}
+                - {getGradingMeaning(gradingSystem, hoveredScore ?? currentScore ?? gradingSystem.scale_min)}
               </>
             ) : (
               <span className="italic text-gray-400 dark:text-gray-500">{t('quiz.score.hint')}</span>

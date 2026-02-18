@@ -118,7 +118,7 @@ function normalizeFeedback(feedback: unknown): CuratorFeedback[] {
 
 function normalizeAnswerDetails(details: any): AnswerDetails {
   const score = toNumberOrNull(details?.score);
-  const safeScore = Math.max(0, Math.min(10, score ?? 0));
+  const safeScore = score ?? 0;
 
   return {
     score: safeScore,
@@ -155,6 +155,113 @@ function normalizeAnswers(rawAnswers: unknown): Record<string, AnswerDetails> {
   }
 
   return {};
+}
+
+function normalizeComputedResult(rawComputed: unknown): QuizResult['computed_result'] | undefined {
+  if (!rawComputed || typeof rawComputed !== 'object') {
+    return undefined;
+  }
+
+  const source = rawComputed as Record<string, unknown>;
+  const metricsRaw = source.metrics;
+  const rankingRaw = source.ranking;
+
+  const metrics =
+    metricsRaw && typeof metricsRaw === 'object'
+      ? Object.fromEntries(
+          Object.entries(metricsRaw as Record<string, unknown>).filter(
+            ([key, value]) =>
+              Boolean(key) && typeof value === 'number' && Number.isFinite(value)
+          )
+        )
+      : {};
+  const ranking = Array.isArray(rankingRaw)
+    ? rankingRaw.filter(
+        (entry): entry is string => typeof entry === 'string' && entry.trim().length > 0
+      )
+    : [];
+
+  const honestyRaw = source.honesty_checks;
+  let honestyChecks: QuizResult['computed_result']['honesty_checks'] | undefined;
+  if (honestyRaw && typeof honestyRaw === 'object') {
+    const honestyRecord = honestyRaw as Record<string, unknown>;
+    const checksRaw = honestyRecord.checks;
+    const checks = Array.isArray(checksRaw)
+      ? checksRaw
+          .filter((entry) => entry && typeof entry === 'object')
+          .map((entry) => {
+            const check = entry as Record<string, unknown>;
+            const id = typeof check.id === 'string' ? check.id.trim() : '';
+            if (!id) {
+              return null;
+            }
+            const value =
+              typeof check.value === 'number' && Number.isFinite(check.value) ? check.value : 0;
+            const passed = Boolean(check.passed);
+            const severity =
+              check.severity === 'info' ||
+              check.severity === 'warning' ||
+              check.severity === 'critical'
+                ? check.severity
+                : 'warning';
+
+            return {
+              id,
+              passed,
+              value,
+              severity,
+            };
+          })
+          .filter(
+            (
+              entry
+            ): entry is NonNullable<QuizResult['computed_result']>['honesty_checks']['checks'][number] =>
+              Boolean(entry)
+          )
+      : [];
+
+    if (checks.length > 0) {
+      const allPassedRaw = honestyRecord.all_passed;
+      const failedCountRaw = honestyRecord.failed_count;
+      const allPassed =
+        typeof allPassedRaw === 'boolean'
+          ? allPassedRaw
+          : checks.every((check) => check.passed);
+      const failedCount =
+        typeof failedCountRaw === 'number' && Number.isFinite(failedCountRaw)
+          ? Math.max(0, Math.round(failedCountRaw))
+          : checks.filter((check) => !check.passed).length;
+
+      honestyChecks = {
+        all_passed: allPassed,
+        failed_count: failedCount,
+        checks,
+      };
+    }
+  }
+
+  if (
+    Object.keys(metrics).length === 0 &&
+    ranking.length === 0 &&
+    !honestyChecks
+  ) {
+    return undefined;
+  }
+
+  const errors = Array.isArray(source.errors)
+    ? source.errors.filter(
+        (entry): entry is string => typeof entry === 'string' && entry.trim().length > 0
+      )
+    : [];
+
+  return {
+    version: 1,
+    engine: 'rules-v1',
+    metrics,
+    ranking,
+    ...(honestyChecks ? { honesty_checks: honestyChecks } : {}),
+    ...(errors.length > 0 ? { errors } : {}),
+  };
 }
 
 function normalizeResult(rawResult: unknown): QuizResult | null {
@@ -195,6 +302,7 @@ function normalizeResult(rawResult: unknown): QuizResult | null {
         : undefined,
     reviewCompletedAt:
       source.reviewCompletedAt !== undefined ? toTimestamp(source.reviewCompletedAt) : undefined,
+    computed_result: normalizeComputedResult(source.computed_result),
   };
 }
 

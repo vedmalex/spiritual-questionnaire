@@ -44,7 +44,7 @@ describe('resultsTransfer', () => {
 
     expect(parsed.totalRaw).toBe(1);
     expect(parsed.valid).toHaveLength(1);
-    expect(parsed.valid[0].answers.q1.score).toBe(10);
+    expect(parsed.valid[0].answers.q1.score).toBe(12);
     expect(parsed.valid[0].userRole).toBe('student');
     expect(parsed.valid[0].reviewStatus).toBe('pending');
   });
@@ -69,6 +69,53 @@ describe('resultsTransfer', () => {
     expect(parsed.totalRaw).toBe(1);
     expect(parsed.valid).toHaveLength(1);
     expect(parsed.valid[0].reviewStatus).toBe('needs_revision');
+  });
+
+  it('keeps computed_result rules payload on import when present', () => {
+    const content = JSON.stringify({
+      results: [
+        {
+          id: 'parsed-rules',
+          questionnaireId: 'q-main',
+          questionnaireTitle: 'Main Quiz',
+          userName: 'Student',
+          completedAt: '2026-02-11T12:00:00.000Z',
+          answers: [{ questionId: 'q1', score: 1 }],
+          computed_result: {
+            version: 1,
+            engine: 'rules-v1',
+            metrics: {
+              extraversion: 12,
+            },
+            ranking: ['extraversion'],
+            honesty_checks: {
+              all_passed: false,
+              failed_count: 1,
+              checks: [
+                {
+                  id: 'lie-scale',
+                  passed: false,
+                  value: 6,
+                  severity: 'critical',
+                },
+              ],
+            },
+          },
+        },
+      ],
+    });
+
+    const parsed = parseResultsTransferPayload(content);
+
+    expect(parsed.totalRaw).toBe(1);
+    expect(parsed.valid[0].computed_result?.engine).toBe('rules-v1');
+    expect(parsed.valid[0].computed_result?.metrics.extraversion).toBe(12);
+    expect(parsed.valid[0].computed_result?.ranking).toEqual(['extraversion']);
+    expect(parsed.valid[0].computed_result?.honesty_checks?.all_passed).toBe(false);
+    expect(parsed.valid[0].computed_result?.honesty_checks?.failed_count).toBe(1);
+    expect(parsed.valid[0].computed_result?.honesty_checks?.checks[0]?.id).toBe(
+      'lie-scale'
+    );
   });
 
   it('skips duplicates by fingerprint with skip strategy', () => {
